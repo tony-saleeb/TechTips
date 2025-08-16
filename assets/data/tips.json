@@ -1,0 +1,346 @@
+{
+  "tips": [
+    {
+      "id": 1,
+      "os": "windows",
+      "title": "Quickly Minimize All Windows",
+      "description": "Instantly minimize all open windows to access your desktop quickly.",
+      "steps": [
+        "Press Windows + D",
+        "All windows will be minimized",
+        "Press Windows + D again to restore windows"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["desktop", "windows", "productivity"],
+      "created_at": "2024-01-15T10:00:00Z",
+      "updated_at": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "os": "windows",
+      "title": "Quick Screenshot with Snipping Tool",
+      "description": "Take screenshots quickly using the built-in Windows Snipping Tool.",
+      "steps": [
+        "Press Windows + Shift + S",
+        "Select the area you want to capture",
+        "The screenshot is copied to clipboard",
+        "Paste it anywhere with Ctrl + V"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["screenshot", "snipping", "capture"],
+      "created_at": "2024-01-15T10:15:00Z",
+      "updated_at": "2024-01-15T10:15:00Z"
+    },
+    {
+      "id": 3,
+      "os": "windows",
+      "title": "Virtual Desktops",
+      "description": "Create and manage multiple virtual desktops for better organization.",
+      "steps": [
+        "Press Windows + Tab to open Task View",
+        "Click 'New desktop' in the top-left corner",
+        "Switch between desktops with Windows + Ctrl + Left/Right arrows",
+        "Close desktops by hovering and clicking the X"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["virtual desktop", "multitasking", "organization"],
+      "created_at": "2024-01-15T10:30:00Z",
+      "updated_at": "2024-01-15T10:30:00Z"
+    },
+    {
+      "id": 4,
+      "os": "windows",
+      "title": "Quick File Search",
+      "description": "Search for files and applications instantly from the Start menu.",
+      "steps": [
+        "Press Windows key",
+        "Start typing the name of the file or application",
+        "Press Enter to open the first result",
+        "Use arrow keys to navigate through results"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["search", "files", "applications"],
+      "created_at": "2024-01-15T10:45:00Z",
+      "updated_at": "2024-01-15T10:45:00Z"
+    },
+    {
+      "id": 5,
+      "os": "windows",
+      "title": "Window Snapping",
+      "description": "Snap windows to different parts of the screen for better multitasking.",
+      "steps": [
+        "Drag a window to the left or right edge to snap it to half screen",
+        "Use Windows + Left/Right arrow to snap active window",
+        "Drag to corners for quarter-screen snapping",
+        "Windows + Up arrow maximizes the window"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["window management", "snapping", "multitasking"],
+      "created_at": "2024-01-15T11:00:00Z",
+      "updated_at": "2024-01-15T11:00:00Z"
+    },
+    {
+      "id": 6,
+      "os": "macos",
+      "title": "Spotlight Search",
+      "description": "Quickly search for files, applications, and information on your Mac.",
+      "steps": [
+        "Press Cmd + Space",
+        "Type what you're looking for",
+        "Press Enter to open the first result",
+        "Use arrow keys to navigate results"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["search", "spotlight", "productivity"],
+      "created_at": "2024-01-15T11:15:00Z",
+      "updated_at": "2024-01-15T11:15:00Z"
+    },
+    {
+      "id": 7,
+      "os": "macos",
+      "title": "Mission Control",
+      "description": "View all open windows and desktops at once for easy navigation.",
+      "steps": [
+        "Press F3 or swipe up with four fingers",
+        "View all open windows and spaces",
+        "Click on a window to switch to it",
+        "Drag windows between spaces"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["mission control", "windows", "spaces"],
+      "created_at": "2024-01-15T11:30:00Z",
+      "updated_at": "2024-01-15T11:30:00Z"
+    },
+    {
+      "id": 8,
+      "os": "macos",
+      "title": "Quick Screenshot",
+      "description": "Take various types of screenshots using keyboard shortcuts.",
+      "steps": [
+        "Cmd + Shift + 3: Full screen screenshot",
+        "Cmd + Shift + 4: Select area to capture",
+        "Cmd + Shift + 4, then Space: Capture specific window",
+        "Add Ctrl to copy to clipboard instead of saving"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["screenshot", "capture", "keyboard shortcuts"],
+      "created_at": "2024-01-15T11:45:00Z",
+      "updated_at": "2024-01-15T11:45:00Z"
+    },
+    {
+      "id": 9,
+      "os": "macos",
+      "title": "Force Quit Applications",
+      "description": "Quickly force quit unresponsive applications.",
+      "steps": [
+        "Press Cmd + Option + Esc",
+        "Select the unresponsive application",
+        "Click 'Force Quit'",
+        "Alternatively, press Cmd + Option + Shift + Esc to force quit the front app"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["force quit", "applications", "troubleshooting"],
+      "created_at": "2024-01-15T12:00:00Z",
+      "updated_at": "2024-01-15T12:00:00Z"
+    },
+    {
+      "id": 10,
+      "os": "macos",
+      "title": "Split View",
+      "description": "Use Split View to work with two apps side by side.",
+      "steps": [
+        "Hold the green maximize button on a window",
+        "Choose 'Tile Window to Left of Screen' or 'Tile Window to Right of Screen'",
+        "Click another window to fill the other side",
+        "Drag the divider to resize windows"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["split view", "multitasking", "window management"],
+      "created_at": "2024-01-15T12:15:00Z",
+      "updated_at": "2024-01-15T12:15:00Z"
+    },
+    {
+      "id": 11,
+      "os": "linux",
+      "title": "Terminal Shortcuts",
+      "description": "Essential keyboard shortcuts to boost your terminal productivity.",
+      "steps": [
+        "Ctrl + C: Cancel current command",
+        "Ctrl + Z: Suspend current process",
+        "Ctrl + A: Move cursor to beginning of line",
+        "Ctrl + E: Move cursor to end of line",
+        "Ctrl + R: Search command history"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["terminal", "keyboard shortcuts", "command line"],
+      "created_at": "2024-01-15T12:30:00Z",
+      "updated_at": "2024-01-15T12:30:00Z"
+    },
+    {
+      "id": 12,
+      "os": "linux",
+      "title": "File Permissions Quick Change",
+      "description": "Quickly change file permissions using chmod command.",
+      "steps": [
+        "Open terminal",
+        "Use 'chmod 755 filename' for executable files",
+        "Use 'chmod 644 filename' for regular files",
+        "Use 'chmod -R 755 directory' for directories recursively"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["chmod", "permissions", "files"],
+      "created_at": "2024-01-15T12:45:00Z",
+      "updated_at": "2024-01-15T12:45:00Z"
+    },
+    {
+      "id": 13,
+      "os": "linux",
+      "title": "Process Management",
+      "description": "Monitor and manage running processes effectively.",
+      "steps": [
+        "Use 'ps aux' to list all running processes",
+        "Use 'top' or 'htop' for real-time process monitoring",
+        "Use 'kill PID' to terminate a process",
+        "Use 'killall process_name' to kill all instances of a process"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["processes", "system monitoring", "kill"],
+      "created_at": "2024-01-15T13:00:00Z",
+      "updated_at": "2024-01-15T13:00:00Z"
+    },
+    {
+      "id": 14,
+      "os": "linux",
+      "title": "Quick File Search with Find",
+      "description": "Use the find command to locate files and directories quickly.",
+      "steps": [
+        "Use 'find . -name \"filename\"' to search by name",
+        "Use 'find . -type f -name \"*.txt\"' to find all text files",
+        "Use 'find . -size +100M' to find files larger than 100MB",
+        "Use 'find . -mtime -7' to find files modified in last 7 days"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["find", "search", "files"],
+      "created_at": "2024-01-15T13:15:00Z",
+      "updated_at": "2024-01-15T13:15:00Z"
+    },
+    {
+      "id": 15,
+      "os": "linux",
+      "title": "Workspace Switching",
+      "description": "Efficiently switch between virtual workspaces in Linux desktop environments.",
+      "steps": [
+        "Use Ctrl + Alt + Arrow keys to switch workspaces",
+        "Use Ctrl + Alt + Shift + Arrow keys to move windows between workspaces",
+        "Use Super + Page Up/Down for workspace switching in GNOME",
+        "Right-click on desktop and select workspace options to configure"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["workspaces", "desktop", "multitasking"],
+      "created_at": "2024-01-15T13:30:00Z",
+      "updated_at": "2024-01-15T13:30:00Z"
+    },
+    {
+      "id": 16,
+      "os": "windows",
+      "title": "Windows Run Dialog",
+      "description": "Access system tools and applications quickly using the Run dialog.",
+      "steps": [
+        "Press Windows + R to open Run dialog",
+        "Type 'msconfig' for System Configuration",
+        "Type 'regedit' for Registry Editor",
+        "Type 'cmd' for Command Prompt",
+        "Type 'appwiz.cpl' for Programs and Features"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["run dialog", "system tools", "shortcuts"],
+      "created_at": "2024-01-15T13:45:00Z",
+      "updated_at": "2024-01-15T13:45:00Z"
+    },
+    {
+      "id": 17,
+      "os": "macos",
+      "title": "Quick Look Preview",
+      "description": "Preview files instantly without opening them in their default applications.",
+      "steps": [
+        "Select a file in Finder",
+        "Press Space bar to open Quick Look",
+        "Use arrow keys to navigate between files",
+        "Press Space again or Esc to close Quick Look"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["quick look", "preview", "finder"],
+      "created_at": "2024-01-15T14:00:00Z",
+      "updated_at": "2024-01-15T14:00:00Z"
+    },
+    {
+      "id": 18,
+      "os": "linux",
+      "title": "Package Management Shortcuts",
+      "description": "Essential package management commands for different Linux distributions.",
+      "steps": [
+        "Ubuntu/Debian: 'sudo apt update && sudo apt upgrade'",
+        "CentOS/RHEL: 'sudo yum update' or 'sudo dnf update'",
+        "Arch Linux: 'sudo pacman -Syu'",
+        "Use 'which package_name' to check if a package is installed"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["package management", "apt", "yum", "pacman"],
+      "created_at": "2024-01-15T14:15:00Z",
+      "updated_at": "2024-01-15T14:15:00Z"
+    },
+    {
+      "id": 19,
+      "os": "windows",
+      "title": "Task Manager Power Tips",
+      "description": "Advanced Task Manager features for system monitoring and troubleshooting.",
+      "steps": [
+        "Press Ctrl + Shift + Esc to open Task Manager directly",
+        "Click 'More details' for advanced view",
+        "Use 'Startup' tab to manage startup programs",
+        "Right-click on processes for additional options like 'Open file location'"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["task manager", "system monitoring", "performance"],
+      "created_at": "2024-01-15T14:30:00Z",
+      "updated_at": "2024-01-15T14:30:00Z"
+    },
+    {
+      "id": 20,
+      "os": "macos",
+      "title": "Dock Customization",
+      "description": "Customize your Dock for improved productivity and aesthetics.",
+      "steps": [
+        "Right-click on Dock divider and select 'Dock Preferences'",
+        "Adjust size and magnification settings",
+        "Choose position: Left, Bottom, or Right",
+        "Enable 'Automatically hide and show the Dock' for more screen space",
+        "Add folders to Dock by dragging them to the right side"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["dock", "customization", "productivity"],
+      "created_at": "2024-01-15T14:45:00Z",
+      "updated_at": "2024-01-15T14:45:00Z"
+    }
+  ]
+}
