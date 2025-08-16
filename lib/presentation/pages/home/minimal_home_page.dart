@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/constants/app_colors.dart';
@@ -36,62 +37,58 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
   }
 
   void _onTabTapped(int index) {
-    if (index < 0 || index >= 3 || index == _selectedIndex) {
-      return;
+    print('Tab tapped: $index, current: $_selectedIndex');
+    if (index != _selectedIndex && index >= 0 && index < 3) {
+      setState(() => _selectedIndex = index);
+      print('Changed to: $_selectedIndex');
     }
-    
-    // Simple, fast tab switching without animations
-    setState(() {
-      _selectedIndex = index;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
     return Scaffold(
-      backgroundColor: Theme.of(context).brightness == Brightness.dark
-        ? AppColors.backgroundDark
-        : AppColors.backgroundLight,
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       drawer: _buildDrawer(context),
       body: Stack(
         children: [
           Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: Theme.of(context).brightness == Brightness.dark
-                  ? [
-                      AppColors.backgroundDark,
-                      AppColors.surfaceDark,
-                      AppColors.backgroundDark,
-                    ]
-                  : [
-                      AppColors.backgroundLight,
-                      AppColors.neutral50,
-                      AppColors.backgroundLight.withValues(alpha: 0.98),
-                    ],
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: isDark
+                    ? [
+                        AppColors.backgroundDark,
+                        AppColors.surfaceDark,
+                        AppColors.backgroundDark,
+                      ]
+                    : [
+                        AppColors.backgroundLight,
+                        AppColors.neutral50,
+                        AppColors.backgroundLight.withValues(alpha: 0.98),
+                      ],
                 stops: const [0.0, 0.5, 1.0],
               ),
             ),
-                                    child: _buildCurrentPage(),
+            child: _buildAnimatedPageSwitcher(),
           ),
-                     // Search button positioned at exact same level as drawer button
-           Positioned(
-             top: 48, // Match drawer button positioning exactly
-             right: 16,
-             child: _buildSearchButton(context),
-           ),
-           // Bottom navigation bar positioned at bottom
-           Positioned(
-             left: 0,
-             right: 0,
-             bottom: 0,
-             child: _buildElegantBottomNav(),
-           ),
+          // Search button positioned at exact same level as drawer button
+          Positioned(
+            top: 48,
+            right: 16,
+            child: _buildSearchButton(context),
+          ),
+          // Bottom navigation bar positioned at bottom
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: _buildElegantBottomNav(),
+          ),
         ],
       ),
-             // Remove bottomNavigationBar property entirely
       floatingActionButton: Builder(
         builder: (BuildContext context) => _buildMenuButton(context),
       ),
@@ -469,12 +466,12 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
         children: [
             Container(
               padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
+        decoration: BoxDecoration(
                 gradient: LinearGradient(
-                                colors: [
-                                  AppColors.accentDark,
-                                  AppColors.accentDark.withValues(alpha: 0.8),
-                  ],
+                colors: [
+                  AppColors.accentDark,
+                  AppColors.accentDark.withValues(alpha: 0.8),
+                ],
                 ),
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -526,7 +523,7 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
     );
   }
 
-  /// Build beautifully simple bottom navigation
+  /// Clean and smooth bottom navigation with water liquid effects
   Widget _buildElegantBottomNav() {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     
@@ -542,32 +539,32 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
           color: isDark
             ? Colors.white.withValues(alpha: 0.1)
             : Colors.black.withValues(alpha: 0.06),
-                                width: 1,
-                              ),
-                          boxShadow: [
-                            BoxShadow(
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
             color: isDark
-                                    ? Colors.black.withValues(alpha: 0.3)
+              ? Colors.black.withValues(alpha: 0.3)
               : Colors.black.withValues(alpha: 0.08),
             blurRadius: 16,
             offset: const Offset(0, 8),
             spreadRadius: -2,
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-          _buildSimpleNavItem(
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          _buildLiquidNavItem(
             icon: Icons.window,
             index: 0,
             isSelected: _selectedIndex == 0,
           ),
-          _buildSimpleNavItem(
+          _buildLiquidNavItem(
             icon: Icons.apple,
             index: 1,
             isSelected: _selectedIndex == 1,
           ),
-          _buildSimpleNavItem(
+          _buildLiquidNavItem(
             icon: Icons.computer,
             index: 2,
             isSelected: _selectedIndex == 2,
@@ -577,10 +574,9 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
     );
   }
 
-  
-
-  /// Build current page based on selected index
-  Widget _buildCurrentPage() {
+  /// Reliable page switcher
+  Widget _buildAnimatedPageSwitcher() {
+    print('Building page switcher with index: $_selectedIndex');
     switch (_selectedIndex) {
       case 0:
         return TipsListPage(
@@ -613,8 +609,8 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
     }
   }
 
-  /// Build clean and elegant navigation item
-  Widget _buildSimpleNavItem({
+  /// Reliable navigation item
+  Widget _buildLiquidNavItem({
     required IconData icon,
     required int index,
     required bool isSelected,
@@ -626,27 +622,18 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
         onTap: () => _onTabTapped(index),
         child: Container(
           margin: const EdgeInsets.all(8),
-          decoration: isSelected
-            ? BoxDecoration(
-                color: AppColors.accentDark,
-                borderRadius: BorderRadius.circular(20),
-              )
-            : BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(20),
-              ),
-          child: Container(
-            height: 49,
-            child: Center(
-              child: Icon(
-                icon,
-                size: 26,
-                color: isSelected
-                  ? Colors.white
-                  : (isDark 
-                      ? AppColors.textDarkSecondary
-                      : AppColors.textSecondary),
-              ),
+          decoration: BoxDecoration(
+            color: isSelected ? AppColors.accentDark : Colors.transparent,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          height: 49,
+          child: Center(
+            child: Icon(
+              icon,
+              size: 26,
+              color: isSelected
+                ? Colors.white
+                : (isDark ? AppColors.textDarkSecondary : AppColors.textSecondary),
             ),
           ),
         ),
@@ -836,11 +823,11 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
   /// Navigate to settings page - bulletproof approach
   void _navigateToSettings(BuildContext context) {
     try {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const SettingsPage(),
-        ),
-      );
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const SettingsPage(),
+      ),
+    );
     } catch (e) {
       // If navigation fails, show a simple dialog instead
       showDialog(

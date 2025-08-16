@@ -11,7 +11,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  double _fontSize = 16.0;
   bool _notificationsEnabled = true;
   
   @override
@@ -29,16 +28,6 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          // Appearance Section
-          _buildSectionHeader('Appearance'),
-          const SizedBox(height: 8),
-          
-          _buildThemeCard(),
-          const SizedBox(height: 16),
-          
-          _buildFontSizeCard(),
-          const SizedBox(height: 24),
-          
           // Preferences Section
           _buildSectionHeader('Preferences'),
           const SizedBox(height: 8),
@@ -74,219 +63,9 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
   
-  Widget _buildThemeCard() {
-    return Consumer<SettingsViewModel>(
-      builder: (context, settingsViewModel, _) {
-        return Card(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    const Icon(Icons.palette, color: Colors.blue),
-                    const SizedBox(width: 12),
-                    const Text(
-                      'Theme Mode',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-                
-                const SizedBox(height: 12),
-                
-                _buildThemeOption(
-                  icon: Icons.light_mode,
-                  title: 'Light',
-                  themeMode: ThemeMode.light,
-                  currentTheme: settingsViewModel.themeMode,
-                  onTap: () => _smoothThemeChange(settingsViewModel, ThemeMode.light),
-                ),
-                
-                _buildThemeOption(
-                  icon: Icons.dark_mode,
-                  title: 'Dark',
-                  themeMode: ThemeMode.dark,
-                  currentTheme: settingsViewModel.themeMode,
-                  onTap: () => _smoothThemeChange(settingsViewModel, ThemeMode.dark),
-                ),
-                
-                _buildThemeOption(
-                  icon: Icons.brightness_auto,
-                  title: 'System',
-                  themeMode: ThemeMode.system,
-                  currentTheme: settingsViewModel.themeMode,
-                  onTap: () => _smoothThemeChange(settingsViewModel, ThemeMode.system),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
+
   
-  Widget _buildThemeOption({
-    required IconData icon,
-    required String title,
-    required ThemeMode themeMode,
-    required ThemeMode currentTheme,
-    required VoidCallback onTap,
-  }) {
-    final isSelected = currentTheme == themeMode;
-    
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
-      curve: Curves.easeInOut,
-      margin: const EdgeInsets.symmetric(vertical: 2),
-      decoration: BoxDecoration(
-        color: isSelected ? Colors.blue.withOpacity(0.1) : Colors.transparent,
-        borderRadius: BorderRadius.circular(12),
-        border: isSelected 
-          ? Border.all(color: Colors.blue.withOpacity(0.3), width: 1)
-          : null,
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            child: Row(
-              children: [
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  child: Icon(
-                    icon,
-                    color: isSelected ? Colors.blue : Colors.grey,
-                    size: 20,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                      color: isSelected ? Colors.blue : Colors.black87,
-                    ),
-                  ),
-                ),
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  width: 20,
-                  height: 20,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: isSelected ? Colors.blue : Colors.transparent,
-                    border: Border.all(
-                      color: isSelected ? Colors.blue : Colors.grey,
-                      width: 2,
-                    ),
-                  ),
-                  child: isSelected
-                    ? const Icon(
-                        Icons.check,
-                        size: 14,
-                        color: Colors.white,
-                      )
-                    : null,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-  
-  void _smoothThemeChange(SettingsViewModel settingsViewModel, ThemeMode newTheme) {
-    // Use Future.microtask to ensure smooth UI update
-    Future.microtask(() {
-      settingsViewModel.setThemeMode(newTheme);
-    });
-    
-    // Show feedback without blocking the UI
-    _showSnackbar('${_getThemeName(newTheme)} theme selected');
-  }
-  
-  String _getThemeName(ThemeMode themeMode) {
-    switch (themeMode) {
-      case ThemeMode.light:
-        return 'Light';
-      case ThemeMode.dark:
-        return 'Dark';
-      case ThemeMode.system:
-        return 'System';
-    }
-  }
-  
-  Widget _buildFontSizeCard() {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                const Icon(Icons.text_fields, color: Colors.blue),
-                const SizedBox(width: 12),
-                const Text(
-                  'Font Size',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-            
-            const SizedBox(height: 16),
-            
-            Text(
-              'Current: ${_fontSize.round()}px',
-              style: const TextStyle(
-                color: Colors.grey,
-                fontSize: 14,
-              ),
-            ),
-            
-            const SizedBox(height: 12),
-            
-            Slider(
-              value: _fontSize,
-              min: 12.0,
-              max: 24.0,
-              divisions: 12,
-              label: '${_fontSize.round()}px',
-              onChanged: (value) {
-                setState(() {
-                  _fontSize = value;
-                });
-              },
-            ),
-            
-            const SizedBox(height: 8),
-            
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Small', style: TextStyle(fontSize: 12)),
-                Text('Large', style: TextStyle(fontSize: 12)),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+
   
   Widget _buildPreferencesCard() {
     return Card(
@@ -475,7 +254,6 @@ class _SettingsPageState extends State<SettingsPage> {
               final settingsViewModel = context.read<SettingsViewModel>();
               await settingsViewModel.resetSettings();
               setState(() {
-                _fontSize = 16.0;
                 _notificationsEnabled = true;
               });
               _showSnackbar('Settings reset successfully');
