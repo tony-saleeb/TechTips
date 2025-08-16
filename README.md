@@ -1,5 +1,10 @@
 # TechShortcuts - OS Tips & Tricks App
 
+[![Flutter](https://img.shields.io/badge/Flutter-3.16.0-blue?style=flat-square&logo=flutter)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.0-blue?style=flat-square&logo=dart)](https://dart.dev)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Web-lightgrey?style=flat-square)](https://flutter.dev/docs/deployment)
+
 A beautiful, modern Flutter application that helps users master keyboard shortcuts and productivity tips across Windows, macOS, and Linux operating systems.
 
 ## ✨ Features
@@ -52,7 +57,9 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+The MIT License is a permissive license that allows others to use, modify, and distribute your code with very few restrictions. It's one of the most popular open-source licenses.
 
 ---
 
