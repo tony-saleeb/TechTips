@@ -110,10 +110,10 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
     return Drawer(
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             colors: isDark
                 ? [
                     AppColors.backgroundDark,
@@ -530,7 +530,7 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
     return Container(
       height: 65,
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-      decoration: BoxDecoration(
+                        decoration: BoxDecoration(
         color: isDark 
           ? AppColors.backgroundDark.withValues(alpha: 0.95)
           : Colors.white.withValues(alpha: 0.95),
@@ -539,21 +539,21 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
           color: isDark
             ? Colors.white.withValues(alpha: 0.1)
             : Colors.black.withValues(alpha: 0.06),
-          width: 1,
-        ),
-        boxShadow: [
-          BoxShadow(
+                                width: 1,
+                              ),
+                          boxShadow: [
+                            BoxShadow(
             color: isDark
-              ? Colors.black.withValues(alpha: 0.3)
+                                    ? Colors.black.withValues(alpha: 0.3)
               : Colors.black.withValues(alpha: 0.08),
             blurRadius: 16,
             offset: const Offset(0, 8),
             spreadRadius: -2,
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
           _buildLiquidNavItem(
             icon: Icons.window,
             index: 0,
@@ -568,9 +568,9 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
             icon: Icons.computer,
             index: 2,
             isSelected: _selectedIndex == 2,
-          ),
-        ],
-      ),
+                            ),
+                          ],
+                        ),
     );
   }
 
