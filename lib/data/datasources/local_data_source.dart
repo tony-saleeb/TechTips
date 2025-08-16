@@ -11,16 +11,32 @@ class LocalDataSource {
   /// Load tips from local JSON asset
   Future<List<TipModel>> loadTipsFromAsset() async {
     try {
+      print('🔍 DataSource: Loading tips from asset: $_tipsAssetPath');
       final String jsonString = await rootBundle.loadString(_tipsAssetPath);
+      print('🔍 DataSource: JSON string length: ${jsonString.length}');
+      
       final Map<String, dynamic> jsonData = json.decode(jsonString);
+      print('🔍 DataSource: JSON parsed successfully');
       
       if (jsonData['tips'] == null) {
+        print('❌ DataSource: No tips found in JSON data');
         throw Exception('No tips found in JSON data');
       }
       
       final List<dynamic> tipsJson = jsonData['tips'];
-      return tipsJson.map((json) => TipModel.fromJson(json)).toList();
+      print('🔍 DataSource: Found ${tipsJson.length} tips in JSON');
+      
+      final tips = tipsJson.map((json) => TipModel.fromJson(json)).toList();
+      print('🔍 DataSource: Successfully parsed ${tips.length} tip models');
+      
+      // Print first few tips for debugging
+      for (int i = 0; i < tips.take(3).length; i++) {
+        print('🔍 DataSource: Tip ${i + 1}: ${tips[i].title} (${tips[i].os})');
+      }
+      
+      return tips;
     } catch (e) {
+      print('❌ DataSource: Failed to load tips from asset: $e');
       throw Exception('Failed to load tips from asset: $e');
     }
   }

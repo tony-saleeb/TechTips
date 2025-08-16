@@ -314,9 +314,9 @@ class _TipsListPageState extends State<TipsListPage>
                 AppColors.accentDark.withValues(alpha: 0.85),
               ]
             : [
-                AppColors.accent.withValues(alpha: 0.9),
-                const Color(0xFFFFB020).withValues(alpha: 0.8),
-                AppColors.accent.withValues(alpha: 0.85),
+                AppColors.getOSColor(widget.os),
+                AppColors.getOSColor(widget.os).withValues(alpha: 0.8),
+                AppColors.getOSColor(widget.os).withValues(alpha: 0.9),
               ],
           stops: const [0.0, 0.5, 1.0],
         ),
@@ -324,21 +324,21 @@ class _TipsListPageState extends State<TipsListPage>
         border: Border.all(
           color: isDark 
             ? Colors.white.withValues(alpha: 0.1)
-            : Colors.white.withValues(alpha: 0.3),
-          width: 1,
+            : Colors.white.withValues(alpha: 0.4),
+          width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: (isDark ? AppColors.accentDark : AppColors.accent).withValues(alpha: 0.3),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-            spreadRadius: 0,
+            color: (isDark ? AppColors.accentDark : AppColors.getOSColor(widget.os)).withValues(alpha: 0.4),
+            blurRadius: 15,
+            offset: const Offset(0, 6),
+            spreadRadius: 2,
           ),
           BoxShadow(
-            color: (isDark ? AppColors.accentDark : AppColors.accent).withValues(alpha: 0.1),
-            blurRadius: 24,
-            offset: const Offset(0, 8),
-            spreadRadius: -4,
+            color: (isDark ? AppColors.accentDark : AppColors.getOSColor(widget.os)).withValues(alpha: 0.15),
+            blurRadius: 30,
+            offset: const Offset(0, 12),
+            spreadRadius: -6,
           ),
         ],
       ),

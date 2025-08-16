@@ -12,7 +12,13 @@ class TipRepositoryImpl implements TipRepository {
   
   /// Load and cache tips if not already loaded
   Future<List<TipModel>> _getTips() async {
-    _cachedTips ??= await _localDataSource.loadTipsFromAsset();
+    print('🔍 Repository: _getTips called, cached tips: ${_cachedTips?.length ?? 0}');
+    if (_cachedTips == null) {
+      print('🔍 Repository: Loading tips from asset (cache miss)');
+      _cachedTips = await _localDataSource.loadTipsFromAsset();
+    } else {
+      print('🔍 Repository: Using cached tips');
+    }
     return _cachedTips!;
   }
   
@@ -29,12 +35,25 @@ class TipRepositoryImpl implements TipRepository {
   @override
   Future<List<TipEntity>> getTipsByOS(String os) async {
     try {
+      print('🔍 Repository: Getting tips for OS: $os');
+      
+      // Clear cache to ensure fresh data
+      print('🔍 Repository: Clearing cache for fresh data...');
+      _cachedTips = null;
+      
       final tips = await _getTips();
+      print('🔍 Repository: Total tips loaded: ${tips.length}');
+      
       final filteredTips = tips
           .where((tip) => tip.os.toLowerCase() == os.toLowerCase())
           .toList();
+      
+      print('🔍 Repository: Filtered tips for $os: ${filteredTips.length}');
+      print('🔍 Repository: Available OS types: ${tips.map((t) => t.os).toSet()}');
+      
       return filteredTips.map((tip) => tip.toEntity()).toList();
     } catch (e) {
+      print('❌ Repository: Error getting tips for $os: $e');
       throw Exception('Failed to get tips for $os: $e');
     }
   }
@@ -153,11 +172,14 @@ class TipRepositoryImpl implements TipRepository {
   @override
   Future<void> refreshTips() async {
     try {
+      print('🔍 Repository: Refreshing tips - clearing cache');
       // Clear cache to force reload from asset
       _cachedTips = null;
       // Preload tips
       await _getTips();
+      print('🔍 Repository: Tips refreshed successfully');
     } catch (e) {
+      print('❌ Repository: Failed to refresh tips: $e');
       throw Exception('Failed to refresh tips: $e');
     }
   }

@@ -86,6 +86,261 @@
     },
     {
       "id": 6,
+      "os": "windows",
+      "title": "Task Manager Shortcut",
+      "description": "Quickly access Task Manager to monitor system performance and end processes.",
+      "steps": [
+        "Press Ctrl + Shift + Esc",
+        "Task Manager opens directly to the Processes tab",
+        "Use Ctrl + Alt + Delete and select Task Manager as alternative",
+        "Right-click taskbar and select 'Task Manager'"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["task manager", "performance", "system"],
+      "created_at": "2024-01-15T11:15:00Z",
+      "updated_at": "2024-01-15T11:15:00Z"
+    },
+    {
+      "id": 7,
+      "os": "windows",
+      "title": "Lock Computer Instantly",
+      "description": "Quickly lock your computer to protect your privacy when stepping away.",
+      "steps": [
+        "Press Windows + L",
+        "Your computer locks immediately",
+        "Enter your password to unlock",
+        "Use Ctrl + Alt + Delete and select 'Lock' as alternative"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["security", "lock", "privacy"],
+      "created_at": "2024-01-15T11:30:00Z",
+      "updated_at": "2024-01-15T11:30:00Z"
+    },
+    {
+      "id": 8,
+      "os": "windows",
+      "title": "Quick Access to Settings",
+      "description": "Open Windows Settings quickly using keyboard shortcuts.",
+      "steps": [
+        "Press Windows + I",
+        "Settings app opens directly",
+        "Use Windows + X and select 'Settings' as alternative",
+        "Right-click Start button and select 'Settings'"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["settings", "system", "configuration"],
+      "created_at": "2024-01-15T11:45:00Z",
+      "updated_at": "2024-01-15T11:45:00Z"
+    },
+    {
+      "id": 9,
+      "os": "windows",
+      "title": "Clipboard History",
+      "description": "Access your clipboard history to paste previously copied items.",
+      "steps": [
+        "Press Windows + V",
+        "Clipboard history panel opens",
+        "Click on any item to paste it",
+        "Pin frequently used items for quick access"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["clipboard", "copy", "paste", "history"],
+      "created_at": "2024-01-15T12:00:00Z",
+      "updated_at": "2024-01-15T12:00:00Z"
+    },
+    {
+      "id": 10,
+      "os": "windows",
+      "title": "Quick Calculator Access",
+      "description": "Open Calculator instantly using the Start menu search.",
+      "steps": [
+        "Press Windows key",
+        "Type 'calc' or 'calculator'",
+        "Press Enter to open Calculator",
+        "Use Windows + R, type 'calc', press Enter"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["calculator", "tools", "utilities"],
+      "created_at": "2024-01-15T12:15:00Z",
+      "updated_at": "2024-01-15T12:15:00Z"
+    },
+    {
+      "id": 11,
+      "os": "windows",
+      "title": "Focus Assist",
+      "description": "Enable Focus Assist to minimize distractions from notifications.",
+      "steps": [
+        "Press Windows + A to open Action Center",
+        "Click on 'Focus assist' tile",
+        "Choose from Off, Priority only, or Alarms only",
+        "Set automatic rules in Settings > System > Focus assist"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["focus", "notifications", "productivity"],
+      "created_at": "2024-01-15T12:30:00Z",
+      "updated_at": "2024-01-15T12:30:00Z"
+    },
+    {
+      "id": 12,
+      "os": "windows",
+      "title": "Quick Volume Control",
+      "description": "Adjust system volume quickly using keyboard shortcuts.",
+      "steps": [
+        "Press Fn + F1/F2 to adjust volume (laptop)",
+        "Use volume buttons on keyboard if available",
+        "Press Windows + Volume Up/Down for quick access",
+        "Right-click speaker icon for more options"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["volume", "audio", "sound"],
+      "created_at": "2024-01-15T12:45:00Z",
+      "updated_at": "2024-01-15T12:45:00Z"
+    },
+    {
+      "id": 13,
+      "os": "windows",
+      "title": "Night Light",
+      "description": "Enable Night Light to reduce blue light emission for better sleep.",
+      "steps": [
+        "Press Windows + A to open Action Center",
+        "Click on 'Night light' tile",
+        "Or go to Settings > System > Display > Night light",
+        "Set schedule for automatic activation"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["night light", "blue light", "eye care"],
+      "created_at": "2024-01-15T13:00:00Z",
+      "updated_at": "2024-01-15T13:00:00Z"
+    },
+    {
+      "id": 14,
+      "os": "windows",
+      "title": "Quick Note Taking",
+      "description": "Open Sticky Notes quickly for instant note taking.",
+      "steps": [
+        "Press Windows key",
+        "Type 'sticky' or 'notes'",
+        "Press Enter to open Sticky Notes",
+        "Use Windows + S to search if needed"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["notes", "sticky notes", "note taking"],
+      "created_at": "2024-01-15T13:15:00Z",
+      "updated_at": "2024-01-15T13:15:00Z"
+    },
+    {
+      "id": 15,
+      "os": "windows",
+      "title": "Quick File Explorer",
+      "description": "Open File Explorer instantly using keyboard shortcuts.",
+      "steps": [
+        "Press Windows + E",
+        "File Explorer opens to Quick access",
+        "Use Windows + R, type 'explorer', press Enter",
+        "Right-click Start button and select 'File Explorer'"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["file explorer", "files", "folders"],
+      "created_at": "2024-01-15T13:30:00Z",
+      "updated_at": "2024-01-15T13:30:00Z"
+    },
+    {
+      "id": 16,
+      "os": "windows",
+      "title": "Quick Run Dialog",
+      "description": "Open Run dialog to execute commands quickly.",
+      "steps": [
+        "Press Windows + R",
+        "Type the command or program name",
+        "Press Enter to execute",
+        "Use Tab to autocomplete commands"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["run", "commands", "execution"],
+      "created_at": "2024-01-15T13:45:00Z",
+      "updated_at": "2024-01-15T13:45:00Z"
+    },
+    {
+      "id": 17,
+      "os": "windows",
+      "title": "Quick System Properties",
+      "description": "Access System Properties quickly for system information and settings.",
+      "steps": [
+        "Press Windows + Pause/Break",
+        "System Properties opens directly",
+        "Use Windows + R, type 'sysdm.cpl', press Enter",
+        "Right-click This PC and select 'Properties'"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["system", "properties", "information"],
+      "created_at": "2024-01-15T14:00:00Z",
+      "updated_at": "2024-01-15T14:00:00Z"
+    },
+    {
+      "id": 18,
+      "os": "windows",
+      "title": "Quick Network Settings",
+      "description": "Open Network & Internet settings quickly.",
+      "steps": [
+        "Press Windows + A to open Action Center",
+        "Click on network tile",
+        "Select 'Network & Internet settings'",
+        "Or go to Settings > Network & Internet"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["network", "internet", "wifi"],
+      "created_at": "2024-01-15T14:15:00Z",
+      "updated_at": "2024-01-15T14:15:00Z"
+    },
+    {
+      "id": 19,
+      "os": "windows",
+      "title": "Quick Bluetooth Settings",
+      "description": "Access Bluetooth settings quickly for device management.",
+      "steps": [
+        "Press Windows + A to open Action Center",
+        "Click on Bluetooth tile to toggle",
+        "Click 'Bluetooth settings' for more options",
+        "Or go to Settings > Devices > Bluetooth"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["bluetooth", "devices", "connectivity"],
+      "created_at": "2024-01-15T14:30:00Z",
+      "updated_at": "2024-01-15T14:30:00Z"
+    },
+    {
+      "id": 20,
+      "os": "windows",
+      "title": "Quick Battery Settings",
+      "description": "Access battery and power settings quickly.",
+      "steps": [
+        "Click battery icon in taskbar",
+        "Select 'Battery settings'",
+        "Or go to Settings > System > Power & sleep",
+        "Adjust power plan and battery saver settings"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["battery", "power", "energy"],
+      "created_at": "2024-01-15T14:45:00Z",
+      "updated_at": "2024-01-15T14:45:00Z"
+    },
+    {
+      "id": 21,
       "os": "macos",
       "title": "Spotlight Search",
       "description": "Quickly search for files, applications, and information on your Mac.",
@@ -98,249 +353,1351 @@
       "media": null,
       "media_type": null,
       "tags": ["search", "spotlight", "productivity"],
-      "created_at": "2024-01-15T11:15:00Z",
-      "updated_at": "2024-01-15T11:15:00Z"
+      "created_at": "2024-01-15T15:00:00Z",
+      "updated_at": "2024-01-15T15:00:00Z"
     },
     {
-      "id": 7,
+      "id": 22,
       "os": "macos",
       "title": "Mission Control",
-      "description": "View all open windows and desktops at once for easy navigation.",
+      "description": "Manage multiple desktops and applications with Mission Control.",
       "steps": [
-        "Press F3 or swipe up with four fingers",
-        "View all open windows and spaces",
-        "Click on a window to switch to it",
-        "Drag windows between spaces"
+        "Press F3 or swipe up with three fingers",
+        "Click '+' to create new desktop",
+        "Drag windows between desktops",
+        "Use Cmd + Tab to switch between apps"
       ],
       "media": null,
       "media_type": null,
-      "tags": ["mission control", "windows", "spaces"],
-      "created_at": "2024-01-15T11:30:00Z",
-      "updated_at": "2024-01-15T11:30:00Z"
+      "tags": ["mission control", "desktop", "multitasking"],
+      "created_at": "2024-01-15T15:15:00Z",
+      "updated_at": "2024-01-15T15:15:00Z"
     },
     {
-      "id": 8,
+      "id": 23,
       "os": "macos",
       "title": "Quick Screenshot",
-      "description": "Take various types of screenshots using keyboard shortcuts.",
+      "description": "Take screenshots quickly using built-in macOS tools.",
       "steps": [
-        "Cmd + Shift + 3: Full screen screenshot",
-        "Cmd + Shift + 4: Select area to capture",
-        "Cmd + Shift + 4, then Space: Capture specific window",
-        "Add Ctrl to copy to clipboard instead of saving"
+        "Press Cmd + Shift + 3 for full screen",
+        "Press Cmd + Shift + 4 for selection",
+        "Press Cmd + Shift + 5 for screenshot menu",
+        "Screenshots save to Desktop by default"
       ],
       "media": null,
       "media_type": null,
-      "tags": ["screenshot", "capture", "keyboard shortcuts"],
-      "created_at": "2024-01-15T11:45:00Z",
-      "updated_at": "2024-01-15T11:45:00Z"
+      "tags": ["screenshot", "capture", "screen"],
+      "created_at": "2024-01-15T15:30:00Z",
+      "updated_at": "2024-01-15T15:30:00Z"
     },
     {
-      "id": 9,
+      "id": 24,
       "os": "macos",
-      "title": "Force Quit Applications",
-      "description": "Quickly force quit unresponsive applications.",
-      "steps": [
-        "Press Cmd + Option + Esc",
-        "Select the unresponsive application",
-        "Click 'Force Quit'",
-        "Alternatively, press Cmd + Option + Shift + Esc to force quit the front app"
-      ],
-      "media": null,
-      "media_type": null,
-      "tags": ["force quit", "applications", "troubleshooting"],
-      "created_at": "2024-01-15T12:00:00Z",
-      "updated_at": "2024-01-15T12:00:00Z"
-    },
-    {
-      "id": 10,
-      "os": "macos",
-      "title": "Split View",
-      "description": "Use Split View to work with two apps side by side.",
-      "steps": [
-        "Hold the green maximize button on a window",
-        "Choose 'Tile Window to Left of Screen' or 'Tile Window to Right of Screen'",
-        "Click another window to fill the other side",
-        "Drag the divider to resize windows"
-      ],
-      "media": null,
-      "media_type": null,
-      "tags": ["split view", "multitasking", "window management"],
-      "created_at": "2024-01-15T12:15:00Z",
-      "updated_at": "2024-01-15T12:15:00Z"
-    },
-    {
-      "id": 11,
-      "os": "linux",
-      "title": "Terminal Shortcuts",
-      "description": "Essential keyboard shortcuts to boost your terminal productivity.",
-      "steps": [
-        "Ctrl + C: Cancel current command",
-        "Ctrl + Z: Suspend current process",
-        "Ctrl + A: Move cursor to beginning of line",
-        "Ctrl + E: Move cursor to end of line",
-        "Ctrl + R: Search command history"
-      ],
-      "media": null,
-      "media_type": null,
-      "tags": ["terminal", "keyboard shortcuts", "command line"],
-      "created_at": "2024-01-15T12:30:00Z",
-      "updated_at": "2024-01-15T12:30:00Z"
-    },
-    {
-      "id": 12,
-      "os": "linux",
-      "title": "File Permissions Quick Change",
-      "description": "Quickly change file permissions using chmod command.",
-      "steps": [
-        "Open terminal",
-        "Use 'chmod 755 filename' for executable files",
-        "Use 'chmod 644 filename' for regular files",
-        "Use 'chmod -R 755 directory' for directories recursively"
-      ],
-      "media": null,
-      "media_type": null,
-      "tags": ["chmod", "permissions", "files"],
-      "created_at": "2024-01-15T12:45:00Z",
-      "updated_at": "2024-01-15T12:45:00Z"
-    },
-    {
-      "id": 13,
-      "os": "linux",
-      "title": "Process Management",
-      "description": "Monitor and manage running processes effectively.",
-      "steps": [
-        "Use 'ps aux' to list all running processes",
-        "Use 'top' or 'htop' for real-time process monitoring",
-        "Use 'kill PID' to terminate a process",
-        "Use 'killall process_name' to kill all instances of a process"
-      ],
-      "media": null,
-      "media_type": null,
-      "tags": ["processes", "system monitoring", "kill"],
-      "created_at": "2024-01-15T13:00:00Z",
-      "updated_at": "2024-01-15T13:00:00Z"
-    },
-    {
-      "id": 14,
-      "os": "linux",
-      "title": "Quick File Search with Find",
-      "description": "Use the find command to locate files and directories quickly.",
-      "steps": [
-        "Use 'find . -name \"filename\"' to search by name",
-        "Use 'find . -type f -name \"*.txt\"' to find all text files",
-        "Use 'find . -size +100M' to find files larger than 100MB",
-        "Use 'find . -mtime -7' to find files modified in last 7 days"
-      ],
-      "media": null,
-      "media_type": null,
-      "tags": ["find", "search", "files"],
-      "created_at": "2024-01-15T13:15:00Z",
-      "updated_at": "2024-01-15T13:15:00Z"
-    },
-    {
-      "id": 15,
-      "os": "linux",
-      "title": "Workspace Switching",
-      "description": "Efficiently switch between virtual workspaces in Linux desktop environments.",
-      "steps": [
-        "Use Ctrl + Alt + Arrow keys to switch workspaces",
-        "Use Ctrl + Alt + Shift + Arrow keys to move windows between workspaces",
-        "Use Super + Page Up/Down for workspace switching in GNOME",
-        "Right-click on desktop and select workspace options to configure"
-      ],
-      "media": null,
-      "media_type": null,
-      "tags": ["workspaces", "desktop", "multitasking"],
-      "created_at": "2024-01-15T13:30:00Z",
-      "updated_at": "2024-01-15T13:30:00Z"
-    },
-    {
-      "id": 16,
-      "os": "windows",
-      "title": "Windows Run Dialog",
-      "description": "Access system tools and applications quickly using the Run dialog.",
-      "steps": [
-        "Press Windows + R to open Run dialog",
-        "Type 'msconfig' for System Configuration",
-        "Type 'regedit' for Registry Editor",
-        "Type 'cmd' for Command Prompt",
-        "Type 'appwiz.cpl' for Programs and Features"
-      ],
-      "media": null,
-      "media_type": null,
-      "tags": ["run dialog", "system tools", "shortcuts"],
-      "created_at": "2024-01-15T13:45:00Z",
-      "updated_at": "2024-01-15T13:45:00Z"
-    },
-    {
-      "id": 17,
-      "os": "macos",
-      "title": "Quick Look Preview",
-      "description": "Preview files instantly without opening them in their default applications.",
+      "title": "Quick Look",
+      "description": "Preview files without opening them using Quick Look.",
       "steps": [
         "Select a file in Finder",
-        "Press Space bar to open Quick Look",
-        "Use arrow keys to navigate between files",
-        "Press Space again or Esc to close Quick Look"
+        "Press Spacebar",
+        "Preview appears instantly",
+        "Use arrow keys to navigate between files"
       ],
       "media": null,
       "media_type": null,
       "tags": ["quick look", "preview", "finder"],
-      "created_at": "2024-01-15T14:00:00Z",
-      "updated_at": "2024-01-15T14:00:00Z"
+      "created_at": "2024-01-15T15:45:00Z",
+      "updated_at": "2024-01-15T15:45:00Z"
     },
     {
-      "id": 18,
-      "os": "linux",
-      "title": "Package Management Shortcuts",
-      "description": "Essential package management commands for different Linux distributions.",
-      "steps": [
-        "Ubuntu/Debian: 'sudo apt update && sudo apt upgrade'",
-        "CentOS/RHEL: 'sudo yum update' or 'sudo dnf update'",
-        "Arch Linux: 'sudo pacman -Syu'",
-        "Use 'which package_name' to check if a package is installed"
-      ],
-      "media": null,
-      "media_type": null,
-      "tags": ["package management", "apt", "yum", "pacman"],
-      "created_at": "2024-01-15T14:15:00Z",
-      "updated_at": "2024-01-15T14:15:00Z"
-    },
-    {
-      "id": 19,
-      "os": "windows",
-      "title": "Task Manager Power Tips",
-      "description": "Advanced Task Manager features for system monitoring and troubleshooting.",
-      "steps": [
-        "Press Ctrl + Shift + Esc to open Task Manager directly",
-        "Click 'More details' for advanced view",
-        "Use 'Startup' tab to manage startup programs",
-        "Right-click on processes for additional options like 'Open file location'"
-      ],
-      "media": null,
-      "media_type": null,
-      "tags": ["task manager", "system monitoring", "performance"],
-      "created_at": "2024-01-15T14:30:00Z",
-      "updated_at": "2024-01-15T14:30:00Z"
-    },
-    {
-      "id": 20,
+      "id": 25,
       "os": "macos",
-      "title": "Dock Customization",
-      "description": "Customize your Dock for improved productivity and aesthetics.",
+      "title": "Split View",
+      "description": "Use two apps side by side in full screen for better productivity.",
       "steps": [
-        "Right-click on Dock divider and select 'Dock Preferences'",
-        "Adjust size and magnification settings",
-        "Choose position: Left, Bottom, or Right",
-        "Enable 'Automatically hide and show the Dock' for more screen space",
-        "Add folders to Dock by dragging them to the right side"
+        "Click and hold the green button on a window",
+        "Choose 'Tile Window to Left/Right'",
+        "Select the second app from Mission Control",
+        "Both apps run in full screen side by side"
       ],
       "media": null,
       "media_type": null,
-      "tags": ["dock", "customization", "productivity"],
-      "created_at": "2024-01-15T14:45:00Z",
-      "updated_at": "2024-01-15T14:45:00Z"
+      "tags": ["split view", "multitasking", "full screen"],
+      "created_at": "2024-01-15T16:00:00Z",
+      "updated_at": "2024-01-15T16:00:00Z"
+    },
+    {
+      "id": 26,
+      "os": "macos",
+      "title": "Hot Corners",
+      "description": "Set up hot corners to quickly access system functions.",
+      "steps": [
+        "Go to System Preferences > Mission Control",
+        "Click 'Hot Corners'",
+        "Choose actions for each corner",
+        "Move mouse to corner to trigger action"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["hot corners", "shortcuts", "accessibility"],
+      "created_at": "2024-01-15T16:15:00Z",
+      "updated_at": "2024-01-15T16:15:00Z"
+    },
+    {
+      "id": 27,
+      "os": "macos",
+      "title": "Force Quit Applications",
+      "description": "Force quit unresponsive applications quickly.",
+      "steps": [
+        "Press Cmd + Option + Esc",
+        "Select the unresponsive app",
+        "Click 'Force Quit'",
+        "Or use Cmd + Tab, hold Option, click 'X'"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["force quit", "applications", "troubleshooting"],
+      "created_at": "2024-01-15T16:30:00Z",
+      "updated_at": "2024-01-15T16:30:00Z"
+    },
+    {
+      "id": 28,
+      "os": "macos",
+      "title": "AirDrop",
+      "description": "Share files wirelessly between Mac and iOS devices.",
+      "steps": [
+        "Open Finder and click AirDrop",
+        "Ensure both devices have AirDrop enabled",
+        "Drag files to recipient's icon",
+        "Accept on receiving device"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["airdrop", "sharing", "wireless"],
+      "created_at": "2024-01-15T16:45:00Z",
+      "updated_at": "2024-01-15T16:45:00Z"
+    },
+    {
+      "id": 29,
+      "os": "macos",
+      "title": "Time Machine",
+      "description": "Set up automatic backups with Time Machine.",
+      "steps": [
+        "Connect external drive",
+        "Go to System Preferences > Time Machine",
+        "Click 'Select Backup Disk'",
+        "Choose your drive and enable backups"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["time machine", "backup", "recovery"],
+      "created_at": "2024-01-15T17:00:00Z",
+      "updated_at": "2024-01-15T17:00:00Z"
+    },
+    {
+      "id": 30,
+      "os": "macos",
+      "title": "Night Shift",
+      "description": "Reduce blue light emission for better sleep quality.",
+      "steps": [
+        "Go to System Preferences > Displays",
+        "Click 'Night Shift' tab",
+        "Set schedule and color temperature",
+        "Enable 'Turn on until tomorrow'"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["night shift", "blue light", "eye care"],
+      "created_at": "2024-01-15T17:15:00Z",
+      "updated_at": "2024-01-15T17:15:00Z"
+    },
+    {
+      "id": 31,
+      "os": "macos",
+      "title": "Focus Mode",
+      "description": "Minimize distractions by enabling Focus mode.",
+      "steps": [
+        "Click Control Center in menu bar",
+        "Click 'Focus'",
+        "Choose from Do Not Disturb, Work, Sleep, etc.",
+        "Set schedule and allowed notifications"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["focus", "notifications", "productivity"],
+      "created_at": "2024-01-15T17:30:00Z",
+      "updated_at": "2024-01-15T17:30:00Z"
+    },
+    {
+      "id": 32,
+      "os": "macos",
+      "title": "Quick Calculator",
+      "description": "Access Calculator quickly using Spotlight.",
+      "steps": [
+        "Press Cmd + Space",
+        "Type 'calculator'",
+        "Press Enter to open Calculator",
+        "Use Cmd + C to copy results"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["calculator", "tools", "utilities"],
+      "created_at": "2024-01-15T17:45:00Z",
+      "updated_at": "2024-01-15T17:45:00Z"
+    },
+    {
+      "id": 33,
+      "os": "macos",
+      "title": "Voice Memos",
+      "description": "Record audio notes quickly using Voice Memos app.",
+      "steps": [
+        "Open Voice Memos app",
+        "Click red record button",
+        "Speak your memo",
+        "Click stop and save with a name"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["voice memos", "recording", "notes"],
+      "created_at": "2024-01-15T18:00:00Z",
+      "updated_at": "2024-01-15T18:00:00Z"
+    },
+    {
+      "id": 34,
+      "os": "macos",
+      "title": "Safari Reader",
+      "description": "Read articles without distractions using Safari Reader.",
+      "steps": [
+        "Open article in Safari",
+        "Click Reader icon in address bar",
+        "Article displays in clean format",
+        "Adjust text size and background color"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["safari", "reader", "reading"],
+      "created_at": "2024-01-15T18:15:00Z",
+      "updated_at": "2024-01-15T18:15:00Z"
+    },
+    {
+      "id": 35,
+      "os": "macos",
+      "title": "Handoff",
+      "description": "Continue work seamlessly between Mac and iOS devices.",
+      "steps": [
+        "Ensure both devices signed into same iCloud",
+        "Enable Handoff in System Preferences",
+        "Start task on one device",
+        "Continue on other device using Handoff icon"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["handoff", "continuity", "icloud"],
+      "created_at": "2024-01-15T18:30:00Z",
+      "updated_at": "2024-01-15T18:30:00Z"
+    },
+    {
+      "id": 36,
+      "os": "macos",
+      "title": "Universal Clipboard",
+      "description": "Copy and paste between Mac and iOS devices.",
+      "steps": [
+        "Copy text/image on one device",
+        "Paste on other device with Cmd + V",
+        "Both devices must be signed into iCloud",
+        "Works with text, images, and files"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["clipboard", "copy", "paste", "universal"],
+      "created_at": "2024-01-15T18:45:00Z",
+      "updated_at": "2024-01-15T18:45:00Z"
+    },
+    {
+      "id": 37,
+      "os": "macos",
+      "title": "Quick Notes",
+      "description": "Create notes instantly using Quick Note feature.",
+      "steps": [
+        "Press Fn + Q or use Control Center",
+        "Quick Note appears as floating window",
+        "Type your note",
+        "Click 'Done' to save and close"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["quick notes", "notes", "productivity"],
+      "created_at": "2024-01-15T19:00:00Z",
+      "updated_at": "2024-01-15T19:00:00Z"
+    },
+    {
+      "id": 38,
+      "os": "macos",
+      "title": "Live Text",
+      "description": "Extract text from images and interact with it.",
+      "steps": [
+        "Open image with text in Photos or Safari",
+        "Click on text in image",
+        "Select, copy, or translate text",
+        "Works with phone numbers, addresses, etc."
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["live text", "ocr", "text recognition"],
+      "created_at": "2024-01-15T19:15:00Z",
+      "updated_at": "2024-01-15T19:15:00Z"
+    },
+    {
+      "id": 39,
+      "os": "macos",
+      "title": "Screen Time",
+      "description": "Monitor and manage your device usage with Screen Time.",
+      "steps": [
+        "Go to System Preferences > Screen Time",
+        "Click 'Turn On'",
+        "Set app limits and downtime",
+        "View usage reports and insights"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["screen time", "digital wellbeing", "usage"],
+      "created_at": "2024-01-15T19:30:00Z",
+      "updated_at": "2024-01-15T19:30:00Z"
+    },
+    {
+      "id": 40,
+      "os": "macos",
+      "title": "Find My",
+      "description": "Locate your Mac and other Apple devices if lost.",
+      "steps": [
+        "Open Find My app",
+        "Sign in with Apple ID",
+        "View all your devices on map",
+        "Use 'Play Sound' or 'Erase' options"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["find my", "location", "security"],
+      "created_at": "2024-01-15T19:45:00Z",
+      "updated_at": "2024-01-15T19:45:00Z"
+    },
+    {
+      "id": 41,
+      "os": "linux",
+      "title": "Package Management with apt",
+      "description": "Install and manage software packages using apt package manager.",
+      "steps": [
+        "Update package list: sudo apt update",
+        "Install package: sudo apt install package_name",
+        "Remove package: sudo apt remove package_name",
+        "Upgrade all packages: sudo apt upgrade"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["apt", "package management", "software"],
+      "created_at": "2024-01-15T20:00:00Z",
+      "updated_at": "2024-01-15T20:00:00Z"
+    },
+    {
+      "id": 42,
+      "os": "linux",
+      "title": "File Permissions",
+      "description": "Manage file and directory permissions using chmod command.",
+      "steps": [
+        "View permissions: ls -la filename",
+        "Change permissions: chmod 755 filename",
+        "Change owner: sudo chown user:group filename",
+        "Recursive change: chmod -R 755 directory"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["permissions", "chmod", "security"],
+      "created_at": "2024-01-15T20:15:00Z",
+      "updated_at": "2024-01-15T20:15:00Z"
+    },
+    {
+      "id": 43,
+      "os": "linux",
+      "title": "Process Management",
+      "description": "Monitor and manage running processes using command line tools.",
+      "steps": [
+        "View processes: ps aux",
+        "Kill process: kill process_id",
+        "Force kill: kill -9 process_id",
+        "Monitor in real-time: htop"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["processes", "ps", "kill", "htop"],
+      "created_at": "2024-01-15T20:30:00Z",
+      "updated_at": "2024-01-15T20:30:00Z"
+    },
+    {
+      "id": 44,
+      "os": "linux",
+      "title": "Network Configuration",
+      "description": "Configure network settings using command line tools.",
+      "steps": [
+        "View interfaces: ip addr show",
+        "Configure IP: sudo ip addr add 192.168.1.100/24 dev eth0",
+        "Set default gateway: sudo ip route add default via 192.168.1.1",
+        "Test connectivity: ping google.com"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["network", "ip", "configuration"],
+      "created_at": "2024-01-15T20:45:00Z",
+      "updated_at": "2024-01-15T20:45:00Z"
+    },
+    {
+      "id": 45,
+      "os": "linux",
+      "title": "SSH Remote Access",
+      "description": "Connect to remote Linux systems securely using SSH.",
+      "steps": [
+        "Connect: ssh username@remote_host",
+        "Generate key pair: ssh-keygen -t rsa",
+        "Copy key: ssh-copy-id username@remote_host",
+        "Use key authentication for security"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["ssh", "remote", "security"],
+      "created_at": "2024-01-15T21:00:00Z",
+      "updated_at": "2024-01-15T21:00:00Z"
+    },
+    {
+      "id": 46,
+      "os": "linux",
+      "title": "System Monitoring",
+      "description": "Monitor system resources using various command line tools.",
+      "steps": [
+        "CPU usage: top or htop",
+        "Memory usage: free -h",
+        "Disk usage: df -h",
+        "Load average: uptime"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["monitoring", "system", "resources"],
+      "created_at": "2024-01-15T21:15:00Z",
+      "updated_at": "2024-01-15T21:15:00Z"
+    },
+    {
+      "id": 47,
+      "os": "linux",
+      "title": "Text Processing",
+      "description": "Process and manipulate text files using command line tools.",
+      "steps": [
+        "View file: cat filename",
+        "Search text: grep 'pattern' filename",
+        "Replace text: sed 's/old/new/g' filename",
+        "Count lines: wc -l filename"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["text", "grep", "sed", "processing"],
+      "created_at": "2024-01-15T21:30:00Z",
+      "updated_at": "2024-01-15T21:30:00Z"
+    },
+    {
+      "id": 48,
+      "os": "linux",
+      "title": "Archive Management",
+      "description": "Create and extract compressed archives using tar and other tools.",
+      "steps": [
+        "Create archive: tar -czf archive.tar.gz directory",
+        "Extract archive: tar -xzf archive.tar.gz",
+        "List contents: tar -tzf archive.tar.gz",
+        "Compress with zip: zip -r archive.zip directory"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["archive", "tar", "compression"],
+      "created_at": "2024-01-15T21:45:00Z",
+      "updated_at": "2024-01-15T21:45:00Z"
+    },
+    {
+      "id": 49,
+      "os": "linux",
+      "title": "User Management",
+      "description": "Create and manage user accounts and groups.",
+      "steps": [
+        "Add user: sudo adduser username",
+        "Delete user: sudo deluser username",
+        "Add to group: sudo usermod -aG groupname username",
+        "Change password: passwd username"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["users", "groups", "management"],
+      "created_at": "2024-01-15T22:00:00Z",
+      "updated_at": "2024-01-15T22:00:00Z"
+    },
+    {
+      "id": 50,
+      "os": "linux",
+      "title": "Service Management",
+      "description": "Manage system services using systemctl command.",
+      "steps": [
+        "Start service: sudo systemctl start service_name",
+        "Stop service: sudo systemctl stop service_name",
+        "Enable service: sudo systemctl enable service_name",
+        "Check status: sudo systemctl status service_name"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["services", "systemctl", "systemd"],
+      "created_at": "2024-01-15T22:15:00Z",
+      "updated_at": "2024-01-15T22:15:00Z"
+    },
+    {
+      "id": 51,
+      "os": "windows",
+      "title": "Quick Access to Control Panel",
+      "description": "Access Control Panel quickly using keyboard shortcuts.",
+      "steps": [
+        "Press Windows + R",
+        "Type 'control' and press Enter",
+        "Or type 'control panel' in Start menu search",
+        "Use 'control' for direct access"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["control panel", "system", "settings"],
+      "created_at": "2024-01-15T22:30:00Z",
+      "updated_at": "2024-01-15T22:30:00Z"
+    },
+    {
+      "id": 52,
+      "os": "windows",
+      "title": "Quick Access to Device Manager",
+      "description": "Open Device Manager quickly for hardware management.",
+      "steps": [
+        "Press Windows + X",
+        "Select 'Device Manager'",
+        "Or press Windows + R, type 'devmgmt.msc'",
+        "Use for hardware troubleshooting"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["device manager", "hardware", "troubleshooting"],
+      "created_at": "2024-01-15T22:45:00Z",
+      "updated_at": "2024-01-15T22:45:00Z"
+    },
+    {
+      "id": 53,
+      "os": "windows",
+      "title": "Quick Access to Disk Management",
+      "description": "Open Disk Management for storage management.",
+      "steps": [
+        "Press Windows + X",
+        "Select 'Disk Management'",
+        "Or press Windows + R, type 'diskmgmt.msc'",
+        "Manage partitions and drives"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["disk management", "storage", "partitions"],
+      "created_at": "2024-01-15T23:00:00Z",
+      "updated_at": "2024-01-15T23:00:00Z"
+    },
+    {
+      "id": 54,
+      "os": "windows",
+      "title": "Quick Access to Services",
+      "description": "Open Services management console quickly.",
+      "steps": [
+        "Press Windows + R",
+        "Type 'services.msc' and press Enter",
+        "Or search 'services' in Start menu",
+        "Manage Windows services"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["services", "system", "management"],
+      "created_at": "2024-01-15T23:15:00Z",
+      "updated_at": "2024-01-15T23:15:00Z"
+    },
+    {
+      "id": 55,
+      "os": "windows",
+      "title": "Quick Access to Registry Editor",
+      "description": "Open Registry Editor for advanced system configuration.",
+      "steps": [
+        "Press Windows + R",
+        "Type 'regedit' and press Enter",
+        "Confirm UAC prompt if needed",
+        "Use with caution - backup first"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["registry", "system", "advanced"],
+      "created_at": "2024-01-15T23:30:00Z",
+      "updated_at": "2024-01-15T23:30:00Z"
+    },
+    {
+      "id": 56,
+      "os": "windows",
+      "title": "Quick Access to Group Policy",
+      "description": "Open Group Policy Editor for system policies.",
+      "steps": [
+        "Press Windows + R",
+        "Type 'gpedit.msc' and press Enter",
+        "Available in Pro/Enterprise editions",
+        "Configure system policies"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["group policy", "system", "policies"],
+      "created_at": "2024-01-15T23:45:00Z",
+      "updated_at": "2024-01-15T23:45:00Z"
+    },
+    {
+      "id": 57,
+      "os": "windows",
+      "title": "Quick Access to Event Viewer",
+      "description": "Open Event Viewer for system logs and troubleshooting.",
+      "steps": [
+        "Press Windows + X",
+        "Select 'Event Viewer'",
+        "Or press Windows + R, type 'eventvwr.msc'",
+        "View system logs and errors"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["event viewer", "logs", "troubleshooting"],
+      "created_at": "2024-01-16T00:00:00Z",
+      "updated_at": "2024-01-16T00:00:00Z"
+    },
+    {
+      "id": 58,
+      "os": "windows",
+      "title": "Quick Access to Performance Monitor",
+      "description": "Open Performance Monitor for system performance analysis.",
+      "steps": [
+        "Press Windows + R",
+        "Type 'perfmon' and press Enter",
+        "Or search 'performance monitor'",
+        "Monitor system performance"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["performance", "monitoring", "analysis"],
+      "created_at": "2024-01-16T00:15:00Z",
+      "updated_at": "2024-01-16T00:15:00Z"
+    },
+    {
+      "id": 59,
+      "os": "windows",
+      "title": "Quick Access to Resource Monitor",
+      "description": "Open Resource Monitor for detailed resource usage.",
+      "steps": [
+        "Press Windows + R",
+        "Type 'resmon' and press Enter",
+        "Or search 'resource monitor'",
+        "Monitor CPU, memory, disk, network"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["resource monitor", "performance", "usage"],
+      "created_at": "2024-01-16T00:30:00Z",
+      "updated_at": "2024-01-16T00:30:00Z"
+    },
+    {
+      "id": 60,
+      "os": "windows",
+      "title": "Quick Access to System Information",
+      "description": "Open System Information for detailed system specs.",
+      "steps": [
+        "Press Windows + R",
+        "Type 'msinfo32' and press Enter",
+        "Or search 'system information'",
+        "View detailed system specifications"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["system information", "specs", "hardware"],
+      "created_at": "2024-01-16T00:45:00Z",
+      "updated_at": "2024-01-16T00:45:00Z"
+    },
+    {
+      "id": 61,
+      "os": "macos",
+      "title": "Quick Access to System Preferences",
+      "description": "Open System Preferences quickly using Spotlight.",
+      "steps": [
+        "Press Cmd + Space",
+        "Type 'system preferences'",
+        "Press Enter to open",
+        "Or use Cmd + , in Finder"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["system preferences", "settings", "configuration"],
+      "created_at": "2024-01-16T01:00:00Z",
+      "updated_at": "2024-01-16T01:00:00Z"
+    },
+    {
+      "id": 62,
+      "os": "macos",
+      "title": "Quick Access to Activity Monitor",
+      "description": "Open Activity Monitor for process management.",
+      "steps": [
+        "Press Cmd + Space",
+        "Type 'activity monitor'",
+        "Press Enter to open",
+        "Monitor and manage processes"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["activity monitor", "processes", "performance"],
+      "created_at": "2024-01-16T01:15:00Z",
+      "updated_at": "2024-01-16T01:15:00Z"
+    },
+    {
+      "id": 63,
+      "os": "macos",
+      "title": "Quick Access to Disk Utility",
+      "description": "Open Disk Utility for storage management.",
+      "steps": [
+        "Press Cmd + Space",
+        "Type 'disk utility'",
+        "Press Enter to open",
+        "Manage disks and partitions"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["disk utility", "storage", "partitions"],
+      "created_at": "2024-01-16T01:30:00Z",
+      "updated_at": "2024-01-16T01:30:00Z"
+    },
+    {
+      "id": 64,
+      "os": "macos",
+      "title": "Quick Access to Console",
+      "description": "Open Console for system logs and debugging.",
+      "steps": [
+        "Press Cmd + Space",
+        "Type 'console'",
+        "Press Enter to open",
+        "View system logs and messages"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["console", "logs", "debugging"],
+      "created_at": "2024-01-16T01:45:00Z",
+      "updated_at": "2024-01-16T01:45:00Z"
+    },
+    {
+      "id": 65,
+      "os": "macos",
+      "title": "Quick Access to Terminal",
+      "description": "Open Terminal quickly using Spotlight.",
+      "steps": [
+        "Press Cmd + Space",
+        "Type 'terminal'",
+        "Press Enter to open",
+        "Access command line interface"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["terminal", "command line", "cli"],
+      "created_at": "2024-01-16T02:00:00Z",
+      "updated_at": "2024-01-16T02:00:00Z"
+    },
+    {
+      "id": 66,
+      "os": "macos",
+      "title": "Quick Access to Network Utility",
+      "description": "Open Network Utility for network diagnostics.",
+      "steps": [
+        "Press Cmd + Space",
+        "Type 'network utility'",
+        "Press Enter to open",
+        "Diagnose network issues"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["network utility", "diagnostics", "network"],
+      "created_at": "2024-01-16T02:15:00Z",
+      "updated_at": "2024-01-16T02:15:00Z"
+    },
+    {
+      "id": 67,
+      "os": "macos",
+      "title": "Quick Access to System Information",
+      "description": "Open System Information for detailed specs.",
+      "steps": [
+        "Press Cmd + Space",
+        "Type 'system information'",
+        "Press Enter to open",
+        "View detailed system specs"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["system information", "specs", "hardware"],
+      "created_at": "2024-01-16T02:30:00Z",
+      "updated_at": "2024-01-16T02:30:00Z"
+    },
+    {
+      "id": 68,
+      "os": "macos",
+      "title": "Quick Access to Migration Assistant",
+      "description": "Open Migration Assistant for data transfer.",
+      "steps": [
+        "Press Cmd + Space",
+        "Type 'migration assistant'",
+        "Press Enter to open",
+        "Transfer data from another Mac"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["migration assistant", "data transfer", "setup"],
+      "created_at": "2024-01-16T02:45:00Z",
+      "updated_at": "2024-01-16T02:45:00Z"
+    },
+    {
+      "id": 69,
+      "os": "macos",
+      "title": "Quick Access to Boot Camp Assistant",
+      "description": "Open Boot Camp Assistant for Windows installation.",
+      "steps": [
+        "Press Cmd + Space",
+        "Type 'boot camp assistant'",
+        "Press Enter to open",
+        "Install Windows on Mac"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["boot camp", "windows", "installation"],
+      "created_at": "2024-01-16T03:00:00Z",
+      "updated_at": "2024-01-16T03:00:00Z"
+    },
+    {
+      "id": 70,
+      "os": "macos",
+      "title": "Quick Access to Keychain Access",
+      "description": "Open Keychain Access for password management.",
+      "steps": [
+        "Press Cmd + Space",
+        "Type 'keychain access'",
+        "Press Enter to open",
+        "Manage passwords and certificates"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["keychain access", "passwords", "security"],
+      "created_at": "2024-01-16T03:15:00Z",
+      "updated_at": "2024-01-16T03:15:00Z"
+    },
+    {
+      "id": 71,
+      "os": "linux",
+      "title": "Quick Access to System Monitor",
+      "description": "Open System Monitor for process management.",
+      "steps": [
+        "Press Super key",
+        "Type 'system monitor'",
+        "Press Enter to open",
+        "Monitor and manage processes"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["system monitor", "processes", "performance"],
+      "created_at": "2024-01-16T03:30:00Z",
+      "updated_at": "2024-01-16T03:30:00Z"
+    },
+    {
+      "id": 72,
+      "os": "linux",
+      "title": "Quick Access to Disk Usage Analyzer",
+      "description": "Open Disk Usage Analyzer for storage analysis.",
+      "steps": [
+        "Press Super key",
+        "Type 'disk usage analyzer'",
+        "Press Enter to open",
+        "Analyze disk space usage"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["disk usage", "storage", "analysis"],
+      "created_at": "2024-01-16T03:45:00Z",
+      "updated_at": "2024-01-16T03:45:00Z"
+    },
+    {
+      "id": 73,
+      "os": "linux",
+      "title": "Quick Access to Log Viewer",
+      "description": "Open Log Viewer for system logs.",
+      "steps": [
+        "Press Super key",
+        "Type 'log viewer'",
+        "Press Enter to open",
+        "View system logs and messages"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["log viewer", "logs", "system"],
+      "created_at": "2024-01-16T04:00:00Z",
+      "updated_at": "2024-01-16T04:00:00Z"
+    },
+    {
+      "id": 74,
+      "os": "linux",
+      "title": "Quick Access to Software Center",
+      "description": "Open Software Center for application management.",
+      "steps": [
+        "Press Super key",
+        "Type 'software center'",
+        "Press Enter to open",
+        "Install and manage applications"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["software center", "applications", "management"],
+      "created_at": "2024-01-16T04:15:00Z",
+      "updated_at": "2024-01-16T04:15:00Z"
+    },
+    {
+      "id": 75,
+      "os": "linux",
+      "title": "Quick Access to Settings",
+      "description": "Open Settings for system configuration.",
+      "steps": [
+        "Press Super key",
+        "Type 'settings'",
+        "Press Enter to open",
+        "Configure system settings"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["settings", "configuration", "system"],
+      "created_at": "2024-01-16T04:30:00Z",
+      "updated_at": "2024-01-16T04:30:00Z"
+    },
+    {
+      "id": 76,
+      "os": "linux",
+      "title": "Quick Access to Terminal",
+      "description": "Open Terminal quickly using keyboard shortcut.",
+      "steps": [
+        "Press Ctrl + Alt + T",
+        "Terminal opens immediately",
+        "Or press Super key and type 'terminal'",
+        "Access command line interface"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["terminal", "command line", "cli"],
+      "created_at": "2024-01-16T04:45:00Z",
+      "updated_at": "2024-01-16T04:45:00Z"
+    },
+    {
+      "id": 77,
+      "os": "linux",
+      "title": "Quick Access to File Manager",
+      "description": "Open File Manager quickly using keyboard shortcut.",
+      "steps": [
+        "Press Super + E",
+        "File Manager opens immediately",
+        "Or press Super key and type 'files'",
+        "Browse and manage files"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["file manager", "files", "browsing"],
+      "created_at": "2024-01-16T05:00:00Z",
+      "updated_at": "2024-01-16T05:00:00Z"
+    },
+    {
+      "id": 78,
+      "os": "linux",
+      "title": "Quick Access to Application Menu",
+      "description": "Open Application Menu quickly using keyboard shortcut.",
+      "steps": [
+        "Press Super key",
+        "Application menu opens",
+        "Type to search applications",
+        "Press Enter to launch"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["application menu", "search", "launch"],
+      "created_at": "2024-01-16T05:15:00Z",
+      "updated_at": "2024-01-16T05:15:00Z"
+    },
+    {
+      "id": 79,
+      "os": "linux",
+      "title": "Quick Access to Workspace Switcher",
+      "description": "Switch between workspaces quickly.",
+      "steps": [
+        "Press Super + Page Up/Down",
+        "Switch between workspaces",
+        "Or use Ctrl + Alt + Arrow keys",
+        "Organize applications by workspace"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["workspace", "multitasking", "organization"],
+      "created_at": "2024-01-16T05:30:00Z",
+      "updated_at": "2024-01-16T05:30:00Z"
+    },
+    {
+      "id": 80,
+      "os": "linux",
+      "title": "Quick Access to System Monitor",
+      "description": "Open System Monitor for resource monitoring.",
+      "steps": [
+        "Press Super key",
+        "Type 'system monitor'",
+        "Press Enter to open",
+        "Monitor CPU, memory, network usage"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["system monitor", "resources", "monitoring"],
+      "created_at": "2024-01-16T05:45:00Z",
+      "updated_at": "2024-01-16T05:45:00Z"
+    },
+    {
+      "id": 81,
+      "os": "windows",
+      "title": "Quick Access to Windows Security",
+      "description": "Open Windows Security for antivirus and firewall settings.",
+      "steps": [
+        "Press Windows + I",
+        "Click on 'Privacy & security'",
+        "Click on 'Windows Security'",
+        "Or search 'windows security' in Start menu"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["windows security", "antivirus", "firewall"],
+      "created_at": "2024-01-16T06:00:00Z",
+      "updated_at": "2024-01-16T06:00:00Z"
+    },
+    {
+      "id": 82,
+      "os": "windows",
+      "title": "Quick Access to Windows Update",
+      "description": "Open Windows Update for system updates.",
+      "steps": [
+        "Press Windows + I",
+        "Click on 'Windows Update'",
+        "Check for updates",
+        "Install available updates"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["windows update", "updates", "system"],
+      "created_at": "2024-01-16T06:15:00Z",
+      "updated_at": "2024-01-16T06:15:00Z"
+    },
+    {
+      "id": 83,
+      "os": "windows",
+      "title": "Quick Access to Backup Settings",
+      "description": "Open Backup settings for file history and system restore.",
+      "steps": [
+        "Press Windows + I",
+        "Click on 'System'",
+        "Click on 'Backup'",
+        "Configure backup settings"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["backup", "file history", "system restore"],
+      "created_at": "2024-01-16T06:30:00Z",
+      "updated_at": "2024-01-16T06:30:00Z"
+    },
+    {
+      "id": 84,
+      "os": "windows",
+      "title": "Quick Access to Recovery Options",
+      "description": "Open Recovery options for system recovery.",
+      "steps": [
+        "Press Windows + I",
+        "Click on 'System'",
+        "Click on 'Recovery'",
+        "Access recovery options"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["recovery", "system restore", "reset"],
+      "created_at": "2024-01-16T06:45:00Z",
+      "updated_at": "2024-01-16T06:45:00Z"
+    },
+    {
+      "id": 85,
+      "os": "windows",
+      "title": "Quick Access to Developer Options",
+      "description": "Enable Developer options for advanced features.",
+      "steps": [
+        "Press Windows + I",
+        "Click on 'Privacy & security'",
+        "Click on 'For developers'",
+        "Enable developer mode"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["developer options", "development", "advanced"],
+      "created_at": "2024-01-16T07:00:00Z",
+      "updated_at": "2024-01-16T07:00:00Z"
+    },
+    {
+      "id": 86,
+      "os": "windows",
+      "title": "Quick Access to Gaming Settings",
+      "description": "Open Gaming settings for Xbox features.",
+      "steps": [
+        "Press Windows + I",
+        "Click on 'Gaming'",
+        "Configure Xbox features",
+        "Set up Game Bar and Game Mode"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["gaming", "xbox", "game bar"],
+      "created_at": "2024-01-16T07:15:00Z",
+      "updated_at": "2024-01-16T07:15:00Z"
+    },
+    {
+      "id": 87,
+      "os": "windows",
+      "title": "Quick Access to Accessibility Settings",
+      "description": "Open Accessibility settings for assistive features.",
+      "steps": [
+        "Press Windows + I",
+        "Click on 'Accessibility'",
+        "Configure assistive features",
+        "Set up screen readers and magnifiers"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["accessibility", "assistive", "features"],
+      "created_at": "2024-01-16T07:30:00Z",
+      "updated_at": "2024-01-16T07:30:00Z"
+    },
+    {
+      "id": 88,
+      "os": "windows",
+      "title": "Quick Access to Time & Language",
+      "description": "Open Time & Language settings for date, time, and language.",
+      "steps": [
+        "Press Windows + I",
+        "Click on 'Time & language'",
+        "Set date, time, and language",
+        "Configure regional settings"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["time", "language", "regional"],
+      "created_at": "2024-01-16T07:45:00Z",
+      "updated_at": "2024-01-16T07:45:00Z"
+    },
+    {
+      "id": 89,
+      "os": "windows",
+      "title": "Quick Access to Ease of Access",
+      "description": "Open Ease of Access settings for accessibility features.",
+      "steps": [
+        "Press Windows + U",
+        "Ease of Access opens directly",
+        "Configure accessibility features",
+        "Set up assistive technologies"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["ease of access", "accessibility", "assistive"],
+      "created_at": "2024-01-16T08:00:00Z",
+      "updated_at": "2024-01-16T08:00:00Z"
+    },
+    {
+      "id": 90,
+      "os": "windows",
+      "title": "Quick Access to Windows Mobility Center",
+      "description": "Open Windows Mobility Center for laptop settings.",
+      "steps": [
+        "Press Windows + X",
+        "Select 'Mobility Center'",
+        "Or press Windows + R, type 'mblctr'",
+        "Configure laptop-specific settings"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["mobility center", "laptop", "settings"],
+      "created_at": "2024-01-16T08:15:00Z",
+      "updated_at": "2024-01-16T08:15:00Z"
+    },
+    {
+      "id": 91,
+      "os": "macos",
+      "title": "Quick Access to Security & Privacy",
+      "description": "Open Security & Privacy settings for security configuration.",
+      "steps": [
+        "Open System Preferences",
+        "Click on 'Security & Privacy'",
+        "Configure security settings",
+        "Manage app permissions"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["security", "privacy", "permissions"],
+      "created_at": "2024-01-16T08:30:00Z",
+      "updated_at": "2024-01-16T08:30:00Z"
+    },
+    {
+      "id": 92,
+      "os": "macos",
+      "title": "Quick Access to Software Update",
+      "description": "Open Software Update for system updates.",
+      "steps": [
+        "Open System Preferences",
+        "Click on 'Software Update'",
+        "Check for updates",
+        "Install available updates"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["software update", "updates", "system"],
+      "created_at": "2024-01-16T08:45:00Z",
+      "updated_at": "2024-01-16T08:45:00Z"
+    },
+    {
+      "id": 93,
+      "os": "macos",
+      "title": "Quick Access to Users & Groups",
+      "description": "Open Users & Groups for user management.",
+      "steps": [
+        "Open System Preferences",
+        "Click on 'Users & Groups'",
+        "Manage user accounts",
+        "Configure login options"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["users", "groups", "accounts"],
+      "created_at": "2024-01-16T09:00:00Z",
+      "updated_at": "2024-01-16T09:00:00Z"
+    },
+    {
+      "id": 94,
+      "os": "macos",
+      "title": "Quick Access to Sharing",
+      "description": "Open Sharing settings for network sharing.",
+      "steps": [
+        "Open System Preferences",
+        "Click on 'Sharing'",
+        "Configure network sharing",
+        "Set up file and printer sharing"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["sharing", "network", "files"],
+      "created_at": "2024-01-16T09:15:00Z",
+      "updated_at": "2024-01-16T09:15:00Z"
+    },
+    {
+      "id": 95,
+      "os": "macos",
+      "title": "Quick Access to Energy Saver",
+      "description": "Open Energy Saver for power management.",
+      "steps": [
+        "Open System Preferences",
+        "Click on 'Energy Saver'",
+        "Configure power settings",
+        "Set sleep and wake schedules"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["energy saver", "power", "battery"],
+      "created_at": "2024-01-16T09:30:00Z",
+      "updated_at": "2024-01-16T09:30:00Z"
+    },
+    {
+      "id": 96,
+      "os": "macos",
+      "title": "Quick Access to Startup Disk",
+      "description": "Open Startup Disk for boot configuration.",
+      "steps": [
+        "Open System Preferences",
+        "Click on 'Startup Disk'",
+        "Select boot disk",
+        "Configure startup options"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["startup disk", "boot", "configuration"],
+      "created_at": "2024-01-16T09:45:00Z",
+      "updated_at": "2024-01-16T09:45:00Z"
+    },
+    {
+      "id": 97,
+      "os": "macos",
+      "title": "Quick Access to Date & Time",
+      "description": "Open Date & Time settings for time configuration.",
+      "steps": [
+        "Open System Preferences",
+        "Click on 'Date & Time'",
+        "Set date and time",
+        "Configure time zone"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["date", "time", "timezone"],
+      "created_at": "2024-01-16T10:00:00Z",
+      "updated_at": "2024-01-16T10:00:00Z"
+    },
+    {
+      "id": 98,
+      "os": "macos",
+      "title": "Quick Access to Language & Region",
+      "description": "Open Language & Region for language settings.",
+      "steps": [
+        "Open System Preferences",
+        "Click on 'Language & Region'",
+        "Set language preferences",
+        "Configure regional formats"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["language", "region", "localization"],
+      "created_at": "2024-01-16T10:15:00Z",
+      "updated_at": "2024-01-16T10:15:00Z"
+    },
+    {
+      "id": 99,
+      "os": "macos",
+      "title": "Quick Access to Accessibility",
+      "description": "Open Accessibility settings for assistive features.",
+      "steps": [
+        "Open System Preferences",
+        "Click on 'Accessibility'",
+        "Configure assistive features",
+        "Set up VoiceOver and other tools"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["accessibility", "assistive", "voiceover"],
+      "created_at": "2024-01-16T10:30:00Z",
+      "updated_at": "2024-01-16T10:30:00Z"
+    },
+    {
+      "id": 100,
+      "os": "macos",
+      "title": "Quick Access to Parental Controls",
+      "description": "Open Parental Controls for user restrictions.",
+      "steps": [
+        "Open System Preferences",
+        "Click on 'Parental Controls'",
+        "Configure user restrictions",
+        "Set up content filtering"
+      ],
+      "media": null,
+      "media_type": null,
+      "tags": ["parental controls", "restrictions", "filtering"],
+      "created_at": "2024-01-16T10:45:00Z",
+      "updated_at": "2024-01-16T10:45:00Z"
     }
   ]
 }

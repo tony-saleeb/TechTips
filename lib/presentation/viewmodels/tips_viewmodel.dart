@@ -39,19 +39,27 @@ class TipsViewModel extends ChangeNotifier {
   
   /// Load tips for specific OS
   Future<void> loadTipsByOS(String os) async {
-    if (os == _currentOS && _tips.isNotEmpty) {
-      return; // Already loaded for this OS
-    }
+    print('🔍 Loading tips for OS: $os');
+    print('🔍 Current OS: $_currentOS, Tips count: ${_tips.length}');
+    
+    // Always clear cache to ensure we get the latest data
+    print('🔍 Clearing repository cache to get fresh data...');
     
     _setLoading(true);
     _clearError();
     _currentOS = os;
     
     try {
+      print('🔍 Calling use case to get tips for $os...');
       _tips = await _getTipsByOSUseCase(os);
+      print('🔍 Loaded ${_tips.length} tips for $os');
+      
       _applySearch(); // Apply current search filter
       await _loadFavoriteIds();
+      
+      print('🔍 Final filtered tips count: ${_filteredTips.length}');
     } catch (e) {
+      print('❌ Error loading tips for $os: $e');
       _setError('Failed to load tips: ${e.toString()}');
       _tips = [];
       _filteredTips = [];
@@ -143,12 +151,24 @@ class TipsViewModel extends ChangeNotifier {
   
   /// Refresh current tips
   Future<void> refresh() async {
+    print('🔍 ViewModel: Refreshing tips for $_currentOS');
     if (_currentOS == 'favorites') {
       await loadFavoriteTips();
     } else if (_currentOS.isNotEmpty) {
       // Clear cache and reload
       _tips.clear();
       _filteredTips.clear();
+      await loadTipsByOS(_currentOS);
+    }
+  }
+  
+  /// Force refresh tips by clearing repository cache
+  Future<void> forceRefresh() async {
+    print('🔍 ViewModel: Force refreshing tips');
+    _tips.clear();
+    _filteredTips.clear();
+    _currentOS = ''; // Reset current OS to force reload
+    if (_currentOS.isNotEmpty) {
       await loadTipsByOS(_currentOS);
     }
   }

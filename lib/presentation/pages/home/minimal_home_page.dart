@@ -208,27 +208,10 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
                     ),
                     _buildDrawerItem(
                       context,
-                      icon: Icons.settings_outlined,
-                      title: 'Settings',
-                      subtitle: 'Customize your experience',
-                      onTap: () {
-                        Navigator.pop(context);
-                        _navigateToSettings(context);
-                      },
-                    ),
-                    _buildDrawerItem(
-                      context,
                       icon: Icons.palette_outlined,
                       title: 'Theme',
                       subtitle: isDark ? 'Dark mode' : 'Light mode',
                       onTap: () => _toggleTheme(context),
-                    ),
-                    _buildDrawerItem(
-                      context,
-                      icon: Icons.import_export_rounded,
-                      title: 'Export Tips',
-                      subtitle: 'Share your favorites',
-                      onTap: () => _exportFavorites(context),
                     ),
                     _buildDrawerItem(
                       context,
@@ -348,13 +331,13 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
   Widget _buildMenuButton(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     
-    return FloatingActionButton.small(
+    return FloatingActionButton(
       onPressed: () => Scaffold.of(context).openDrawer(),
       backgroundColor: isDark ? AppColors.surfaceDark : Colors.white,
       foregroundColor: isDark ? AppColors.textDarkPrimary : AppColors.textPrimary,
-      elevation: 2,
+      elevation: 4,
       heroTag: "drawer_button",
-      child: const Icon(Icons.menu_rounded, size: 20),
+      child: const Icon(Icons.menu_rounded, size: 24),
     );
   }
 
@@ -365,15 +348,15 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
     // Get search state from current page
     bool isSearchActive = _getCurrentPageSearchState();
     
-    return FloatingActionButton.small(
+    return FloatingActionButton(
       onPressed: _toggleSearch,
       backgroundColor: isDark ? AppColors.surfaceDark : Colors.white,
       foregroundColor: isDark ? AppColors.textDarkPrimary : AppColors.textPrimary,
-      elevation: 2,
+      elevation: 4,
       heroTag: "search_button",
       child: Icon(
         isSearchActive ? Icons.close_rounded : Icons.search_rounded,
-        size: 20,
+        size: 24,
       ),
     );
   }
