@@ -34,13 +34,34 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
   @override
   void initState() {
     super.initState();
+    
+    // Initialize tips cache for instant tab switching
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final tipsViewModel = context.read<TipsViewModel>();
+      if (!tipsViewModel.isInitialized) {
+        tipsViewModel.initializeTips();
+      }
+    });
   }
 
   void _onTabTapped(int index) {
     print('Tab tapped: $index, current: $_selectedIndex');
     if (index != _selectedIndex && index >= 0 && index < 3) {
+      // Haptic feedback for responsive feel
+      HapticFeedback.lightImpact();
+      
       setState(() => _selectedIndex = index);
       print('Changed to: $_selectedIndex');
+      
+      // Load tips for the new OS (will use cache if available)
+      final osNames = ['windows', 'macos', 'linux'];
+      final newOS = osNames[index];
+      final tipsViewModel = context.read<TipsViewModel>();
+      
+      // Only load if not already cached or if it's the first time
+      if (!tipsViewModel.hasCachedTips(newOS) || tipsViewModel.currentOS != newOS) {
+        tipsViewModel.loadTipsByOS(newOS);
+      }
     }
   }
 
@@ -557,9 +578,32 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
     );
   }
 
-  /// Reliable page switcher
+  /// Smooth page switcher with animations
   Widget _buildAnimatedPageSwitcher() {
     print('Building page switcher with index: $_selectedIndex');
+    
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 200), // Faster for responsive feel
+      transitionBuilder: (Widget child, Animation<double> animation) {
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0.05, 0.0), // Smaller slide for subtlety
+            end: Offset.zero,
+          ).animate(CurvedAnimation(
+            parent: animation,
+            curve: Curves.easeOutQuart, // More responsive curve
+          )),
+          child: FadeTransition(
+            opacity: animation,
+            child: child,
+                  ),
+                );
+              },
+      child: _buildCurrentPage(),
+    );
+  }
+  
+  Widget _buildCurrentPage() {
     switch (_selectedIndex) {
       case 0:
         return TipsListPage(

@@ -27,6 +27,10 @@ class TipsViewModel extends ChangeNotifier {
   String _currentOS = '';
   String _searchQuery = '';
   
+  // Cache for instant tab switching
+  Map<String, List<TipEntity>> _tipsCache = {};
+  bool _isInitialized = false;
+  
   // Getters
   List<TipEntity> get tips => _filteredTips;
   List<int> get favoriteIds => _favoriteIds;
@@ -37,27 +41,70 @@ class TipsViewModel extends ChangeNotifier {
   bool get hasError => _error != null;
   bool get isEmpty => _filteredTips.isEmpty && !_isLoading;
   
-  /// Load tips for specific OS
+  /// Initialize and preload all tips for instant switching
+  Future<void> initializeTips() async {
+    if (_isInitialized) return;
+    
+    print('🚀 Initializing tips cache for instant switching...');
+    _setLoading(true);
+    
+    try {
+      // Preload tips for all OS types
+      final allTips = await _getTipsByOSUseCase('windows');
+      final macosTips = await _getTipsByOSUseCase('macos');
+      final linuxTips = await _getTipsByOSUseCase('linux');
+      
+      // Cache tips by OS
+      _tipsCache['windows'] = allTips;
+      _tipsCache['macos'] = macosTips;
+      _tipsCache['linux'] = linuxTips;
+      
+      _isInitialized = true;
+      await _loadFavoriteIds();
+      
+      print('✅ Tips cache initialized: ${_tipsCache.length} OS types cached');
+    } catch (e) {
+      print('❌ Error initializing tips cache: $e');
+      _setError('Failed to initialize tips: ${e.toString()}');
+    } finally {
+      _setLoading(false);
+    }
+  }
+  
+  /// Load tips for specific OS (instant from cache)
   Future<void> loadTipsByOS(String os) async {
-    print('🔍 Loading tips for OS: $os');
-    print('🔍 Current OS: $_currentOS, Tips count: ${_tips.length}');
+    print('🔍 Switching to OS: $os');
     
-    // Always clear cache to ensure we get the latest data
-    print('🔍 Clearing repository cache to get fresh data...');
+    // If not initialized, initialize first
+    if (!_isInitialized) {
+      await initializeTips();
+    }
     
+    // Check if we have cached tips for this OS
+    if (_tipsCache.containsKey(os)) {
+      print('⚡ Loading from cache: ${_tipsCache[os]!.length} tips for $os');
+      
+      // Ultra-fast loading from cache
+      _tips = _tipsCache[os]!;
+      _currentOS = os;
+      _filteredTips = List.from(_tips); // Direct assignment
+      notifyListeners();
+      
+      return;
+    }
+    
+    // Fallback: load from repository if not in cache
+    print('🔄 Loading from repository for $os...');
     _setLoading(true);
     _clearError();
     _currentOS = os;
     
     try {
-      print('🔍 Calling use case to get tips for $os...');
       _tips = await _getTipsByOSUseCase(os);
-      print('🔍 Loaded ${_tips.length} tips for $os');
+      _tipsCache[os] = _tips; // Cache for next time
+      print('✅ Loaded ${_tips.length} tips for $os');
       
-      _applySearch(); // Apply current search filter
-      await _loadFavoriteIds();
-      
-      print('🔍 Final filtered tips count: ${_filteredTips.length}');
+      _filteredTips = List.from(_tips); // Direct assignment
     } catch (e) {
       print('❌ Error loading tips for $os: $e');
       _setError('Failed to load tips: ${e.toString()}');
@@ -155,10 +202,29 @@ class TipsViewModel extends ChangeNotifier {
     if (_currentOS == 'favorites') {
       await loadFavoriteTips();
     } else if (_currentOS.isNotEmpty) {
-      // Clear cache and reload
+      // Clear all caches and force reload from repository
       _tips.clear();
       _filteredTips.clear();
-      await loadTipsByOS(_currentOS);
+      _tipsCache.remove(_currentOS); // Remove from cache to force reload
+      
+      // Force reload from repository
+      _setLoading(true);
+      _clearError();
+      
+      try {
+        _tips = await _getTipsByOSUseCase(_currentOS);
+        _tipsCache[_currentOS] = _tips; // Re-cache the fresh data
+        print('✅ Refreshed ${_tips.length} tips for $_currentOS');
+        
+        _filteredTips = List.from(_tips);
+      } catch (e) {
+        print('❌ Error refreshing tips for $_currentOS: $e');
+        _setError('Failed to refresh tips: ${e.toString()}');
+        _tips = [];
+        _filteredTips = [];
+      } finally {
+        _setLoading(false);
+      }
     }
   }
   
@@ -208,6 +274,8 @@ class TipsViewModel extends ChangeNotifier {
     }
   }
   
+
+  
   /// Set error state
   void _setError(String error) {
     _error = error;
@@ -230,4 +298,17 @@ class TipsViewModel extends ChangeNotifier {
       return null;
     }
   }
+  
+  /// Check if tips are cached for an OS
+  bool hasCachedTips(String os) {
+    return _tipsCache.containsKey(os) && _tipsCache[os]!.isNotEmpty;
+  }
+  
+  /// Get cached tips count for an OS
+  int getCachedTipsCount(String os) {
+    return _tipsCache[os]?.length ?? 0;
+  }
+  
+  /// Check if tips are initialized
+  bool get isInitialized => _isInitialized;
 }

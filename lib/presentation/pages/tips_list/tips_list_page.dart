@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../core/constants/app_strings.dart';
 import '../../../core/constants/app_colors.dart';
-import '../../../core/widgets/custom_loading_indicator.dart';
 import '../../../core/widgets/custom_error_widget.dart';
 import '../../../core/widgets/custom_search_bar.dart';
-import '../../widgets/minimal_tip_card.dart';
 import '../../widgets/empty_state_widget.dart';
+import '../../widgets/animated_tips_list.dart';
 import '../../viewmodels/tips_viewmodel.dart';
 
 /// Page displaying list of tips for a specific OS
@@ -43,11 +41,29 @@ class _TipsListPageState extends State<TipsListPage>
     widget.onSearchToggleCallback?.call(_toggleSearch);
     widget.onSearchStateCallback?.call(() => _showSearch);
     
-    // Load tips immediately when the page initializes
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final tipsViewModel = context.read<TipsViewModel>();
-      tipsViewModel.loadTipsByOS(widget.os);
-    });
+         // Initialize tips cache and load current OS tips
+     WidgetsBinding.instance.addPostFrameCallback((_) {
+       final tipsViewModel = context.read<TipsViewModel>();
+       
+       // Always load tips immediately for instant display
+       if (!tipsViewModel.isInitialized) {
+         tipsViewModel.initializeTips().then((_) {
+           tipsViewModel.loadTipsByOS(widget.os);
+         });
+       } else {
+         // Load tips immediately from cache
+         tipsViewModel.loadTipsByOS(widget.os);
+       }
+       
+       // Preload tips for other OS types in background
+       if (tipsViewModel.isInitialized) {
+         Future.microtask(() {
+           if (widget.os != 'windows') tipsViewModel.loadTipsByOS('windows');
+           if (widget.os != 'macos') tipsViewModel.loadTipsByOS('macos');
+           if (widget.os != 'linux') tipsViewModel.loadTipsByOS('linux');
+         });
+       }
+     });
   }
   
   @override
@@ -169,13 +185,8 @@ class _TipsListPageState extends State<TipsListPage>
     );
   }
   
-  Widget _buildContent(TipsViewModel tipsViewModel) {
-    if (tipsViewModel.isLoading) {
-      return const CustomLoadingIndicator(
-        message: AppStrings.loading,
-      );
-    }
-    
+    Widget _buildContent(TipsViewModel tipsViewModel) {
+    // Show error state
     if (tipsViewModel.hasError) {
       return CustomErrorWidget(
         message: tipsViewModel.error,
@@ -183,26 +194,16 @@ class _TipsListPageState extends State<TipsListPage>
       );
     }
     
+    // Show empty state
     if (tipsViewModel.isEmpty) {
       return _buildEmptyState(tipsViewModel);
     }
     
-    return RefreshIndicator(
+    // Show tips list instantly
+    return AnimatedTipsList(
+      tips: tipsViewModel.tips,
+      os: widget.os,
       onRefresh: () => _refresh(tipsViewModel),
-      child: ListView.builder(
-        padding: const EdgeInsets.only(
-          top: 8,
-          bottom: 80, // Space for FAB
-        ),
-        itemCount: tipsViewModel.tips.length,
-        itemBuilder: (context, index) {
-          final tip = tipsViewModel.tips[index];
-          return MinimalTipCard(
-            tip: tip,
-            index: index,
-          );
-        },
-      ),
     );
   }
   

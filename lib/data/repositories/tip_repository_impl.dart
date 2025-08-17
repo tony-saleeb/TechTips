@@ -37,10 +37,6 @@ class TipRepositoryImpl implements TipRepository {
     try {
       print('🔍 Repository: Getting tips for OS: $os');
       
-      // Clear cache to ensure fresh data
-      print('🔍 Repository: Clearing cache for fresh data...');
-      _cachedTips = null;
-      
       final tips = await _getTips();
       print('🔍 Repository: Total tips loaded: ${tips.length}');
       
@@ -89,6 +85,12 @@ class TipRepositoryImpl implements TipRepository {
     } catch (e) {
       throw Exception('Failed to search tips: $e');
     }
+  }
+  
+  /// Clear repository cache (for refresh operations)
+  void clearCache() {
+    print('🔍 Repository: Clearing cache');
+    _cachedTips = null;
   }
   
   @override

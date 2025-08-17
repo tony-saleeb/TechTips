@@ -44,46 +44,46 @@ class _MinimalTipCardState extends State<MinimalTipCard>
     super.initState();
     
     _entranceController = AnimationController(
-      duration: const Duration(milliseconds: 800),
+      duration: const Duration(milliseconds: 50), // Ultra-fast
       vsync: this,
     );
     
     _hoverController = AnimationController(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 100), // Fast
       vsync: this,
     );
     
     _tapController = AnimationController(
-      duration: const Duration(milliseconds: 150),
+      duration: const Duration(milliseconds: 50), // Ultra-fast
       vsync: this,
     );
 
-    // Entrance animations
+    // Instant entrance animations
     _fadeAnimation = Tween<double>(
-      begin: 0.0,
+      begin: 1.0, // Start fully visible
       end: 1.0,
     ).animate(CurvedAnimation(
       parent: _entranceController,
-      curve: const Interval(0.0, 0.6, curve: Curves.easeOut),
+      curve: Curves.linear,
     ));
     
     _slideAnimation = Tween<double>(
-      begin: 50.0,
+      begin: 0.0, // No slide
       end: 0.0,
     ).animate(CurvedAnimation(
       parent: _entranceController,
-      curve: const Interval(0.2, 0.8, curve: Curves.easeOutCubic),
+      curve: Curves.linear,
     ));
     
     _scaleAnimation = Tween<double>(
-      begin: 0.8,
+      begin: 1.0, // No scale
       end: 1.0,
     ).animate(CurvedAnimation(
       parent: _entranceController,
-      curve: const Interval(0.4, 1.0, curve: Curves.elasticOut),
+      curve: Curves.linear,
     ));
-
-    // Hover animations
+    
+    // Fast hover animations
     _glowAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
@@ -100,12 +100,8 @@ class _MinimalTipCardState extends State<MinimalTipCard>
       curve: Curves.easeOutCubic,
     ));
 
-    // Staggered entrance animation
-    Future.delayed(Duration(milliseconds: widget.index * 120), () {
-      if (mounted) {
-        _entranceController.forward();
-      }
-    });
+    // Instant entrance animation
+    _entranceController.forward();
   }
 
   @override
@@ -158,14 +154,14 @@ class _MinimalTipCardState extends State<MinimalTipCard>
           child: Transform.scale(
             scale: _scaleAnimation.value * (_isPressed ? 0.98 : 1.0),
             child: FadeTransition(
-              opacity: _fadeAnimation,
-              child: Consumer<TipsViewModel>(
-                builder: (context, tipsViewModel, _) {
-                  final isFavorite = tipsViewModel.isFavorite(widget.tip.id);
-                  
-                  return Container(
+      opacity: _fadeAnimation,
+      child: Consumer<TipsViewModel>(
+        builder: (context, tipsViewModel, _) {
+          final isFavorite = tipsViewModel.isFavorite(widget.tip.id);
+          
+          return Container(
                     margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    child: MouseRegion(
+            child: MouseRegion(
                       onEnter: (_) => _onHover(true),
                       onExit: (_) => _onHover(false),
                       child: GestureDetector(
@@ -206,12 +202,12 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                             borderRadius: BorderRadius.circular(28),
                             child: Container(
                               padding: const EdgeInsets.all(32),
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: isDark
-                                    ? [
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: isDark
+                                ? [
                                         Colors.white.withValues(alpha: 0.08),
                                         Colors.white.withValues(alpha: 0.05),
                                         Colors.white.withValues(alpha: 0.02),
@@ -220,25 +216,25 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                                         Colors.white.withValues(alpha: 0.9),
                                         Colors.white.withValues(alpha: 0.7),
                                         Colors.white.withValues(alpha: 0.5),
-                                      ],
-                                  stops: const [0.0, 0.5, 1.0],
-                                ),
+                                  ],
+                              stops: const [0.0, 0.5, 1.0],
+                            ),
                                 borderRadius: BorderRadius.circular(28),
-                                border: Border.all(
-                                  color: isDark
+                            border: Border.all(
+                                color: isDark 
                                     ? Colors.white.withValues(alpha: 0.1 + (_borderAnimation.value * 0.1))
                                     : Colors.white.withValues(alpha: 0.3 + (_borderAnimation.value * 0.2)),
                                   width: 1.5 + (_borderAnimation.value * 0.5),
                                 ),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
                                   // Premium header with OS badge and favorite
-                                  Row(
-                                    children: [
+                              Row(
+                                children: [
                                       _buildPremiumOSBadge(context),
-                                      const Spacer(),
+                                  const Spacer(),
                                       _buildPremiumFavoriteButton(context, isFavorite, tipsViewModel),
                                     ],
                                   ),
@@ -258,43 +254,43 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                                             AppColors.textPrimary.withValues(alpha: 0.8),
                                           ],
                                     ).createShader(bounds),
-                                    child: Text(
-                                      widget.tip.title,
-                                      style: context.textTheme.headlineSmall?.copyWith(
-                                        fontWeight: FontWeight.w900,
+                                child: Text(
+                                  widget.tip.title,
+                                  style: context.textTheme.headlineSmall?.copyWith(
+                                    fontWeight: FontWeight.w900,
                                         color: Colors.white,
                                         height: 1.2,
                                         letterSpacing: -0.8,
                                         fontSize: 24,
-                                      ),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
                                   ),
-                                  
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              
                                   const SizedBox(height: 20),
-                                  
+                              
                                   // Premium description with enhanced typography
-                                  Text(
-                                    widget.tip.description,
-                                    style: context.textTheme.bodyLarge?.copyWith(
+                              Text(
+                                widget.tip.description,
+                                style: context.textTheme.bodyLarge?.copyWith(
                                       color: isDark 
                                         ? Colors.white.withValues(alpha: 0.8)
                                         : AppColors.textSecondary,
                                       height: 1.8,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
                                       letterSpacing: 0.3,
-                                    ),
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  
+                                ),
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              
                                   const SizedBox(height: 24),
-                                  
+                              
                                   // Premium tags with glassmorphism
-                                  if (widget.tip.tags.isNotEmpty) ...[
-                                    Wrap(
+                              if (widget.tip.tags.isNotEmpty) ...[
+                                Wrap(
                                       spacing: 10,
                                       runSpacing: 8,
                                       children: widget.tip.tags.take(3).map((tag) => _buildPremiumTag(context, tag)).toList(),
@@ -303,9 +299,9 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                                   ],
                                   
                                   // Ultra-premium footer with glassmorphism
-                                  Container(
+                              Container(
                                     padding: const EdgeInsets.all(16),
-                                    decoration: BoxDecoration(
+                                decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         begin: Alignment.topLeft,
                                         end: Alignment.bottomRight,
@@ -315,16 +311,16 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                                         ],
                                       ),
                                       borderRadius: BorderRadius.circular(16),
-                                      border: Border.all(
+                                  border: Border.all(
                                         color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.2),
                                         width: 1,
-                                      ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Container(
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Container(
                                           padding: const EdgeInsets.all(8),
-                                          decoration: BoxDecoration(
+                                      decoration: BoxDecoration(
                                             gradient: LinearGradient(
                                               colors: [
                                                 AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.2),
@@ -332,34 +328,34 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                                               ],
                                             ),
                                             borderRadius: BorderRadius.circular(10),
-                                          ),
-                                          child: Icon(
+                                      ),
+                                      child: Icon(
                                             Icons.format_list_bulleted_rounded,
                                             size: 16,
-                                            color: AppColors.getOSColor(widget.tip.os),
-                                          ),
-                                        ),
+                                        color: AppColors.getOSColor(widget.tip.os),
+                                      ),
+                                    ),
                                         const SizedBox(width: 12),
-                                        Text(
-                                          '${widget.tip.steps.length} steps',
+                                    Text(
+                                      '${widget.tip.steps.length} steps',
                                           style: context.textTheme.bodyMedium?.copyWith(
-                                            color: AppColors.getOSColor(widget.tip.os),
+                                        color: AppColors.getOSColor(widget.tip.os),
                                             fontWeight: FontWeight.w700,
                                             fontSize: 14,
                                             letterSpacing: 0.5,
-                                          ),
-                                        ),
-                                        const Spacer(),
-                                        Container(
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    Container(
                                           padding: const EdgeInsets.all(8),
-                                          decoration: BoxDecoration(
+                                      decoration: BoxDecoration(
                                             gradient: LinearGradient(
                                               colors: [
                                                 AppColors.getOSColor(widget.tip.os),
                                                 AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.8),
                                               ],
                                             ),
-                                            borderRadius: BorderRadius.circular(12),
+                                        borderRadius: BorderRadius.circular(12),
                                             boxShadow: [
                                               BoxShadow(
                                                 color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.3),
@@ -367,17 +363,17 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                                                 offset: const Offset(0, 2),
                                               ),
                                             ],
-                                          ),
-                                          child: const Icon(
+                                      ),
+                                      child: const Icon(
                                             Icons.arrow_forward_rounded,
                                             size: 14,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ],
+                                        color: Colors.white,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
+                              ),
+                            ],
                               ),
                             ),
                           ),
@@ -387,10 +383,10 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                   );
                 },
               ),
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
     );
   }
 
@@ -550,8 +546,8 @@ class _MinimalTipCardState extends State<MinimalTipCard>
       minChildSize: 0.8,
       maxChildSize: 0.99,
       builder: (context, scrollController) {
-        return Container(
-          decoration: BoxDecoration(
+    return Container(
+      decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -656,7 +652,7 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                     stops: const [0.0, 0.33, 0.66, 1.0],
                   ),
                   borderRadius: BorderRadius.circular(30),
-                  border: Border.all(
+        border: Border.all(
                     color: isDark
                       ? Colors.white.withValues(alpha: 0.2)
                       : Colors.white.withValues(alpha: 0.5),
@@ -678,9 +674,9 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                       spreadRadius: 5,
                     ),
                   ],
-                ),
-                child: Row(
-                  children: [
+      ),
+      child: Row(
+        children: [
                     _buildPremiumOSBadge(context),
                     const SizedBox(width: 20),
                     Expanded(
@@ -718,7 +714,7 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                              ),
                            ),
                           const SizedBox(height: 8),
-                          Text(
+          Text(
                             '${widget.tip.steps.length} steps to master',
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: isDark 
@@ -727,10 +723,10 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
                               letterSpacing: 0.3,
-                            ),
-                          ),
-                        ],
-                      ),
+            ),
+          ),
+        ],
+      ),
                     ),
                   ],
                 ),
@@ -749,7 +745,7 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                        Container(
                          margin: const EdgeInsets.only(bottom: 36),
                          padding: const EdgeInsets.all(28),
-                         decoration: BoxDecoration(
+      decoration: BoxDecoration(
                            gradient: LinearGradient(
                              begin: Alignment.topLeft,
                              end: Alignment.bottomRight,
@@ -783,7 +779,7 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                          ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+        children: [
                             Row(
                               children: [
                                 Container(
@@ -811,17 +807,17 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                                   ),
                                 ),
                                 const SizedBox(width: 12),
-                                Text(
+          Text(
                                   'Description',
                                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                     color: AppColors.getOSColor(widget.tip.os),
                                     fontWeight: FontWeight.w800,
                                     fontSize: 16,
                                     letterSpacing: 0.5,
-                                  ),
-                                ),
-                              ],
-                            ),
+            ),
+          ),
+        ],
+      ),
                             const SizedBox(height: 16),
                             Text(
                               widget.tip.description,
@@ -873,8 +869,8 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                                    ),
                                  ],
                                ),
-                               child: Row(
-                                 children: [
+      child: Row(
+        children: [
                                    Container(
                                      padding: const EdgeInsets.all(12),
                                      decoration: BoxDecoration(
@@ -959,7 +955,7 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                                     ),
                                   ),
                                   const SizedBox(width: 12),
-                                  Text(
+          Text(
                                     'Tags',
                                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                       color: AppColors.getOSColor(widget.tip.os),
@@ -1044,7 +1040,7 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                                   'Share',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w700,
                                     fontSize: 16,
                                   ),
                                 ),
@@ -1105,10 +1101,10 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                       ),
                     ],
                   ),
-                ),
-              ),
-            ],
+            ),
           ),
+        ],
+      ),
         );
       },
     );
@@ -1297,7 +1293,7 @@ class _PremiumFavoriteButtonState extends State<_PremiumFavoriteButton>
       parent: _favoriteController,
       curve: Curves.elasticOut,
     ));
-    
+
     _glowAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
@@ -1389,14 +1385,14 @@ class _PremiumFavoriteButtonState extends State<_PremiumFavoriteButton>
                 scale: _favoriteScaleAnimation.value,
                 child: Transform.rotate(
                   angle: _rotationAnimation.value * 3.14159 * 2,
-                  child: Icon(
+                child: Icon(
                     widget.isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
                     size: 24,
-                    color: widget.isFavorite 
-                      ? AppColors.favoriteRed 
-                      : (Theme.of(context).brightness == Brightness.dark 
+                  color: widget.isFavorite 
+                    ? AppColors.favoriteRed 
+                    : (Theme.of(context).brightness == Brightness.dark 
                           ? Colors.white.withValues(alpha: 0.7)
-                          : Colors.grey.shade600),
+                        : Colors.grey.shade600),
                   ),
                 ),
               ),
