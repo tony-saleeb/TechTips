@@ -111,36 +111,55 @@ class _HomePageState extends State<HomePage> {
           ? AppColors.backgroundDark
           : AppColors.backgroundLight,
       ),
-      child: ClipRRect(
-        child: Container(
-          height: 90,
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          decoration: BoxDecoration(
-            color: Theme.of(context).brightness == Brightness.dark
-              ? Colors.black.withOpacity(0.2)
-              : Colors.white.withOpacity(0.2),
-            border: Border(
-              top: BorderSide(
-                color: Colors.white.withOpacity(0.1),
-                width: 1,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(
+            color: AppColors.getOSColor(appViewModel.currentOS).withValues(alpha: 0.25),
+            width: 1.5,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.getOSColor(appViewModel.currentOS).withValues(alpha: 0.15),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(24),
+          child: Container(
+            height: 90,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            decoration: BoxDecoration(
+              color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.black.withOpacity(0.2)
+                : Colors.white.withOpacity(0.2),
+              border: Border(
+                top: BorderSide(
+                  color: Colors.white.withOpacity(0.1),
+                  width: 1,
+                ),
               ),
             ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: appViewModel.availableOS.asMap().entries.map((entry) {
-              final index = entry.key;
-              final os = entry.value;
-              final isSelected = appViewModel.currentTabIndex == index;
-              
-              return _buildNavItem(
-                os: os,
-                icon: appViewModel.getOSIcon(os),
-                label: appViewModel.getOSDisplayName(os),
-                isSelected: isSelected,
-                onTap: () => _onTabTapped(index, appViewModel),
-              );
-            }).toList(),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: appViewModel.availableOS.asMap().entries.map((entry) {
+                final index = entry.key;
+                final os = entry.value;
+                final isSelected = appViewModel.currentTabIndex == index;
+                
+                return _buildNavItem(
+                  os: os,
+                  icon: appViewModel.getOSIcon(os),
+                  label: appViewModel.getOSDisplayName(os),
+                  isSelected: isSelected,
+                  onTap: () => _onTabTapped(index, appViewModel),
+                );
+              }).toList(),
+            ),
           ),
         ),
       ),

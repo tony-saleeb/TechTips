@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:ui';
 import 'package:provider/provider.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/widgets/custom_error_widget.dart';
@@ -24,13 +25,9 @@ class TipsListPage extends StatefulWidget {
   State<TipsListPage> createState() => _TipsListPageState();
 }
 
-class _TipsListPageState extends State<TipsListPage>
-    with AutomaticKeepAliveClientMixin {
+class _TipsListPageState extends State<TipsListPage> {
   late TextEditingController _searchController;
   bool _showSearch = false;
-  
-  @override
-  bool get wantKeepAlive => true;
   
   @override
   void initState() {
@@ -41,29 +38,15 @@ class _TipsListPageState extends State<TipsListPage>
     widget.onSearchToggleCallback?.call(_toggleSearch);
     widget.onSearchStateCallback?.call(() => _showSearch);
     
-         // Initialize tips cache and load current OS tips
-     WidgetsBinding.instance.addPostFrameCallback((_) {
-       final tipsViewModel = context.read<TipsViewModel>();
-       
-       // Always load tips immediately for instant display
-       if (!tipsViewModel.isInitialized) {
-         tipsViewModel.initializeTips().then((_) {
-           tipsViewModel.loadTipsByOS(widget.os);
-         });
-       } else {
-         // Load tips immediately from cache
-         tipsViewModel.loadTipsByOS(widget.os);
-       }
-       
-       // Preload tips for other OS types in background
-       if (tipsViewModel.isInitialized) {
-         Future.microtask(() {
-           if (widget.os != 'windows') tipsViewModel.loadTipsByOS('windows');
-           if (widget.os != 'macos') tipsViewModel.loadTipsByOS('macos');
-           if (widget.os != 'linux') tipsViewModel.loadTipsByOS('linux');
-         });
-       }
-     });
+    // Only initialize if TipsViewModel is not initialized
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final tipsViewModel = context.read<TipsViewModel>();
+      
+      if (!tipsViewModel.isInitialized) {
+        print('🚀 TipsListPage: Initializing TipsViewModel');
+        tipsViewModel.initializeTips();
+      }
+    });
   }
   
   @override
@@ -74,80 +57,109 @@ class _TipsListPageState extends State<TipsListPage>
   
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-    
     return Consumer<TipsViewModel>(
       builder: (context, tipsViewModel, _) {
         return Scaffold(
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(80), // Reduced height for sleeker look
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: Theme.of(context).brightness == Brightness.dark
-                    ? [
-                        AppColors.backgroundDark.withValues(alpha: 0.95),
-                        AppColors.surfaceDark.withValues(alpha: 0.9),
-                        AppColors.backgroundDark.withValues(alpha: 0.98),
-                      ]
-                    : [
-                        Colors.white.withValues(alpha: 0.95),
-                        const Color(0xFFF8F9FF).withValues(alpha: 0.9),
-                        Colors.white,
-                      ],
-                  stops: const [0.0, 0.5, 1.0],
-                ),
-                // Curved app bar with rounded bottom corners
+            child: Transform(
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 0.001) // Perspective
+                ..translate(0.0, -2.0, 8.0), // Lift up and forward
+              child: ClipRRect(
                 borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(24),
-                  bottomRight: Radius.circular(24),
+                  bottomLeft: Radius.circular(40),
+                  bottomRight: Radius.circular(40),
                 ),
-                border: Border.all(
-                  color: Theme.of(context).brightness == Brightness.dark
-                    ? Colors.white.withValues(alpha: 0.08)
-                    : Colors.black.withValues(alpha: 0.04),
-                  width: 0.5,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Theme.of(context).brightness == Brightness.dark
-                      ? Colors.black.withValues(alpha: 0.3)
-                      : Colors.black.withValues(alpha: 0.08),
-                    blurRadius: 16,
-                    offset: const Offset(0, 4),
-                    spreadRadius: 0,
-                  ),
-                  BoxShadow(
-                    color: Theme.of(context).brightness == Brightness.dark
-                      ? Colors.black.withValues(alpha: 0.1)
-                      : Colors.black.withValues(alpha: 0.03),
-                    blurRadius: 32,
-                    offset: const Offset(0, 8),
-                    spreadRadius: -4,
-                  ),
-                ],
-              ),
-              child: SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8), // Sleeker padding
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // Spacer for left alignment (drawer button space)
-                      const SizedBox(width: 40),
-                      
-                      // Elegant title - centered
-                      Expanded(
-                        child: Center(
-                          child: _buildModernTitle(),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: Theme.of(context).brightness == Brightness.dark
+                          ? [
+                              Colors.white.withValues(alpha: 0.2),
+                              AppColors.getOSColor(widget.os).withValues(alpha: 0.18),
+                              Colors.white.withValues(alpha: 0.12),
+                            ]
+                          : [
+                              Colors.white.withValues(alpha: 0.9),
+                              AppColors.getOSColor(widget.os).withValues(alpha: 0.12),
+                              Colors.white.withValues(alpha: 0.8),
+                            ],
+                        stops: const [0.0, 0.5, 1.0],
+                      ),
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(40),
+                        bottomRight: Radius.circular(40),
+                      ),
+                      border: Border.all(
+                        color: Theme.of(context).brightness == Brightness.dark
+                          ? AppColors.getOSColor(widget.os).withValues(alpha: 0.5)
+                          : AppColors.getOSColor(widget.os).withValues(alpha: 0.35),
+                        width: 1.5,
+                      ),
+                      boxShadow: [
+                        // Primary depth shadow
+                        BoxShadow(
+                          color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.black.withValues(alpha: 0.6)
+                            : Colors.black.withValues(alpha: 0.3),
+                          blurRadius: 40,
+                          offset: const Offset(0, 16),
+                          spreadRadius: 0,
+                        ),
+                        // Secondary depth shadow
+                        BoxShadow(
+                          color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.black.withValues(alpha: 0.4)
+                            : Colors.black.withValues(alpha: 0.2),
+                          blurRadius: 60,
+                          offset: const Offset(0, 24),
+                          spreadRadius: -20,
+                        ),
+                        // 3D glow effect
+                        BoxShadow(
+                          color: AppColors.getOSColor(widget.os).withValues(alpha: 0.4),
+                          blurRadius: 60,
+                          offset: const Offset(0, 25),
+                          spreadRadius: -25,
+                        ),
+                        // Inner highlight for 3D effect
+                        BoxShadow(
+                          color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white.withValues(alpha: 0.1)
+                            : Colors.white.withValues(alpha: 0.3),
+                          blurRadius: 20,
+                          offset: const Offset(0, -8),
+                          spreadRadius: -10,
+                        ),
+                      ],
+                    ),
+                    child: SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8), // Sleeker padding
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            // Spacer for left alignment (drawer button space)
+                            const SizedBox(width: 40),
+                            
+                            // Elegant title - centered
+                            Expanded(
+                              child: Center(
+                                child: _buildModernTitle(),
+                              ),
+                            ),
+                            
+                            // Spacer for right alignment (search button space)
+                            const SizedBox(width: 40),
+                          ],
                         ),
                       ),
-                      
-                      // Spacer for right alignment (search button space)
-                      const SizedBox(width: 40),
-                    ],
+                    ),
                   ),
                 ),
               ),
@@ -291,7 +303,7 @@ class _TipsListPageState extends State<TipsListPage>
       case 'windows':
         return Icons.window;
       case 'macos':
-        return Icons.laptop_mac;
+        return Icons.apple;
       case 'linux':
         return Icons.computer;
       default:
@@ -303,43 +315,45 @@ class _TipsListPageState extends State<TipsListPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
     
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: isDark
             ? [
-                AppColors.accentDark.withValues(alpha: 0.9),
-                AppColors.accentDark.withValues(alpha: 0.7),
-                AppColors.accentDark.withValues(alpha: 0.85),
+                AppColors.surfaceDark.withValues(alpha: 0.95),
+                AppColors.cardDark.withValues(alpha: 0.9),
+                AppColors.surfaceDark.withValues(alpha: 0.98),
               ]
             : [
-                AppColors.getOSColor(widget.os),
-                AppColors.getOSColor(widget.os).withValues(alpha: 0.8),
-                AppColors.getOSColor(widget.os).withValues(alpha: 0.9),
+                Colors.white.withValues(alpha: 0.95),
+                AppColors.neutral50.withValues(alpha: 0.9),
+                Colors.white,
               ],
           stops: const [0.0, 0.5, 1.0],
         ),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(18),
         border: Border.all(
           color: isDark 
-            ? Colors.white.withValues(alpha: 0.1)
-            : Colors.white.withValues(alpha: 0.4),
+            ? AppColors.getOSColor(widget.os).withValues(alpha: 0.25)
+            : AppColors.getOSColor(widget.os).withValues(alpha: 0.2),
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: (isDark ? AppColors.accentDark : AppColors.getOSColor(widget.os)).withValues(alpha: 0.4),
-            blurRadius: 15,
-            offset: const Offset(0, 6),
-            spreadRadius: 2,
+            color: isDark 
+              ? Colors.black.withValues(alpha: 0.3)
+              : Colors.black.withValues(alpha: 0.1),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+            spreadRadius: 0,
           ),
           BoxShadow(
-            color: (isDark ? AppColors.accentDark : AppColors.getOSColor(widget.os)).withValues(alpha: 0.15),
-            blurRadius: 30,
+            color: AppColors.getOSColor(widget.os).withValues(alpha: 0.08),
+            blurRadius: 28,
             offset: const Offset(0, 12),
-            spreadRadius: -6,
+            spreadRadius: -4,
           ),
         ],
       ),
@@ -347,32 +361,54 @@ class _TipsListPageState extends State<TipsListPage>
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            padding: const EdgeInsets.all(6),
+            width: 42,
+            height: 42,
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                color: Colors.white.withValues(alpha: 0.1),
-                width: 1,
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  AppColors.getOSColor(widget.os),
+                  AppColors.getOSColor(widget.os).withValues(alpha: 0.8),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(14),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.getOSColor(widget.os).withValues(alpha: 0.4),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                  spreadRadius: 0,
+                ),
+                BoxShadow(
+                  color: Colors.white.withValues(alpha: 0.3),
+                  blurRadius: 1,
+                  offset: const Offset(0, 1),
+                  spreadRadius: 0,
+                ),
+              ],
+            ),
+            child: Center(
+              child: Icon(
+                _getOSIcon(widget.os),
+                color: Colors.white,
+                size: 22,
               ),
             ),
-            child: Icon(
-              _getOSIcon(widget.os),
-              color: Colors.white,
-              size: 20,
-            ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 16),
           Text(
             '${_getOSDisplayName(widget.os)} Tips',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w800,
-              color: Colors.white,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.w700,
+              color: isDark ? AppColors.textDarkPrimary : AppColors.textPrimary,
               letterSpacing: -0.3,
               fontSize: 18,
               shadows: [
                 Shadow(
-                  color: Colors.black.withValues(alpha: 0.2),
+                  color: isDark 
+                    ? Colors.black.withValues(alpha: 0.2)
+                    : Colors.black.withValues(alpha: 0.05),
                   offset: const Offset(0, 1),
                   blurRadius: 2,
                 ),
@@ -385,3 +421,4 @@ class _TipsListPageState extends State<TipsListPage>
   }
 
 }
+

@@ -58,10 +58,9 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
       final newOS = osNames[index];
       final tipsViewModel = context.read<TipsViewModel>();
       
-      // Only load if not already cached or if it's the first time
-      if (!tipsViewModel.hasCachedTips(newOS) || tipsViewModel.currentOS != newOS) {
-        tipsViewModel.loadTipsByOS(newOS);
-      }
+      // Always force load the correct OS tips
+      print('🔄 Tab switch: Loading tips for $newOS');
+      tipsViewModel.loadTipsByOS(newOS);
     }
   }
 
@@ -530,51 +529,89 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
   /// Clean and smooth bottom navigation with water liquid effects
   Widget _buildElegantBottomNav() {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final currentOS = ['windows', 'macos', 'linux'][_selectedIndex];
     
-    return Container(
-      height: 65,
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                        decoration: BoxDecoration(
-        color: isDark 
-          ? AppColors.backgroundDark.withValues(alpha: 0.95)
-          : Colors.white.withValues(alpha: 0.95),
-        borderRadius: BorderRadius.circular(32),
-        border: Border.all(
-          color: isDark
-            ? Colors.white.withValues(alpha: 0.1)
-            : Colors.black.withValues(alpha: 0.06),
-                                width: 1,
-                              ),
-                          boxShadow: [
-                            BoxShadow(
-            color: isDark
-                                    ? Colors.black.withValues(alpha: 0.3)
-              : Colors.black.withValues(alpha: 0.08),
-            blurRadius: 16,
-            offset: const Offset(0, 8),
-            spreadRadius: -2,
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-          _buildLiquidNavItem(
-            icon: Icons.window,
-            index: 0,
-            isSelected: _selectedIndex == 0,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      child: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.9,
+          height: 75,
+          decoration: BoxDecoration(
+            color: isDark 
+              ? AppColors.backgroundDark.withValues(alpha: 0.85)
+              : Colors.white.withValues(alpha: 0.85),
+            borderRadius: BorderRadius.circular(40),
+            border: Border.all(
+              color: AppColors.getOSColor(currentOS).withValues(alpha: 0.8),
+              width: 3.0,
+            ),
+            boxShadow: [
+              // Primary depth shadow
+              BoxShadow(
+                color: isDark
+                  ? Colors.black.withValues(alpha: 0.9)
+                  : Colors.black.withValues(alpha: 0.5),
+                blurRadius: 80,
+                offset: const Offset(0, 30),
+                spreadRadius: 0,
+              ),
+              // Secondary depth shadow
+              BoxShadow(
+                color: isDark
+                  ? Colors.black.withValues(alpha: 0.7)
+                  : Colors.black.withValues(alpha: 0.4),
+                blurRadius: 120,
+                offset: const Offset(0, 55),
+                spreadRadius: -40,
+              ),
+              // 3D glow effect
+              BoxShadow(
+                color: AppColors.getOSColor(currentOS).withValues(alpha: 0.8),
+                blurRadius: 100,
+                offset: const Offset(0, 60),
+                spreadRadius: -45,
+              ),
+              // Inner highlight for 3D effect
+              BoxShadow(
+                color: isDark
+                  ? Colors.white.withValues(alpha: 0.25)
+                  : Colors.white.withValues(alpha: 0.6),
+                blurRadius: 40,
+                offset: const Offset(0, -15),
+                spreadRadius: -20,
+              ),
+              // Additional outer glow
+              BoxShadow(
+                color: AppColors.getOSColor(currentOS).withValues(alpha: 0.4),
+                blurRadius: 150,
+                offset: const Offset(0, 80),
+                spreadRadius: -50,
+              ),
+            ],
           ),
-          _buildLiquidNavItem(
-            icon: Icons.apple,
-            index: 1,
-            isSelected: _selectedIndex == 1,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildLiquidNavItem(
+                icon: _getOSIcon('windows'),
+                index: 0,
+                isSelected: _selectedIndex == 0,
+              ),
+              _buildLiquidNavItem(
+                icon: _getOSIcon('macos'),
+                index: 1,
+                isSelected: _selectedIndex == 1,
+              ),
+              _buildLiquidNavItem(
+                icon: _getOSIcon('linux'),
+                index: 2,
+                isSelected: _selectedIndex == 2,
+              ),
+            ],
           ),
-          _buildLiquidNavItem(
-            icon: Icons.computer,
-            index: 2,
-            isSelected: _selectedIndex == 2,
-                            ),
-                          ],
-                        ),
+        ),
+      ),
     );
   }
 
@@ -604,36 +641,50 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
   }
   
   Widget _buildCurrentPage() {
-    switch (_selectedIndex) {
-      case 0:
-        return TipsListPage(
-          key: const ValueKey('windows'),
-          os: 'windows',
-          onSearchToggleCallback: (callback) => _windowsToggleSearch = callback,
-          onSearchStateCallback: (callback) => _windowsIsSearchActive = callback,
-        );
-      case 1:
-        return TipsListPage(
-          key: const ValueKey('macos'),
-          os: 'macos',
-          onSearchToggleCallback: (callback) => _macosToggleSearch = callback,
-          onSearchStateCallback: (callback) => _macosIsSearchActive = callback,
-        );
-      case 2:
-        return TipsListPage(
-          key: const ValueKey('linux'),
-          os: 'linux',
-          onSearchToggleCallback: (callback) => _linuxToggleSearch = callback,
-          onSearchStateCallback: (callback) => _linuxIsSearchActive = callback,
-        );
-      default:
-        return TipsListPage(
-          key: const ValueKey('windows'),
-          os: 'windows',
-          onSearchToggleCallback: (callback) => _windowsToggleSearch = callback,
-          onSearchStateCallback: (callback) => _windowsIsSearchActive = callback,
-        );
-    }
+    final osNames = ['windows', 'macos', 'linux'];
+    final currentOS = osNames[_selectedIndex];
+    
+    print('Building page for index: $_selectedIndex, OS: $currentOS');
+    
+    // Force TipsViewModel to update for the current OS
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final tipsViewModel = context.read<TipsViewModel>();
+      if (tipsViewModel.currentOS != currentOS) {
+        print('🔄 Forcing TipsViewModel update from ${tipsViewModel.currentOS} to $currentOS');
+        tipsViewModel.loadTipsByOS(currentOS);
+      }
+    });
+    
+    return TipsListPage(
+      key: ValueKey('tips_page_${currentOS}_$_selectedIndex'),
+      os: currentOS,
+      onSearchToggleCallback: (callback) {
+        switch (_selectedIndex) {
+          case 0:
+            _windowsToggleSearch = callback;
+            break;
+          case 1:
+            _macosToggleSearch = callback;
+            break;
+          case 2:
+            _linuxToggleSearch = callback;
+            break;
+        }
+      },
+      onSearchStateCallback: (callback) {
+        switch (_selectedIndex) {
+          case 0:
+            _windowsIsSearchActive = callback;
+            break;
+          case 1:
+            _macosIsSearchActive = callback;
+            break;
+          case 2:
+            _linuxIsSearchActive = callback;
+            break;
+        }
+      },
+    );
   }
 
   /// Reliable navigation item
@@ -666,6 +717,20 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
         ),
       ),
     );
+  }
+
+  /// Get OS icon
+  IconData _getOSIcon(String os) {
+    switch (os.toLowerCase()) {
+      case 'windows':
+        return Icons.window;
+      case 'macos':
+        return Icons.apple;
+      case 'linux':
+        return Icons.computer;
+      default:
+        return Icons.computer;
+    }
   }
 
   /// Show favorites bottom sheet
