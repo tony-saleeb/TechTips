@@ -456,142 +456,219 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
     ).toList();
 
     return Drawer(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      child: Container(
+      backgroundColor: Colors.transparent,
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(50),
+          bottomRight: Radius.circular(50),
+        ),
+        child: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-            colors: isDark
+              colors: isDark
                 ? [
                     AppColors.backgroundDark,
                     AppColors.surfaceDark.withValues(alpha: 0.95),
-                    AppColors.backgroundDark,
+                    AppColors.backgroundDark.withValues(alpha: 0.98),
                   ]
                 : [
                     Colors.white,
                     const Color(0xFFFBFCFF),
-                    Colors.white,
+                    Colors.white.withValues(alpha: 0.98),
                   ],
               stops: const [0.0, 0.5, 1.0],
             ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              // Header with app icon and name
-              Container(
-                padding: const EdgeInsets.all(24),
-                child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    AppColors.accentDark,
-                    AppColors.accentDark.withValues(alpha: 0.8),
-                  ],
-                ),
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.accentDark.withValues(alpha: 0.4),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: const Icon(
-                Icons.lightbulb_rounded,
-                color: Colors.white,
-                size: 28,
-              ),
+            borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(50),
+              bottomRight: Radius.circular(50),
             ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.3),
+                blurRadius: 30,
+                offset: const Offset(5, 0),
+                spreadRadius: 5,
+              ),
+            ],
+          ),
+          child: SafeArea(
+            child: Column(
               children: [
-                Text(
-                  AppConstants.appName,
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.w900,
-                              color: isDark ? AppColors.textDarkPrimary : AppColors.textPrimary,
-                    letterSpacing: -0.5,
-                              fontSize: 20,
+                // Premium header with unique design
+                Container(
+                  margin: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    // Match app palette colors
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: isDark
+                        ? [
+                            AppColors.accentDark.withValues(alpha: 0.8),
+                            AppColors.accentDark.withValues(alpha: 0.6),
+                            AppColors.accentDark.withValues(alpha: 0.7),
+                          ]
+                        : [
+                            AppColors.neutral50.withValues(alpha: 0.9),
+                            AppColors.neutral100.withValues(alpha: 0.7),
+                            AppColors.neutral50.withValues(alpha: 0.8),
+                          ],
+                      stops: const [0.0, 0.5, 1.0],
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: isDark 
+                        ? AppColors.accentDark.withValues(alpha: 0.5)
+                        : AppColors.accentDark.withValues(alpha: 0.3),
+                      width: 2,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: isDark 
+                          ? AppColors.accentDark.withValues(alpha: 0.4)
+                          : AppColors.accentDark.withValues(alpha: 0.2),
+                        blurRadius: 15,
+                        offset: const Offset(0, 6),
+                        spreadRadius: 1,
+                      ),
+                      BoxShadow(
+                        color: isDark 
+                          ? Colors.black.withValues(alpha: 0.2)
+                          : Colors.black.withValues(alpha: 0.08),
+                        blurRadius: 12,
+                        offset: const Offset(0, 3),
+                        spreadRadius: 0,
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      // App icon - clean and obvious
+                      Icon(
+                        Icons.terminal_rounded,
+                        color: isDark 
+                          ? Colors.white
+                          : AppColors.accentDark,
+                        size: 40,
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              AppConstants.appName,
+                              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                fontWeight: FontWeight.w800,
+                                color: isDark 
+                                  ? Colors.white
+                                  : AppColors.textPrimary,
+                                letterSpacing: -0.5,
+                                fontSize: 20,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'Master your OS',
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: isDark 
+                                  ? Colors.white.withValues(alpha: 0.8)
+                                  : AppColors.textSecondary,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.2,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Text(
-                  'Master your OS',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: isDark ? AppColors.textDarkSecondary : AppColors.textSecondary,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 0.2,
+                
+                // Premium menu items
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    children: [
+                      _buildPremiumDrawerItem(
+                        context,
+                        icon: Icons.favorite_rounded,
+                        title: 'Favorites',
+                        subtitle: '${favorites.length} ${_getOSDisplayName(currentOS)} tips',
+                        onTap: () => _showFavorites(context),
+                      ),
+                      _buildPremiumDrawerItem(
+                        context,
+                        icon: Icons.palette_outlined,
+                        title: 'Theme',
+                        subtitle: 'Light, dark, or system',
+                        onTap: () => _toggleTheme(context),
+                      ),
+                      _buildPremiumDrawerItem(
+                        context,
+                        icon: Icons.info_outline,
+                        title: 'About',
+                        subtitle: 'Version & credits',
+                        onTap: () => _showAbout(context),
+                      ),
+                    ],
+                  ),
+                ),
+                
+                // Premium footer
+                Container(
+                  margin: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: isDark
+                        ? [
+                            AppColors.surfaceDark.withValues(alpha: 0.8),
+                            AppColors.surfaceDark.withValues(alpha: 0.6),
+                            AppColors.surfaceDark.withValues(alpha: 0.7),
+                          ]
+                        : [
+                            AppColors.neutral50.withValues(alpha: 0.9),
+                            AppColors.neutral100.withValues(alpha: 0.7),
+                            AppColors.neutral50.withValues(alpha: 0.8),
+                          ],
+                      stops: const [0.0, 0.5, 1.0],
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: isDark 
+                        ? AppColors.borderDark.withValues(alpha: 0.4)
+                        : AppColors.accentDark.withValues(alpha: 0.2),
+                      width: 1,
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Made with ❤️ By Antony Saleeb',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: isDark 
+                            ? Colors.white.withValues(alpha: 0.95)
+                            : AppColors.textPrimary,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0.2,
+                          fontSize: 14,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
                 ),
               ],
-                      ),
             ),
-          ],
-        ),
-              ),
-              
-              const Divider(height: 1),
-              
-              // Menu items
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  children: [
-                    _buildDrawerItem(
-                      context,
-                      icon: Icons.favorite_rounded,
-                      title: 'Favorites',
-                      subtitle: '${favorites.length} ${_getOSDisplayName(currentOS)} tips',
-                      onTap: () {
-                        Navigator.pop(context);
-                        _showFavorites(context);
-                      },
-                    ),
-                    _buildDrawerItem(
-                      context,
-                      icon: Icons.palette_outlined,
-                      title: 'Theme',
-                      subtitle: isDark ? 'Dark mode' : 'Light mode',
-                      onTap: () => _toggleTheme(context),
-                    ),
-                    _buildDrawerItem(
-                      context,
-                      icon: Icons.info_outline,
-                      title: 'About',
-                      subtitle: 'Version & credits',
-                      onTap: () => _showAbout(context),
           ),
-        ],
-      ),
-              ),
-              
-              // Footer
-              Container(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    const Divider(height: 1),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Made with ❤️ for productivity',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: isDark ? AppColors.textDarkSecondary : AppColors.textSecondary,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
-          ],
         ),
-      ),
       ),
     );
   }
@@ -1355,6 +1432,138 @@ class _MinimalHomePageState extends State<MinimalHomePage> {
         ),
       );
     }
+  }
+
+  /// Build a premium drawer menu item with unique identity
+  Widget _buildPremiumDrawerItem(
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+  }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final currentOS = ['windows', 'macos', 'linux'][_selectedIndex];
+    
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(20),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              // Match app palette colors
+              color: isDark 
+                ? AppColors.surfaceDark.withValues(alpha: 0.8)
+                : AppColors.neutral50.withValues(alpha: 0.9),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                color: isDark 
+                  ? AppColors.borderDark.withValues(alpha: 0.6)
+                  : AppColors.borderLight.withValues(alpha: 0.8),
+                width: 2,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: isDark 
+                    ? Colors.black.withValues(alpha: 0.4)
+                    : Colors.black.withValues(alpha: 0.1),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                  spreadRadius: 0,
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                // Icon container with app palette colors
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    // Use app accent color
+                    color: isDark 
+                      ? AppColors.accentDark.withValues(alpha: 0.3)
+                      : AppColors.accentDark.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: isDark 
+                        ? AppColors.accentDark.withValues(alpha: 0.5)
+                        : AppColors.accentDark.withValues(alpha: 0.3),
+                      width: 1.5,
+                    ),
+                  ),
+                  child: Icon(
+                    icon,
+                    size: 24,
+                    color: isDark 
+                      ? AppColors.accentDark
+                      : AppColors.accentDark,
+                  ),
+                ),
+                const SizedBox(width: 18),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w800,
+                          color: isDark 
+                            ? AppColors.textDarkPrimary
+                            : AppColors.textPrimary,
+                          fontSize: 17,
+                          letterSpacing: 0.3,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        subtitle,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: isDark 
+                            ? AppColors.textDarkSecondary
+                            : AppColors.textSecondary,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          letterSpacing: 0.2,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // Chevron with app palette colors
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: isDark 
+                      ? AppColors.surfaceDark.withValues(alpha: 0.6)
+                      : AppColors.neutral100.withValues(alpha: 0.8),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: isDark 
+                        ? AppColors.borderDark.withValues(alpha: 0.4)
+                        : AppColors.borderLight.withValues(alpha: 0.6),
+                      width: 1,
+                    ),
+                  ),
+                  child: Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    size: 16,
+                    color: isDark 
+                      ? AppColors.textDarkSecondary
+                      : AppColors.textSecondary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 

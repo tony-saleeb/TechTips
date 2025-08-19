@@ -1,6 +1,6 @@
 /// Application-wide constants
 class AppConstants {
-  static const String appName = 'TechShortcuts';
+  static const String appName = 'TechTips';
   static const String appDescription = 'OS Tips & Tricks for Power Users';
   
   // Storage keys

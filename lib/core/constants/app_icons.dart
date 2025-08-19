@@ -49,13 +49,13 @@ class AppIcons {
   static IconData getOSIcon(String os) {
     switch (os.toLowerCase()) {
       case 'windows':
-        return windows;
+        return Icons.laptop_windows_rounded;
       case 'macos':
-        return macOS;
+        return Icons.laptop_mac_rounded;
       case 'linux':
-        return linux;
+        return Icons.computer_rounded;
       default:
-        return computer;
+        return Icons.computer_rounded;
     }
   }
   

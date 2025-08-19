@@ -50,20 +50,10 @@ class TipDetailsPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // OS Badge
-                _buildOSBadge(context),
+                // Creative Header with OS and Title
+                _buildCreativeHeader(context),
                 
-                const SizedBox(height: 16),
-                
-                // Title
-                Text(
-                  tip.title,
-                  style: context.textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                
-                const SizedBox(height: 16),
+                const SizedBox(height: 20),
                 
                 // Description
                 Container(
@@ -152,39 +142,212 @@ class TipDetailsPage extends StatelessWidget {
     );
   }
   
-  Widget _buildOSBadge(BuildContext context) {
+  Widget _buildCreativeHeader(BuildContext context) {
     final osColor = AppColors.getOSColor(tip.os);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      width: double.infinity,
+      margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
-        color: osColor.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: osColor.withOpacity(0.3),
-          width: 1,
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: isDark
+            ? [
+                AppColors.accentDark.withValues(alpha: 0.1),
+                AppColors.accentDark.withValues(alpha: 0.05),
+                AppColors.surfaceDark.withValues(alpha: 0.8),
+              ]
+            : [
+                AppColors.accentDark.withValues(alpha: 0.08),
+                AppColors.accentDark.withValues(alpha: 0.03),
+                AppColors.neutral50.withValues(alpha: 0.9),
+              ],
+          stops: const [0.0, 0.3, 1.0],
         ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            AppIcons.getOSIcon(tip.os),
-            size: 20,
-            color: osColor,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(
+          color: isDark 
+            ? AppColors.accentDark.withValues(alpha: 0.3)
+            : AppColors.accentDark.withValues(alpha: 0.2),
+          width: 2,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: isDark 
+              ? AppColors.accentDark.withValues(alpha: 0.2)
+              : AppColors.accentDark.withValues(alpha: 0.15),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+            spreadRadius: 2,
           ),
-          const SizedBox(width: 8),
-          Text(
-            _getOSDisplayName(tip.os),
-            style: context.textTheme.labelLarge?.copyWith(
-              color: osColor,
-              fontWeight: FontWeight.w600,
-            ),
+          BoxShadow(
+            color: isDark 
+              ? Colors.black.withValues(alpha: 0.15)
+              : Colors.black.withValues(alpha: 0.06),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+            spreadRadius: 0,
           ),
         ],
       ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(24),
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // OS Badge with enhanced design
+              Row(
+                children: [
+                  // Enhanced OS Icon Container
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          osColor.withValues(alpha: 0.2),
+                          osColor.withValues(alpha: 0.1),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: osColor.withValues(alpha: 0.4),
+                        width: 2,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: osColor.withValues(alpha: 0.3),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                          spreadRadius: 0,
+                        ),
+                      ],
+                    ),
+                    child: Icon(
+                      AppIcons.getOSIcon(tip.os),
+                      size: 24,
+                      color: osColor,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  // Enhanced OS Name Badge
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          osColor.withValues(alpha: 0.15),
+                          osColor.withValues(alpha: 0.08),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: osColor.withValues(alpha: 0.4),
+                        width: 1.5,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: osColor.withValues(alpha: 0.2),
+                          blurRadius: 6,
+                          offset: const Offset(0, 2),
+                          spreadRadius: 0,
+                        ),
+                      ],
+                    ),
+                    child: Text(
+                      _getOSDisplayName(tip.os),
+                      style: context.textTheme.labelLarge?.copyWith(
+                        color: osColor,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 14,
+                        letterSpacing: 0.3,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  // Tip Type Indicator
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: isDark 
+                        ? Colors.white.withValues(alpha: 0.1)
+                        : Colors.white.withValues(alpha: 0.8),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: isDark 
+                          ? Colors.white.withValues(alpha: 0.2)
+                          : Colors.white.withValues(alpha: 0.6),
+                        width: 1,
+                      ),
+                    ),
+                    child: Text(
+                      'Tip',
+                      style: context.textTheme.labelSmall?.copyWith(
+                        color: isDark 
+                          ? Colors.white.withValues(alpha: 0.8)
+                          : AppColors.textSecondary,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 11,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              // Enhanced Title
+              Text(
+                tip.title,
+                style: context.textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w900,
+                  color: isDark 
+                    ? Colors.white
+                    : AppColors.textPrimary,
+                  fontSize: 22,
+                  letterSpacing: -0.5,
+                  height: 1.2,
+                ),
+              ),
+              const SizedBox(height: 8),
+              // Subtitle with step count
+              Row(
+                children: [
+                  Icon(
+                    Icons.format_list_numbered_rounded,
+                    size: 16,
+                    color: isDark 
+                      ? Colors.white.withValues(alpha: 0.7)
+                      : AppColors.textSecondary,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    '${tip.steps.length} steps to master',
+                    style: context.textTheme.bodyMedium?.copyWith(
+                      color: isDark 
+                        ? Colors.white.withValues(alpha: 0.7)
+                        : AppColors.textSecondary,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                      letterSpacing: 0.2,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
+  
+
   
   Widget _buildStep(BuildContext context, int stepNumber, String stepText) {
     return Container(

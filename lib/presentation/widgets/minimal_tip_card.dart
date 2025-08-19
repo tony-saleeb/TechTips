@@ -487,14 +487,14 @@ class _MinimalTipCardState extends State<MinimalTipCard>
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            padding: const EdgeInsets.all(6),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.25),
-              borderRadius: BorderRadius.circular(8),
+              color: Colors.white.withValues(alpha: 0.3),
+              borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(
               AppIcons.getOSIcon(widget.tip.os),
-              size: 16,
+              size: 20,
               color: Colors.white,
             ),
           ),
@@ -660,7 +660,7 @@ class _MinimalTipCardState extends State<MinimalTipCard>
           ),
           child: Column(
             children: [
-              // Ultra-premium handle bar with glow effect
+              // Handle bar indicator
               Container(
                 margin: const EdgeInsets.only(top: 24),
                 width: 80,
@@ -686,115 +686,200 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                       offset: const Offset(0, 6),
                       spreadRadius: 3,
                     ),
-                    BoxShadow(
-                      color: AppColors.accentDark.withValues(alpha: 0.3),
-                      blurRadius: 30,
-                      offset: const Offset(0, 10),
-                      spreadRadius: 5,
-                    ),
                   ],
                 ),
               ),
               
-              // Ultra-premium header with glassmorphism
+              // Premium header container with enhanced design
               Container(
                 margin: const EdgeInsets.all(28),
-                padding: const EdgeInsets.all(28),
+                padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: isDark
                       ? [
-                          Colors.white.withValues(alpha: 0.15),
-                          Colors.white.withValues(alpha: 0.08),
-                          Colors.white.withValues(alpha: 0.05),
-                          Colors.white.withValues(alpha: 0.02),
+                          AppColors.accentDark.withValues(alpha: 0.1),
+                          AppColors.accentDark.withValues(alpha: 0.05),
+                          AppColors.surfaceDark.withValues(alpha: 0.8),
                         ]
                       : [
-                          Colors.white.withValues(alpha: 0.95),
-                          Colors.white.withValues(alpha: 0.85),
-                          Colors.white.withValues(alpha: 0.7),
-                          Colors.white.withValues(alpha: 0.6),
+                          AppColors.accentDark.withValues(alpha: 0.08),
+                          AppColors.accentDark.withValues(alpha: 0.03),
+                          AppColors.neutral50.withValues(alpha: 0.9),
                         ],
-                    stops: const [0.0, 0.33, 0.66, 1.0],
+                    stops: const [0.0, 0.3, 1.0],
                   ),
-                  borderRadius: BorderRadius.circular(30),
-        border: Border.all(
-                    color: isDark
-                      ? Colors.white.withValues(alpha: 0.2)
-                      : Colors.white.withValues(alpha: 0.5),
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(
+                    color: isDark 
+                      ? AppColors.accentDark.withValues(alpha: 0.3)
+                      : AppColors.accentDark.withValues(alpha: 0.2),
                     width: 2,
                   ),
                   boxShadow: [
                     BoxShadow(
                       color: isDark 
-                        ? Colors.black.withValues(alpha: 0.4)
-                        : Colors.black.withValues(alpha: 0.15),
-                      blurRadius: 30,
-                      offset: const Offset(0, 12),
-                      spreadRadius: 3,
+                        ? AppColors.accentDark.withValues(alpha: 0.2)
+                        : AppColors.accentDark.withValues(alpha: 0.15),
+                      blurRadius: 20,
+                      offset: const Offset(0, 8),
+                      spreadRadius: 2,
                     ),
                     BoxShadow(
-                      color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.1),
-                      blurRadius: 40,
-                      offset: const Offset(0, 20),
-                      spreadRadius: 5,
+                      color: isDark 
+                        ? Colors.black.withValues(alpha: 0.15)
+                        : Colors.black.withValues(alpha: 0.06),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                      spreadRadius: 0,
                     ),
                   ],
-      ),
-      child: Row(
-        children: [
-                    _buildPremiumOSBadge(context),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                                                     ShaderMask(
-                             shaderCallback: (bounds) => LinearGradient(
-                               begin: Alignment.topLeft,
-                               end: Alignment.bottomRight,
-                               colors: isDark
-                                 ? [
-                                     Colors.white,
-                                     Colors.white.withValues(alpha: 0.95),
-                                     Colors.white.withValues(alpha: 0.9),
-                                     Colors.white.withValues(alpha: 0.85),
-                                   ]
-                                 : [
-                                     AppColors.textPrimary,
-                                     AppColors.textPrimary.withValues(alpha: 0.9),
-                                     AppColors.textPrimary.withValues(alpha: 0.8),
-                                     AppColors.textPrimary.withValues(alpha: 0.7),
-                                   ],
-                               stops: const [0.0, 0.33, 0.66, 1.0],
-                             ).createShader(bounds),
-                             child: Text(
-                               widget.tip.title,
-                               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                 fontWeight: FontWeight.w900,
-                                 color: Colors.white,
-                                 height: 1.2,
-                                 letterSpacing: -1.0,
-                                 fontSize: 24,
-                               ),
-                             ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // OS Badge with enhanced design
+                    Row(
+                      children: [
+                        // Enhanced OS Icon Container
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.2),
+                                AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.1),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.4),
+                              width: 2,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.3),
+                                blurRadius: 8,
+                                offset: const Offset(0, 2),
+                                spreadRadius: 0,
+                              ),
+                            ],
+                          ),
+                                                     child: Icon(
+                             AppIcons.getOSIcon(widget.tip.os),
+                             size: 24,
+                             color: AppColors.getOSColor(widget.tip.os),
                            ),
-                          const SizedBox(height: 8),
-          Text(
-                            '${widget.tip.steps.length} steps to master',
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: isDark 
-                                ? Colors.white.withValues(alpha: 0.7)
-                                : AppColors.textSecondary,
-                              fontWeight: FontWeight.w600,
+                        ),
+                        const SizedBox(width: 16),
+                        // Enhanced OS Name Badge
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.15),
+                                AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.08),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.4),
+                              width: 1.5,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.2),
+                                blurRadius: 6,
+                                offset: const Offset(0, 2),
+                                spreadRadius: 0,
+                              ),
+                            ],
+                          ),
+                          child: Text(
+                            _getOSDisplayName(widget.tip.os),
+                            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                              color: AppColors.getOSColor(widget.tip.os),
+                              fontWeight: FontWeight.w800,
                               fontSize: 14,
                               letterSpacing: 0.3,
-            ),
-          ),
-        ],
-      ),
+                            ),
+                          ),
+                        ),
+                        const Spacer(),
+                        // Tip Type Indicator
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: isDark 
+                              ? Colors.white.withValues(alpha: 0.1)
+                              : Colors.white.withValues(alpha: 0.8),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: isDark 
+                                ? Colors.white.withValues(alpha: 0.2)
+                                : Colors.white.withValues(alpha: 0.6),
+                              width: 1,
+                            ),
+                          ),
+                          child: Text(
+                            'Tip',
+                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: isDark 
+                                ? Colors.white.withValues(alpha: 0.8)
+                                : AppColors.textSecondary,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 11,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    // Enhanced Title
+                    Text(
+                      widget.tip.title,
+                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.w900,
+                        color: isDark 
+                          ? Colors.white
+                          : AppColors.textPrimary,
+                        fontSize: 22,
+                        letterSpacing: -0.5,
+                        height: 1.2,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    // Subtitle with step count
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.format_list_numbered_rounded,
+                          size: 16,
+                          color: isDark 
+                            ? Colors.white.withValues(alpha: 0.7)
+                            : AppColors.textSecondary,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          '${widget.tip.steps.length} steps to master',
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: isDark 
+                              ? Colors.white.withValues(alpha: 0.7)
+                              : AppColors.textSecondary,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                            letterSpacing: 0.2,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
