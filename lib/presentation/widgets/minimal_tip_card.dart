@@ -298,75 +298,143 @@ class _MinimalTipCardState extends State<MinimalTipCard>
                                     const SizedBox(height: 24),
                                   ],
                                   
-                                  // Ultra-premium footer with glassmorphism
+                                  // Fancy and sophisticated footer
                               Container(
-                                    padding: const EdgeInsets.all(16),
+                                    padding: const EdgeInsets.all(20),
                                 decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         begin: Alignment.topLeft,
                                         end: Alignment.bottomRight,
-                                        colors: [
-                                          AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.1),
-                                          AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.05),
-                                        ],
+                                        colors: isDark
+                                          ? [
+                                              Colors.white.withValues(alpha: 0.12),
+                                              Colors.white.withValues(alpha: 0.08),
+                                              Colors.white.withValues(alpha: 0.05),
+                                            ]
+                                          : [
+                                              Colors.white.withValues(alpha: 0.95),
+                                              Colors.white.withValues(alpha: 0.9),
+                                              Colors.white.withValues(alpha: 0.85),
+                                            ],
+                                        stops: const [0.0, 0.5, 1.0],
                                       ),
-                                      borderRadius: BorderRadius.circular(16),
+                                      borderRadius: BorderRadius.circular(18),
                                   border: Border.all(
-                                        color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.2),
-                                        width: 1,
+                                        color: isDark 
+                                          ? Colors.white.withValues(alpha: 0.2)
+                                          : AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.25),
+                                        width: 1.5,
                                   ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: isDark 
+                                        ? Colors.black.withValues(alpha: 0.3)
+                                        : Colors.black.withValues(alpha: 0.1),
+                                      blurRadius: 16,
+                                      offset: const Offset(0, 6),
+                                      spreadRadius: 0,
+                                    ),
+                                    BoxShadow(
+                                      color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.15),
+                                      blurRadius: 25,
+                                      offset: const Offset(0, 8),
+                                      spreadRadius: 2,
+                                    ),
+                                  ],
                                 ),
                                 child: Row(
                                   children: [
+                                    // Fancy steps icon with gradient
                                     Container(
-                                          padding: const EdgeInsets.all(8),
+                                          padding: const EdgeInsets.all(10),
                                       decoration: BoxDecoration(
                                             gradient: LinearGradient(
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomRight,
                                               colors: [
-                                                AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.2),
-                                                AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.1),
+                                                AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.25),
+                                                AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.15),
                                               ],
                                             ),
-                                            borderRadius: BorderRadius.circular(10),
+                                            borderRadius: BorderRadius.circular(12),
+                                            border: Border.all(
+                                              color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.4),
+                                              width: 1.5,
+                                            ),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.2),
+                                                blurRadius: 10,
+                                                offset: const Offset(0, 3),
+                                                spreadRadius: 0,
+                                              ),
+                                            ],
                                       ),
                                       child: Icon(
-                                            Icons.format_list_bulleted_rounded,
-                                            size: 16,
+                                            Icons.format_list_numbered_rounded,
+                                            size: 18,
                                         color: AppColors.getOSColor(widget.tip.os),
                                       ),
                                     ),
-                                        const SizedBox(width: 12),
-                                    Text(
-                                      '${widget.tip.steps.length} steps',
-                                          style: context.textTheme.bodyMedium?.copyWith(
-                                        color: AppColors.getOSColor(widget.tip.os),
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 14,
-                                            letterSpacing: 0.5,
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    Container(
-                                          padding: const EdgeInsets.all(8),
-                                      decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                              colors: [
+                                        const SizedBox(width: 14),
+                                    // Fancy steps text with gradient
+                                    Expanded(
+                                      child: ShaderMask(
+                                        shaderCallback: (bounds) => LinearGradient(
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                          colors: isDark
+                                            ? [
+                                                Colors.white,
+                                                Colors.white.withValues(alpha: 0.9),
+                                              ]
+                                            : [
                                                 AppColors.getOSColor(widget.tip.os),
                                                 AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.8),
                                               ],
+                                        ).createShader(bounds),
+                                        child: Text(
+                                          '${widget.tip.steps.length} steps to master',
+                                              style: context.textTheme.bodyMedium?.copyWith(
+                                            color: Colors.white,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 15,
+                                                letterSpacing: 0.3,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    // Fancy arrow button with premium styling
+                                    Container(
+                                          padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomRight,
+                                              colors: [
+                                                AppColors.getOSColor(widget.tip.os),
+                                                AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.9),
+                                              ],
                                             ),
-                                        borderRadius: BorderRadius.circular(12),
+                                            borderRadius: BorderRadius.circular(12),
                                             boxShadow: [
                                               BoxShadow(
-                                                color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.3),
-                                                blurRadius: 8,
-                                                offset: const Offset(0, 2),
+                                                color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.4),
+                                                blurRadius: 12,
+                                                offset: const Offset(0, 4),
+                                                spreadRadius: 1,
+                                              ),
+                                              BoxShadow(
+                                                color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.2),
+                                                blurRadius: 20,
+                                                offset: const Offset(0, 8),
+                                                spreadRadius: 2,
                                               ),
                                             ],
                                       ),
                                       child: const Icon(
                                             Icons.arrow_forward_rounded,
-                                            size: 14,
+                                            size: 16,
                                         color: Colors.white,
                                       ),
                                     ),

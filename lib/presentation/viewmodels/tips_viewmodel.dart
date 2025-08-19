@@ -62,10 +62,16 @@ class TipsViewModel extends ChangeNotifier {
       _isInitialized = true;
       await _loadFavoriteIds();
       
+      // Set default OS (Windows) as current tips to display
+      _tips = allTips;
+      _currentOS = 'windows';
+      _filteredTips = List.from(_tips);
+      
       print('✅ Tips cache initialized: ${_tipsCache.length} OS types cached');
+      print('✅ Default tips set: ${_tips.length} Windows tips loaded');
     } catch (e) {
       print('❌ Error initializing tips cache: $e');
-      _setError('Failed to initialize tips: ${e.toString()}');
+      _setError('Unable to initialize tips. Please restart the app.');
     } finally {
       _setLoading(false);
     }
@@ -107,7 +113,7 @@ class TipsViewModel extends ChangeNotifier {
       _filteredTips = List.from(_tips); // Direct assignment
     } catch (e) {
       print('❌ Error loading tips for $os: $e');
-      _setError('Failed to load tips: ${e.toString()}');
+      _setError('Unable to load tips at the moment. Please try again.');
       _tips = [];
       _filteredTips = [];
     } finally {
@@ -139,7 +145,7 @@ class TipsViewModel extends ChangeNotifier {
         _filteredTips = await _searchTipsUseCase(_searchQuery);
       }
     } catch (e) {
-      _setError('Failed to search tips: ${e.toString()}');
+      _setError('Unable to search tips at the moment. Please try again.');
       _filteredTips = [];
     } finally {
       _setLoading(false);
@@ -188,7 +194,7 @@ class TipsViewModel extends ChangeNotifier {
       _filteredTips = List.from(_tips);
       await _loadFavoriteIds();
     } catch (e) {
-      _setError('Failed to load favorite tips: ${e.toString()}');
+      _setError('Unable to load favorite tips at the moment. Please try again.');
       _tips = [];
       _filteredTips = [];
     } finally {

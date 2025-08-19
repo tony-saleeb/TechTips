@@ -37,16 +37,6 @@ class _TipsListPageState extends State<TipsListPage> {
     // Set up callbacks for parent to control search
     widget.onSearchToggleCallback?.call(_toggleSearch);
     widget.onSearchStateCallback?.call(() => _showSearch);
-    
-    // Only initialize if TipsViewModel is not initialized
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final tipsViewModel = context.read<TipsViewModel>();
-      
-      if (!tipsViewModel.isInitialized) {
-        print('🚀 TipsListPage: Initializing TipsViewModel');
-        tipsViewModel.initializeTips();
-      }
-    });
   }
   
   @override
@@ -60,138 +50,10 @@ class _TipsListPageState extends State<TipsListPage> {
     return Consumer<TipsViewModel>(
       builder: (context, tipsViewModel, _) {
         return Scaffold(
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(80), // Reduced height for sleeker look
-            child: Transform(
-              transform: Matrix4.identity()
-                ..setEntry(3, 2, 0.001) // Perspective
-                ..translate(0.0, -2.0, 8.0), // Lift up and forward
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(40),
-                  bottomRight: Radius.circular(40),
-                ),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: Theme.of(context).brightness == Brightness.dark
-                          ? [
-                              Colors.white.withValues(alpha: 0.2),
-                              AppColors.getOSColor(widget.os).withValues(alpha: 0.18),
-                              Colors.white.withValues(alpha: 0.12),
-                            ]
-                          : [
-                              Colors.white.withValues(alpha: 0.9),
-                              AppColors.getOSColor(widget.os).withValues(alpha: 0.12),
-                              Colors.white.withValues(alpha: 0.8),
-                            ],
-                        stops: const [0.0, 0.5, 1.0],
-                      ),
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(40),
-                        bottomRight: Radius.circular(40),
-                      ),
-                      border: Border.all(
-                        color: Theme.of(context).brightness == Brightness.dark
-                          ? AppColors.getOSColor(widget.os).withValues(alpha: 0.5)
-                          : AppColors.getOSColor(widget.os).withValues(alpha: 0.35),
-                        width: 1.5,
-                      ),
-                      boxShadow: [
-                        // Primary depth shadow
-                        BoxShadow(
-                          color: Theme.of(context).brightness == Brightness.dark
-                            ? Colors.black.withValues(alpha: 0.6)
-                            : Colors.black.withValues(alpha: 0.3),
-                          blurRadius: 40,
-                          offset: const Offset(0, 16),
-                          spreadRadius: 0,
-                        ),
-                        // Secondary depth shadow
-                        BoxShadow(
-                          color: Theme.of(context).brightness == Brightness.dark
-                            ? Colors.black.withValues(alpha: 0.4)
-                            : Colors.black.withValues(alpha: 0.2),
-                          blurRadius: 60,
-                          offset: const Offset(0, 24),
-                          spreadRadius: -20,
-                        ),
-                        // 3D glow effect
-                        BoxShadow(
-                          color: AppColors.getOSColor(widget.os).withValues(alpha: 0.4),
-                          blurRadius: 60,
-                          offset: const Offset(0, 25),
-                          spreadRadius: -25,
-                        ),
-                        // Inner highlight for 3D effect
-                        BoxShadow(
-                          color: Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white.withValues(alpha: 0.1)
-                            : Colors.white.withValues(alpha: 0.3),
-                          blurRadius: 20,
-                          offset: const Offset(0, -8),
-                          spreadRadius: -10,
-                        ),
-                      ],
-                    ),
-                    child: SafeArea(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8), // Sleeker padding
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            // Spacer for left alignment (drawer button space)
-                            const SizedBox(width: 40),
-                            
-                            // Elegant title - centered
-                            Expanded(
-                              child: Center(
-                                child: _buildModernTitle(),
-                              ),
-                            ),
-                            
-                            // Spacer for right alignment (search button space)
-                            const SizedBox(width: 40),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-
-          
-          body: Container(
-            margin: const EdgeInsets.only(top: 8), // Small margin to complement curved app bar
-            child: Column(
-              children: [
-                // Search bar
-                if (_showSearch)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: CustomSearchBar(
-                      controller: _searchController,
-                      hintText: 'Search ${_getOSDisplayName(widget.os)} tips...',
-                      onChanged: (query) => _onSearchChanged(query, tipsViewModel),
-                      onClear: () => _onSearchCleared(tipsViewModel),
-                      autofocus: true,
-                    ),
-                  ),
-                
-                // Content
-                Expanded(
-                  child: _buildContent(tipsViewModel),
-                ),
-              ],
-            ),
-          ),
-
+          backgroundColor: Colors.transparent,
+          body: _showSearch
+            ? _buildSearchView(tipsViewModel)
+            : _buildTipsListView(tipsViewModel),
         );
       },
     );
@@ -235,7 +97,7 @@ class _TipsListPageState extends State<TipsListPage> {
     
     return EmptyStateWidget(
       title: 'No Tips Available',
-      message: 'Check your internet connection and try again.',
+      message: 'Tips will appear here once loaded.',
       icon: Icons.info_outline,
       osTheme: widget.os,
       action: ElevatedButton(
@@ -419,6 +281,37 @@ class _TipsListPageState extends State<TipsListPage> {
       ),
     );
   }
+
+  /// Build search view with search bar
+  Widget _buildSearchView(TipsViewModel tipsViewModel) {
+    return Column(
+      children: [
+        // Search bar
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: CustomSearchBar(
+            controller: _searchController,
+            hintText: 'Search ${_getOSDisplayName(widget.os)} tips...',
+            onChanged: (query) => _onSearchChanged(query, tipsViewModel),
+            onClear: () => _onSearchCleared(tipsViewModel),
+            autofocus: true,
+          ),
+        ),
+        
+        // Content
+        Expanded(
+          child: _buildContent(tipsViewModel),
+        ),
+      ],
+    );
+  }
+
+  /// Build tips list view without search bar
+  Widget _buildTipsListView(TipsViewModel tipsViewModel) {
+    return _buildContent(tipsViewModel);
+  }
+
+  /// Build content
 
 }
 
