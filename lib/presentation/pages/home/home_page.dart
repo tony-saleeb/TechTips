@@ -135,11 +135,11 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
               color: Theme.of(context).brightness == Brightness.dark
-                ? Colors.black.withOpacity(0.2)
-                : Colors.white.withOpacity(0.2),
+                        ? Colors.black.withValues(alpha: 0.2)
+        : Colors.white.withValues(alpha: 0.2),
               border: Border(
                 top: BorderSide(
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                   width: 1,
                 ),
               ),
@@ -184,12 +184,12 @@ class _HomePageState extends State<HomePage> {
         decoration: BoxDecoration(
           gradient: isSelected
             ? LinearGradient(
-                colors: [osColor.withOpacity(0.2), osColor.withOpacity(0.1)],
+                colors: [osColor.withValues(alpha: 0.2), osColor.withValues(alpha: 0.1)],
               )
             : null,
           borderRadius: BorderRadius.circular(20),
           border: isSelected
-            ? Border.all(color: osColor.withOpacity(0.3), width: 1)
+            ? Border.all(color: osColor.withValues(alpha: 0.3), width: 1)
             : null,
         ),
         child: Column(
@@ -200,13 +200,13 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 gradient: isSelected
-                  ? LinearGradient(colors: [osColor, osColor.withOpacity(0.8)])
+                  ? LinearGradient(colors: [osColor, osColor.withValues(alpha: 0.8)])
                   : null,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: isSelected
                   ? [
                       BoxShadow(
-                        color: osColor.withOpacity(0.3),
+                        color: osColor.withValues(alpha: 0.3),
                         blurRadius: 8,
                         offset: const Offset(0, 4),
                       ),
@@ -217,7 +217,7 @@ class _HomePageState extends State<HomePage> {
                 icon,
                 color: isSelected
                   ? Colors.white
-                  : Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                  : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                 size: 24,
               ),
             ),
@@ -225,9 +225,9 @@ class _HomePageState extends State<HomePage> {
             Text(
               label,
               style: TextStyle(
-                color: isSelected
-                  ? osColor
-                  : Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                            color: isSelected
+              ? osColor
+              : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                 fontSize: 12,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
               ),

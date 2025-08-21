@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import '../../domain/entities/tip_entity.dart';
 import '../../domain/repositories/tip_repository.dart';
 import '../datasources/local_data_source.dart';
@@ -12,12 +13,12 @@ class TipRepositoryImpl implements TipRepository {
   
   /// Load and cache tips if not already loaded
   Future<List<TipModel>> _getTips() async {
-    print('🔍 Repository: _getTips called, cached tips: ${_cachedTips?.length ?? 0}');
+    debugPrint('🔍 Repository: _getTips called, cached tips: ${_cachedTips?.length ?? 0}');
     if (_cachedTips == null) {
-      print('🔍 Repository: Loading tips from asset (cache miss)');
+      debugPrint('🔍 Repository: Loading tips from asset (cache miss)');
       _cachedTips = await _localDataSource.loadTipsFromAsset();
     } else {
-      print('🔍 Repository: Using cached tips');
+      debugPrint('🔍 Repository: Using cached tips');
     }
     return _cachedTips!;
   }
@@ -35,21 +36,21 @@ class TipRepositoryImpl implements TipRepository {
   @override
   Future<List<TipEntity>> getTipsByOS(String os) async {
     try {
-      print('🔍 Repository: Getting tips for OS: $os');
+      debugPrint('🔍 Repository: Getting tips for OS: $os');
       
       final tips = await _getTips();
-      print('🔍 Repository: Total tips loaded: ${tips.length}');
+              debugPrint('🔍 Repository: Total tips loaded: ${tips.length}');
       
       final filteredTips = tips
           .where((tip) => tip.os.toLowerCase() == os.toLowerCase())
           .toList();
       
-      print('🔍 Repository: Filtered tips for $os: ${filteredTips.length}');
-      print('🔍 Repository: Available OS types: ${tips.map((t) => t.os).toSet()}');
+              debugPrint('🔍 Repository: Filtered tips for $os: ${filteredTips.length}');
+        debugPrint('🔍 Repository: Available OS types: ${tips.map((t) => t.os).toSet()}');
       
       return filteredTips.map((tip) => tip.toEntity()).toList();
     } catch (e) {
-      print('❌ Repository: Error getting tips for $os: $e');
+      debugPrint('❌ Repository: Error getting tips for $os: $e');
       throw Exception('Failed to get tips for $os: $e');
     }
   }
@@ -89,7 +90,7 @@ class TipRepositoryImpl implements TipRepository {
   
   /// Clear repository cache (for refresh operations)
   void clearCache() {
-    print('🔍 Repository: Clearing cache');
+    debugPrint('🔍 Repository: Clearing cache');
     _cachedTips = null;
   }
   
@@ -174,14 +175,14 @@ class TipRepositoryImpl implements TipRepository {
   @override
   Future<void> refreshTips() async {
     try {
-      print('🔍 Repository: Refreshing tips - clearing cache');
+      debugPrint('🔍 Repository: Refreshing tips - clearing cache');
       // Clear cache to force reload from asset
       _cachedTips = null;
       // Preload tips
       await _getTips();
-      print('🔍 Repository: Tips refreshed successfully');
+      debugPrint('🔍 Repository: Tips refreshed successfully');
     } catch (e) {
-      print('❌ Repository: Failed to refresh tips: $e');
+      debugPrint('❌ Repository: Failed to refresh tips: $e');
       throw Exception('Failed to refresh tips: $e');
     }
   }

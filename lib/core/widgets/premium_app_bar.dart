@@ -54,8 +54,8 @@ class PremiumAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             centerTitle: centerTitle,
             backgroundColor: isDark 
-              ? Colors.black.withOpacity(0.1)
-              : Colors.white.withOpacity(0.1),
+                      ? Colors.black.withValues(alpha: 0.1)
+        : Colors.white.withValues(alpha: 0.1),
             elevation: elevation,
             leading: leading,
             actions: actions?.map((action) {
@@ -64,13 +64,13 @@ class PremiumAppBar extends StatelessWidget implements PreferredSizeWidget {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Colors.white.withOpacity(0.1),
-                      Colors.white.withOpacity(0.05),
+                              Colors.white.withValues(alpha: 0.1),
+        Colors.white.withValues(alpha: 0.05),
                     ],
                   ),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     width: 1,
                   ),
                 ),

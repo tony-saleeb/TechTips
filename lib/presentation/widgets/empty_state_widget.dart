@@ -85,7 +85,7 @@ class _EmptyStateWidgetState extends State<EmptyStateWidget>
       opacity: _fadeAnimation,
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.all(40),
+          padding: context.re(40),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -98,22 +98,22 @@ class _EmptyStateWidgetState extends State<EmptyStateWidget>
                     child: ScaleTransition(
                       scale: _scaleAnimation,
                       child: Container(
-                        width: 120,
-                        height: 120,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              osColor.withValues(alpha: 0.15),
-                              osColor.withValues(alpha: 0.05),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.circular(30),
-                          border: Border.all(
-                            color: osColor.withValues(alpha: 0.2),
-                            width: 2,
-                          ),
+                                                 width: context.rw(120),
+                         height: context.rh(120),
+                         decoration: BoxDecoration(
+                           gradient: LinearGradient(
+                             begin: Alignment.topLeft,
+                             end: Alignment.bottomRight,
+                             colors: [
+                               osColor.withValues(alpha: 0.15),
+                               osColor.withValues(alpha: 0.05),
+                             ],
+                           ),
+                           borderRadius: BorderRadius.circular(context.rbr(30)),
+                           border: Border.all(
+                             color: osColor.withValues(alpha: 0.2),
+                             width: context.rw(2),
+                           ),
                           boxShadow: [
                             BoxShadow(
                               color: osColor.withValues(alpha: 0.1),
@@ -122,11 +122,11 @@ class _EmptyStateWidgetState extends State<EmptyStateWidget>
                             ),
                           ],
                         ),
-                        child: Icon(
-                          widget.icon ?? Icons.info_outline,
-                          size: 50,
-                          color: osColor,
-                        ),
+                                                 child: Icon(
+                           widget.icon ?? Icons.info_outline,
+                           size: context.ri(50),
+                           color: osColor,
+                         ),
                       ),
                     ),
                   );
@@ -135,41 +135,44 @@ class _EmptyStateWidgetState extends State<EmptyStateWidget>
               
               const SizedBox(height: 32),
               
-              // Enhanced title
-              Text(
-                widget.title ?? 'Nothing Here',
-                style: context.textTheme.headlineSmall?.copyWith(
-                  color: osColor,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: -0.5,
-                ),
-                textAlign: TextAlign.center,
-              ),
+                             // Enhanced title
+               Text(
+                 widget.title ?? 'Nothing Here',
+                 style: context.textTheme.headlineSmall?.copyWith(
+                   color: osColor,
+                   fontWeight: FontWeight.w700,
+                   letterSpacing: -0.5,
+                   fontSize: context.rs(20),
+                 ),
+                 textAlign: TextAlign.center,
+               ),
+               
+               context.rsb(height: 12),
               
-              const SizedBox(height: 12),
-              
-              // Enhanced message in container
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                decoration: BoxDecoration(
-                  color: context.colorScheme.surfaceVariant.withValues(alpha: 0.3),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: context.colorScheme.outline.withValues(alpha: 0.2),
-                  ),
-                ),
-                child: Text(
-                  widget.message ?? 'There are no items to display.',
-                  style: context.textTheme.bodyLarge?.copyWith(
-                    color: context.colorScheme.onSurfaceVariant,
-                    height: 1.5,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
+                             // Enhanced message in container
+               Container(
+                 padding: context.rse(horizontal: 20, vertical: 16),
+                 decoration: BoxDecoration(
+                   color: context.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+                   borderRadius: BorderRadius.circular(context.rbr(12)),
+                   border: Border.all(
+                     color: context.colorScheme.outline.withValues(alpha: 0.2),
+                     width: context.rw(1),
+                   ),
+                 ),
+                 child: Text(
+                   widget.message ?? 'There are no items to display.',
+                   style: context.textTheme.bodyLarge?.copyWith(
+                     color: context.colorScheme.onSurfaceVariant,
+                     height: 1.5,
+                     fontSize: context.rs(16),
+                   ),
+                   textAlign: TextAlign.center,
+                 ),
+               ),
               
               if (widget.action != null) ...[
-                const SizedBox(height: 32),
+                context.rsb(height: 32),
                 widget.action!,
               ],
             ],

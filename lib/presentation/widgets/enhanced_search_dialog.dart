@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
+import '../../core/utils/extensions.dart';
 import '../viewmodels/tips_viewmodel.dart';
 
 /// Enhanced search dialog with advanced filtering and better UX
@@ -98,11 +99,14 @@ class _EnhancedSearchDialogState extends State<EnhancedSearchDialog>
             child: FadeTransition(
               opacity: _fadeAnimation,
               child: Container(
-                constraints: const BoxConstraints(maxWidth: 500, maxHeight: 600),
-                margin: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface,
-                  borderRadius: BorderRadius.circular(24),
+                                 constraints: BoxConstraints(
+                   maxWidth: context.rw(500), 
+                   maxHeight: context.rh(600)
+                 ),
+                 margin: context.re(20),
+                 decoration: BoxDecoration(
+                   color: Theme.of(context).colorScheme.surface,
+                   borderRadius: BorderRadius.circular(context.rbr(24)),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withValues(alpha: 0.2),
@@ -141,8 +145,8 @@ class _EnhancedSearchDialogState extends State<EnhancedSearchDialog>
   }
 
   Widget _buildEnhancedHeader(BuildContext context, Color osColor) {
-    return Container(
-      padding: const EdgeInsets.all(24),
+         return Container(
+       padding: context.re(24),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -152,48 +156,50 @@ class _EnhancedSearchDialogState extends State<EnhancedSearchDialog>
             osColor.withValues(alpha: 0.05),
           ],
         ),
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
-        ),
+                 borderRadius: BorderRadius.only(
+           topLeft: Radius.circular(context.rbr(24)),
+           topRight: Radius.circular(context.rbr(24)),
+         ),
       ),
       child: Row(
         children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: osColor.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: osColor.withValues(alpha: 0.3),
-                width: 2,
-              ),
-            ),
-            child: Icon(
-              Icons.search_rounded,
-              color: osColor,
-              size: 24,
-            ),
-          ),
-          const SizedBox(width: 16),
+                     Container(
+             padding: context.re(12),
+             decoration: BoxDecoration(
+               color: osColor.withValues(alpha: 0.15),
+               borderRadius: BorderRadius.circular(context.rbr(16)),
+               border: Border.all(
+                 color: osColor.withValues(alpha: 0.3),
+                 width: context.rw(2),
+               ),
+             ),
+             child: Icon(
+               Icons.search_rounded,
+               color: osColor,
+               size: context.ri(24),
+             ),
+           ),
+           context.rsb(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Advanced Search',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: osColor,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Find ${_getOSDisplayName(widget.os)} tips quickly',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-                ),
+                                 Text(
+                   'Advanced Search',
+                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                     fontWeight: FontWeight.w800,
+                     color: osColor,
+                     fontSize: context.rs(20),
+                   ),
+                 ),
+                 context.rsb(height: 4),
+                                 Text(
+                   'Find ${_getOSDisplayName(widget.os)} tips quickly',
+                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                     color: Theme.of(context).colorScheme.onSurfaceVariant,
+                     fontSize: context.rs(14),
+                   ),
+                 ),
               ],
             ),
           ),
@@ -204,7 +210,7 @@ class _EnhancedSearchDialogState extends State<EnhancedSearchDialog>
               color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
             style: IconButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.surfaceVariant.withValues(alpha: 0.5),
+              backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
             ),
           ),
         ],
@@ -363,7 +369,7 @@ class _EnhancedSearchDialogState extends State<EnhancedSearchDialog>
                   decoration: BoxDecoration(
                     color: isSelected 
                       ? osColor.withValues(alpha: 0.15)
-                      : Theme.of(context).colorScheme.surfaceVariant.withValues(alpha: 0.5),
+                      : Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       color: isSelected 

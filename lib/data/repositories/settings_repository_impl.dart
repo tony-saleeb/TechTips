@@ -54,6 +54,26 @@ class SettingsRepositoryImpl implements SettingsRepository {
   }
   
   @override
+  Future<double> getAppearanceSize() async {
+    try {
+      final appearanceSize = await _localDataSource.getAppearanceSize();
+      return appearanceSize ?? 1.0; // Default appearance size
+    } catch (e) {
+      // Return default appearance size on error
+      return 1.0;
+    }
+  }
+  
+  @override
+  Future<void> setAppearanceSize(double appearanceSize) async {
+    try {
+      await _localDataSource.saveAppearanceSize(appearanceSize);
+    } catch (e) {
+      throw Exception('Failed to set appearance size: $e');
+    }
+  }
+  
+  @override
   String getAppVersion() {
     return _appVersion;
   }

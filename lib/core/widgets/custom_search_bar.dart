@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_strings.dart';
 import '../constants/app_icons.dart';
+import '../utils/extensions.dart';
 
 /// Custom search bar widget
 class CustomSearchBar extends StatefulWidget {
@@ -65,7 +66,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(16),
+      margin: context.re(16),
       child: TextField(
         controller: _controller,
         autofocus: widget.autofocus,
@@ -80,7 +81,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                   tooltip: 'Clear search',
                 )
               : null,
-          contentPadding: const EdgeInsets.symmetric(
+          contentPadding: context.rse(
             horizontal: 16,
             vertical: 12,
           ),

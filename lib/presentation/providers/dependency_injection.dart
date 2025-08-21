@@ -10,7 +10,6 @@ import '../../data/repositories/settings_repository_impl.dart';
 import '../../domain/repositories/tip_repository.dart';
 import '../../domain/repositories/settings_repository.dart';
 import '../../domain/usecases/get_tips_by_os_usecase.dart';
-import '../../domain/usecases/search_tips_usecase.dart';
 import '../../domain/usecases/manage_favorites_usecase.dart';
 import '../../domain/usecases/manage_settings_usecase.dart';
 
@@ -41,9 +40,6 @@ class DependencyInjection {
       ProxyProvider<TipRepository, GetTipsByOSUseCase>(
         update: (_, repository, __) => GetTipsByOSUseCase(repository),
       ),
-      ProxyProvider<TipRepository, SearchTipsUseCase>(
-        update: (_, repository, __) => SearchTipsUseCase(repository),
-      ),
       ProxyProvider<TipRepository, ManageFavoritesUseCase>(
         update: (_, repository, __) => ManageFavoritesUseCase(repository),
       ),
@@ -55,16 +51,14 @@ class DependencyInjection {
       ChangeNotifierProvider<AppViewModel>(
         create: (_) => AppViewModel(),
       ),
-      ChangeNotifierProxyProvider3<GetTipsByOSUseCase, SearchTipsUseCase, ManageFavoritesUseCase, TipsViewModel>(
+      ChangeNotifierProxyProvider2<GetTipsByOSUseCase, ManageFavoritesUseCase, TipsViewModel>(
         create: (context) => TipsViewModel(
           getTipsByOSUseCase: context.read<GetTipsByOSUseCase>(),
-          searchTipsUseCase: context.read<SearchTipsUseCase>(),
           manageFavoritesUseCase: context.read<ManageFavoritesUseCase>(),
         ),
-        update: (_, getTipsUseCase, searchUseCase, favoritesUseCase, previous) {
+        update: (_, getTipsUseCase, favoritesUseCase, previous) {
           return previous ?? TipsViewModel(
             getTipsByOSUseCase: getTipsUseCase,
-            searchTipsUseCase: searchUseCase,
             manageFavoritesUseCase: favoritesUseCase,
           );
         },

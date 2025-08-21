@@ -14,6 +14,12 @@ abstract class SettingsRepository {
   /// Set font size
   Future<void> setFontSize(double fontSize);
   
+  /// Get appearance size
+  Future<double> getAppearanceSize();
+  
+  /// Set appearance size
+  Future<void> setAppearanceSize(double appearanceSize);
+  
   /// Get app version
   String getAppVersion();
   

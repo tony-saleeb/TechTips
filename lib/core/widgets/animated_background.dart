@@ -125,7 +125,7 @@ class FloatingShapesPainter extends CustomPainter {
       final y = (shape.y + math.sin(progress * math.pi * 2) * 0.1) * size.height;
 
       paint.color = isDark 
-        ? shape.color.withValues(alpha: shape.color.alpha * 0.5)
+        ? shape.color.withValues(alpha: shape.color.a * 0.5)
         : shape.color;
 
       switch (shape.type) {

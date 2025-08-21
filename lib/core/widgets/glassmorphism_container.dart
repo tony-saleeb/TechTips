@@ -51,25 +51,25 @@ class GlassmorphismContainer extends StatelessWidget {
                 end: Alignment.bottomRight,
                 colors: [
                   isDark 
-                    ? Colors.white.withOpacity(opacity)
-                    : Colors.white.withOpacity(opacity + 0.1),
+                            ? Colors.white.withValues(alpha: opacity)
+        : Colors.white.withValues(alpha: opacity + 0.1),
                   isDark
-                    ? Colors.white.withOpacity(opacity * 0.5)
-                    : Colors.white.withOpacity(opacity * 0.8),
+                            ? Colors.white.withValues(alpha: opacity * 0.5)
+        : Colors.white.withValues(alpha: opacity * 0.8),
                 ],
               ),
               borderRadius: borderRadius ?? BorderRadius.circular(16),
               border: border ?? Border.all(
                 color: isDark 
-                  ? Colors.white.withOpacity(0.2)
-                  : Colors.white.withOpacity(0.3),
+                          ? Colors.white.withValues(alpha: 0.2)
+        : Colors.white.withValues(alpha: 0.3),
                 width: 1,
               ),
               boxShadow: boxShadow ?? [
                 BoxShadow(
                   color: isDark 
-                    ? Colors.black.withOpacity(0.3)
-                    : Colors.black.withOpacity(0.1),
+                            ? Colors.black.withValues(alpha: 0.3)
+        : Colors.black.withValues(alpha: 0.1),
                   blurRadius: 20,
                   offset: const Offset(0, 10),
                 ),
@@ -186,7 +186,7 @@ class _PremiumCardState extends State<PremiumCard>
                   boxShadow: [
                     BoxShadow(
                       color: isDark 
-                        ? Colors.black.withOpacity(0.4)
+                        ? Colors.black.withValues(alpha: 0.4)
                         : AppColors.primary.withValues(alpha: 0.1),
                       blurRadius: _elevationAnimation.value,
                       offset: Offset(0, _elevationAnimation.value / 2),

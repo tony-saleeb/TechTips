@@ -7,6 +7,7 @@ import '../../../core/constants/app_icons.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/utils/extensions.dart';
 import '../../viewmodels/tips_viewmodel.dart';
+import '../../viewmodels/settings_viewmodel.dart';
 
 /// Page displaying detailed view of a tip
 class TipDetailsPage extends StatelessWidget {
@@ -19,8 +20,8 @@ class TipDetailsPage extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return Consumer<TipsViewModel>(
-      builder: (context, tipsViewModel, _) {
+    return Consumer2<TipsViewModel, SettingsViewModel>(
+      builder: (context, tipsViewModel, settingsViewModel, _) {
         final isFavorite = tipsViewModel.isFavorite(tip.id);
         
         return Scaffold(
@@ -46,51 +47,54 @@ class TipDetailsPage extends StatelessWidget {
           ),
           
           body: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
+            padding: context.re(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Creative Header with OS and Title
                 _buildCreativeHeader(context),
                 
-                const SizedBox(height: 20),
+                context.rsb(height: 20),
                 
                 // Description
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.all(16),
+                  padding: context.re(16),
                   decoration: BoxDecoration(
-                    color: context.colorScheme.primaryContainer.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
+                    color: context.colorScheme.primaryContainer.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(context.rbr(12)),
                     border: Border.all(
-                      color: context.colorScheme.primaryContainer.withOpacity(0.3),
+                      color: context.colorScheme.primaryContainer.withValues(alpha: 0.3),
+                      width: context.rw(1),
                     ),
                   ),
                   child: Text(
                     tip.description,
                     style: context.textTheme.bodyLarge?.copyWith(
                       height: 1.5,
+                      fontSize: context.rs(16),
                     ),
                   ),
                 ),
                 
-                const SizedBox(height: 24),
+                context.rsb(height: 24),
                 
                 // Steps
                 Text(
                   AppStrings.steps,
                   style: context.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.w600,
+                    fontSize: context.rs(22),
                   ),
                 ),
                 
-                const SizedBox(height: 12),
+                context.rsb(height: 12),
                 
                 ...tip.steps.asMap().entries.map(
                   (entry) => _buildStep(context, entry.key + 1, entry.value),
                 ),
                 
-                const SizedBox(height: 24),
+                context.rsb(height: 24),
                 
                 // Tags
                 if (tip.tags.isNotEmpty) ...[
@@ -98,18 +102,19 @@ class TipDetailsPage extends StatelessWidget {
                     'Tags',
                     style: context.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w600,
+                      fontSize: context.rs(18),
                     ),
                   ),
                   
-                  const SizedBox(height: 8),
+                  context.rsb(height: 8),
                   
                   Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
+                    spacing: context.rsp(8),
+                    runSpacing: context.rsp(8),
                     children: tip.tags.map((tag) => _buildTag(context, tag)).toList(),
                   ),
                   
-                  const SizedBox(height: 24),
+                  context.rsb(height: 24),
                 ],
                 
                 // Action buttons
@@ -122,7 +127,7 @@ class TipDetailsPage extends StatelessWidget {
                         label: const Text('Copy Steps'),
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    context.rsb(width: 12),
                     Expanded(
                       child: OutlinedButton.icon(
                         onPressed: () => _shareTip(context),
@@ -133,7 +138,7 @@ class TipDetailsPage extends StatelessWidget {
                   ],
                 ),
                 
-                const SizedBox(height: 32),
+                context.rsb(height: 32),
               ],
             ),
           ),
@@ -148,7 +153,7 @@ class TipDetailsPage extends StatelessWidget {
     
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.only(bottom: 8),
+      margin: context.ro(bottom: 8),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -166,12 +171,12 @@ class TipDetailsPage extends StatelessWidget {
               ],
           stops: const [0.0, 0.3, 1.0],
         ),
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(context.rbr(24)),
         border: Border.all(
           color: isDark 
             ? AppColors.accentDark.withValues(alpha: 0.3)
             : AppColors.accentDark.withValues(alpha: 0.2),
-          width: 2,
+          width: context.rw(2),
         ),
         boxShadow: [
           BoxShadow(
@@ -193,9 +198,9 @@ class TipDetailsPage extends StatelessWidget {
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(context.rbr(24)),
         child: Container(
-          padding: const EdgeInsets.all(24),
+          padding: context.re(24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -204,7 +209,7 @@ class TipDetailsPage extends StatelessWidget {
                 children: [
                   // Enhanced OS Icon Container
                   Container(
-                    padding: const EdgeInsets.all(12),
+                    padding: context.re(12),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topLeft,
@@ -214,10 +219,10 @@ class TipDetailsPage extends StatelessWidget {
                           osColor.withValues(alpha: 0.1),
                         ],
                       ),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(context.rbr(16)),
                       border: Border.all(
                         color: osColor.withValues(alpha: 0.4),
-                        width: 2,
+                        width: context.rw(2),
                       ),
                       boxShadow: [
                         BoxShadow(
@@ -230,14 +235,14 @@ class TipDetailsPage extends StatelessWidget {
                     ),
                     child: Icon(
                       AppIcons.getOSIcon(tip.os),
-                      size: 24,
+                      size: context.ri(24),
                       color: osColor,
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  context.rsb(width: 16),
                   // Enhanced OS Name Badge
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: context.rse(horizontal: 16, vertical: 8),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topLeft,
@@ -247,10 +252,10 @@ class TipDetailsPage extends StatelessWidget {
                           osColor.withValues(alpha: 0.08),
                         ],
                       ),
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(context.rbr(20)),
                       border: Border.all(
                         color: osColor.withValues(alpha: 0.4),
-                        width: 1.5,
+                        width: context.rw(1.5),
                       ),
                       boxShadow: [
                         BoxShadow(
@@ -266,7 +271,7 @@ class TipDetailsPage extends StatelessWidget {
                       style: context.textTheme.labelLarge?.copyWith(
                         color: osColor,
                         fontWeight: FontWeight.w800,
-                        fontSize: 14,
+                        fontSize: context.rs(14),
                         letterSpacing: 0.3,
                       ),
                     ),
@@ -274,17 +279,17 @@ class TipDetailsPage extends StatelessWidget {
                   const Spacer(),
                   // Tip Type Indicator
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: context.rse(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
                       color: isDark 
                         ? Colors.white.withValues(alpha: 0.1)
                         : Colors.white.withValues(alpha: 0.8),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(context.rbr(12)),
                       border: Border.all(
                         color: isDark 
                           ? Colors.white.withValues(alpha: 0.2)
                           : Colors.white.withValues(alpha: 0.6),
-                        width: 1,
+                        width: context.rw(1),
                       ),
                     ),
                     child: Text(
@@ -294,14 +299,14 @@ class TipDetailsPage extends StatelessWidget {
                           ? Colors.white.withValues(alpha: 0.8)
                           : AppColors.textSecondary,
                         fontWeight: FontWeight.w600,
-                        fontSize: 11,
+                        fontSize: context.rs(11),
                         letterSpacing: 0.5,
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              context.rsb(height: 20),
               // Enhanced Title
               Text(
                 tip.title,
@@ -310,23 +315,23 @@ class TipDetailsPage extends StatelessWidget {
                   color: isDark 
                     ? Colors.white
                     : AppColors.textPrimary,
-                  fontSize: 22,
+                  fontSize: context.rs(22),
                   letterSpacing: -0.5,
                   height: 1.2,
                 ),
               ),
-              const SizedBox(height: 8),
+              context.rsb(height: 8),
               // Subtitle with step count
               Row(
                 children: [
                   Icon(
                     Icons.format_list_numbered_rounded,
-                    size: 16,
+                    size: context.ri(16),
                     color: isDark 
                       ? Colors.white.withValues(alpha: 0.7)
                       : AppColors.textSecondary,
                   ),
-                  const SizedBox(width: 8),
+                  context.rsb(width: 8),
                   Text(
                     '${tip.steps.length} steps to master',
                     style: context.textTheme.bodyMedium?.copyWith(
@@ -334,7 +339,7 @@ class TipDetailsPage extends StatelessWidget {
                         ? Colors.white.withValues(alpha: 0.7)
                         : AppColors.textSecondary,
                       fontWeight: FontWeight.w600,
-                      fontSize: 14,
+                      fontSize: context.rs(14),
                       letterSpacing: 0.2,
                     ),
                   ),
@@ -351,21 +356,22 @@ class TipDetailsPage extends StatelessWidget {
   
   Widget _buildStep(BuildContext context, int stepNumber, String stepText) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
+      margin: context.ro(bottom: 12),
+      padding: context.re(16),
       decoration: BoxDecoration(
         color: context.colorScheme.surface,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(context.rbr(12)),
         border: Border.all(
-          color: context.colorScheme.outline.withOpacity(0.2),
+          color: context.colorScheme.outline.withValues(alpha: 0.2),
+          width: context.rw(1),
         ),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 32,
-            height: 32,
+            width: context.rw(32),
+            height: context.rh(32),
             decoration: BoxDecoration(
               color: context.colorScheme.primary,
               shape: BoxShape.circle,
@@ -376,18 +382,20 @@ class TipDetailsPage extends StatelessWidget {
                 style: context.textTheme.labelLarge?.copyWith(
                   color: context.colorScheme.onPrimary,
                   fontWeight: FontWeight.bold,
+                  fontSize: context.rs(14),
                 ),
               ),
             ),
           ),
           
-          const SizedBox(width: 16),
+          context.rsb(width: 16),
           
           Expanded(
             child: Text(
               stepText,
               style: context.textTheme.bodyLarge?.copyWith(
                 height: 1.5,
+                fontSize: context.rs(16),
               ),
             ),
           ),
@@ -398,16 +406,17 @@ class TipDetailsPage extends StatelessWidget {
   
   Widget _buildTag(BuildContext context, String tag) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: context.rse(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: context.colorScheme.secondaryContainer.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(16),
+        color: context.colorScheme.secondaryContainer.withValues(alpha: 0.5),
+        borderRadius: BorderRadius.circular(context.rbr(16)),
       ),
       child: Text(
         tag,
         style: context.textTheme.labelMedium?.copyWith(
           color: context.colorScheme.onSecondaryContainer,
           fontWeight: FontWeight.w500,
+          fontSize: context.rs(12),
         ),
       ),
     );

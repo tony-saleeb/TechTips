@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/tip_model.dart';
@@ -11,32 +12,32 @@ class LocalDataSource {
   /// Load tips from local JSON asset
   Future<List<TipModel>> loadTipsFromAsset() async {
     try {
-      print('🔍 DataSource: Loading tips from asset: $_tipsAssetPath');
+      debugPrint('🔍 DataSource: Loading tips from asset: $_tipsAssetPath');
       final String jsonString = await rootBundle.loadString(_tipsAssetPath);
-      print('🔍 DataSource: JSON string length: ${jsonString.length}');
+              debugPrint('🔍 DataSource: JSON string length: ${jsonString.length}');
       
       final Map<String, dynamic> jsonData = json.decode(jsonString);
-      print('🔍 DataSource: JSON parsed successfully');
+              debugPrint('🔍 DataSource: JSON parsed successfully');
       
       if (jsonData['tips'] == null) {
-        print('❌ DataSource: No tips found in JSON data');
+        debugPrint('❌ DataSource: No tips found in JSON data');
         throw Exception('No tips found in JSON data');
       }
       
       final List<dynamic> tipsJson = jsonData['tips'];
-      print('🔍 DataSource: Found ${tipsJson.length} tips in JSON');
+              debugPrint('🔍 DataSource: Found ${tipsJson.length} tips in JSON');
       
       final tips = tipsJson.map((json) => TipModel.fromJson(json)).toList();
-      print('🔍 DataSource: Successfully parsed ${tips.length} tip models');
+              debugPrint('🔍 DataSource: Successfully parsed ${tips.length} tip models');
       
-      // Print first few tips for debugging
-      for (int i = 0; i < tips.take(3).length; i++) {
-        print('🔍 DataSource: Tip ${i + 1}: ${tips[i].title} (${tips[i].os})');
-      }
+              // Print first few tips for debugging
+        for (int i = 0; i < tips.take(3).length; i++) {
+          debugPrint('🔍 DataSource: Tip ${i + 1}: ${tips[i].title} (${tips[i].os})');
+        }
       
       return tips;
     } catch (e) {
-      print('❌ DataSource: Failed to load tips from asset: $e');
+      debugPrint('❌ DataSource: Failed to load tips from asset: $e');
       throw Exception('Failed to load tips from asset: $e');
     }
   }
@@ -143,6 +144,26 @@ class LocalDataSource {
       await prefs.setDouble(AppConstants.fontSizeKey, fontSize);
     } catch (e) {
       throw Exception('Failed to save font size: $e');
+    }
+  }
+  
+  /// Get appearance size from SharedPreferences
+  Future<double?> getAppearanceSize() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getDouble('appearance_size');
+    } catch (e) {
+      throw Exception('Failed to get appearance size: $e');
+    }
+  }
+  
+  /// Save appearance size to SharedPreferences
+  Future<void> saveAppearanceSize(double appearanceSize) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setDouble('appearance_size', appearanceSize);
+    } catch (e) {
+      throw Exception('Failed to save appearance size: $e');
     }
   }
   

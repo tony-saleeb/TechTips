@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:ui';
 import 'package:provider/provider.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../../core/widgets/custom_error_widget.dart';
 import '../../../core/widgets/custom_search_bar.dart';
 import '../../widgets/empty_state_widget.dart';
@@ -59,7 +57,14 @@ class _TipsListPageState extends State<TipsListPage> {
     );
   }
   
-    Widget _buildContent(TipsViewModel tipsViewModel) {
+  Widget _buildTipsListView(TipsViewModel tipsViewModel) {
+    // Show loading state during initialization
+    if (tipsViewModel.isLoading && tipsViewModel.tips.isEmpty) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+    
     // Show error state
     if (tipsViewModel.hasError) {
       return CustomErrorWidget(
@@ -68,8 +73,8 @@ class _TipsListPageState extends State<TipsListPage> {
       );
     }
     
-    // Show empty state
-    if (tipsViewModel.isEmpty) {
+    // Show empty state only if not loading and tips are actually empty
+    if (tipsViewModel.isEmpty && !tipsViewModel.isLoading) {
       return _buildEmptyState(tipsViewModel);
     }
     
@@ -95,16 +100,28 @@ class _TipsListPageState extends State<TipsListPage> {
       );
     }
     
-    return EmptyStateWidget(
-      title: 'No Tips Available',
-      message: 'Tips will appear here once loaded.',
-      icon: Icons.info_outline,
-      osTheme: widget.os,
-      action: ElevatedButton(
-        onPressed: () => _retry(tipsViewModel),
-        child: const Text('Retry'),
-      ),
-    );
+    // If tips are being loaded, show loading instead of empty state
+    if (tipsViewModel.isLoading) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+    
+    // Only show "No Tips Available" if there's an actual error or no tips loaded
+    if (!tipsViewModel.hasTips && !tipsViewModel.isLoading) {
+      return EmptyStateWidget(
+        title: 'Loading Tips...',
+        message: 'Please wait while tips are being loaded.',
+        icon: Icons.hourglass_empty,
+        osTheme: widget.os,
+        action: ElevatedButton(
+          onPressed: () => _retry(tipsViewModel),
+          child: const Text('Retry'),
+        ),
+      );
+    }
+    
+    return const SizedBox.shrink(); // Don't show anything if tips are available
   }
   
   void _toggleSearch() {
@@ -159,128 +176,9 @@ class _TipsListPageState extends State<TipsListPage> {
     }
   }
   
-  /// Get OS icon
-  IconData _getOSIcon(String os) {
-    switch (os.toLowerCase()) {
-      case 'windows':
-        return Icons.window;
-      case 'macos':
-        return Icons.apple;
-      case 'linux':
-        return Icons.computer;
-      default:
-        return Icons.computer;
-    }
-  }
 
-  Widget _buildModernTitle() {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: isDark
-            ? [
-                AppColors.surfaceDark.withValues(alpha: 0.95),
-                AppColors.cardDark.withValues(alpha: 0.9),
-                AppColors.surfaceDark.withValues(alpha: 0.98),
-              ]
-            : [
-                Colors.white.withValues(alpha: 0.95),
-                AppColors.neutral50.withValues(alpha: 0.9),
-                Colors.white,
-              ],
-          stops: const [0.0, 0.5, 1.0],
-        ),
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(
-          color: isDark 
-            ? AppColors.getOSColor(widget.os).withValues(alpha: 0.25)
-            : AppColors.getOSColor(widget.os).withValues(alpha: 0.2),
-          width: 1.5,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: isDark 
-              ? Colors.black.withValues(alpha: 0.3)
-              : Colors.black.withValues(alpha: 0.1),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-            spreadRadius: 0,
-          ),
-          BoxShadow(
-            color: AppColors.getOSColor(widget.os).withValues(alpha: 0.08),
-            blurRadius: 28,
-            offset: const Offset(0, 12),
-            spreadRadius: -4,
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 42,
-            height: 42,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  AppColors.getOSColor(widget.os),
-                  AppColors.getOSColor(widget.os).withValues(alpha: 0.8),
-                ],
-              ),
-              borderRadius: BorderRadius.circular(14),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.getOSColor(widget.os).withValues(alpha: 0.4),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
-                  spreadRadius: 0,
-                ),
-                BoxShadow(
-                  color: Colors.white.withValues(alpha: 0.3),
-                  blurRadius: 1,
-                  offset: const Offset(0, 1),
-                  spreadRadius: 0,
-                ),
-              ],
-            ),
-            child: Center(
-              child: Icon(
-                _getOSIcon(widget.os),
-                color: Colors.white,
-                size: 22,
-              ),
-            ),
-          ),
-          const SizedBox(width: 16),
-          Text(
-            '${_getOSDisplayName(widget.os)} Tips',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.w700,
-              color: isDark ? AppColors.textDarkPrimary : AppColors.textPrimary,
-              letterSpacing: -0.3,
-              fontSize: 18,
-              shadows: [
-                Shadow(
-                  color: isDark 
-                    ? Colors.black.withValues(alpha: 0.2)
-                    : Colors.black.withValues(alpha: 0.05),
-                  offset: const Offset(0, 1),
-                  blurRadius: 2,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
+
 
   /// Build search view with search bar
   Widget _buildSearchView(TipsViewModel tipsViewModel) {
@@ -300,15 +198,10 @@ class _TipsListPageState extends State<TipsListPage> {
         
         // Content
         Expanded(
-          child: _buildContent(tipsViewModel),
+          child: _buildTipsListView(tipsViewModel),
         ),
       ],
     );
-  }
-
-  /// Build tips list view without search bar
-  Widget _buildTipsListView(TipsViewModel tipsViewModel) {
-    return _buildContent(tipsViewModel);
   }
 
   /// Build content

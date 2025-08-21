@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../viewmodels/settings_viewmodel.dart';
+import '../../../core/utils/extensions.dart';
 
 /// Full-featured settings page with theme and app controls
 class SettingsPage extends StatefulWidget {
@@ -26,28 +27,28 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       
       body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
+            padding: context.re(16),
+              children: [
           // Preferences Section
           _buildSectionHeader('Preferences'),
-          const SizedBox(height: 8),
-          
+                context.rsb(height: 8),
+                
           _buildPreferencesCard(),
-          const SizedBox(height: 24),
-          
+                context.rsb(height: 24),
+                
           // About Section
           _buildSectionHeader('About'),
-          const SizedBox(height: 8),
-          
+                context.rsb(height: 8),
+                
           _buildAboutCard(),
-          const SizedBox(height: 24),
-          
+                context.rsb(height: 24),
+                
           // Actions Section
           _buildSectionHeader('Actions'),
-          const SizedBox(height: 8),
-          
+          context.rsb(height: 8),
+                
           _buildActionsCard(context),
-        ],
+              ],
       ),
     );
   }
@@ -55,8 +56,8 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget _buildSectionHeader(String title) {
     return Text(
       title,
-      style: const TextStyle(
-        fontSize: 18,
+      style: TextStyle(
+        fontSize: context.rs(18),
         fontWeight: FontWeight.bold,
         color: Colors.blue,
       ),
@@ -94,7 +95,7 @@ class _SettingsPageState extends State<SettingsPage> {
               title: const Text('Notifications'),
               subtitle: const Text('Enable push notifications'),
               value: _notificationsEnabled,
-              onChanged: (value) {
+                onChanged: (value) {
                 setState(() {
                   _notificationsEnabled = value;
                 });

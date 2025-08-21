@@ -1,4 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../presentation/viewmodels/settings_viewmodel.dart';
+
+/// Device categories for responsive sizing
+enum DeviceCategory {
+  smallPhone,   // < 360px
+  mediumPhone,  // 360-400px
+  largePhone,   // 400-600px
+  tablet,       // 600px+
+}
 
 /// Extension methods for enhanced functionality
 extension StringExtensions on String {
@@ -43,6 +53,113 @@ extension ListExtensions<T> on List<T> {
 }
 
 extension BuildContextExtensions on BuildContext {
+  /// Get device category based on screen width
+  DeviceCategory get deviceCategory {
+    final width = screenWidth;
+    if (width < 360) return DeviceCategory.smallPhone;
+    if (width < 400) return DeviceCategory.mediumPhone;
+    if (width < 600) return DeviceCategory.largePhone;
+    return DeviceCategory.tablet;
+  }
+  
+  /// Get scaling factor based on device category and user preference
+  double get scaleFactor {
+    // Get user's appearance size preference from settings with listening
+    double userScaleFactor = 1.0;
+    try {
+      final settingsViewModel = Provider.of<SettingsViewModel>(this, listen: true);
+      userScaleFactor = settingsViewModel.appearanceSize;
+    } catch (e) {
+      // If settings not available, use default
+      userScaleFactor = 1.0;
+    }
+    
+    // Combine device category scaling with user preference
+    double deviceScaleFactor;
+    switch (deviceCategory) {
+      case DeviceCategory.smallPhone:
+        deviceScaleFactor = 0.8;
+        break;
+      case DeviceCategory.mediumPhone:
+        deviceScaleFactor = 0.9;
+        break;
+      case DeviceCategory.largePhone:
+        deviceScaleFactor = 1.0;
+        break;
+      case DeviceCategory.tablet:
+        deviceScaleFactor = 1.1;
+        break;
+    }
+    
+    return deviceScaleFactor * userScaleFactor;
+  }
+  
+  /// Responsive font size
+  double rs(double baseSize) => baseSize * scaleFactor;
+  
+  /// Responsive padding
+  double rp(double basePadding) => basePadding * scaleFactor;
+  
+  /// Responsive margin
+  double rm(double baseMargin) => baseMargin * scaleFactor;
+  
+  /// Responsive icon size
+  double ri(double baseIconSize) => baseIconSize * scaleFactor;
+  
+  /// Responsive border radius
+  double rbr(double baseRadius) => baseRadius * scaleFactor;
+  
+  /// Responsive height
+  double rh(double baseHeight) => baseHeight * scaleFactor;
+  
+  /// Responsive width
+  double rw(double baseWidth) => baseWidth * scaleFactor;
+  
+  /// Responsive spacing
+  double rsp(double baseSpacing) => baseSpacing * scaleFactor;
+  
+  /// Responsive edge insets
+  EdgeInsets re(double basePadding) => EdgeInsets.all(basePadding * scaleFactor);
+  
+  /// Responsive symmetric edge insets
+  EdgeInsets rse({double? horizontal, double? vertical}) {
+    return EdgeInsets.symmetric(
+      horizontal: (horizontal ?? 0) * scaleFactor,
+      vertical: (vertical ?? 0) * scaleFactor,
+    );
+  }
+  
+  /// Responsive only edge insets
+  EdgeInsets ro({
+    double? left,
+    double? top,
+    double? right,
+    double? bottom,
+  }) {
+    return EdgeInsets.only(
+      left: (left ?? 0) * scaleFactor,
+      top: (top ?? 0) * scaleFactor,
+      right: (right ?? 0) * scaleFactor,
+      bottom: (bottom ?? 0) * scaleFactor,
+    );
+  }
+  
+  /// Responsive sized box
+  Widget rsb({double? width, double? height}) {
+    return SizedBox(
+      width: width != null ? width * scaleFactor : null,
+      height: height != null ? height * scaleFactor : null,
+    );
+  }
+  
+  /// Responsive container with padding
+  Widget rc(Widget child, {double? padding}) {
+    return Container(
+      padding: padding != null ? EdgeInsets.all(padding * scaleFactor) : null,
+      child: child,
+    );
+  }
+  
   /// Get theme data
   ThemeData get theme => Theme.of(this);
   

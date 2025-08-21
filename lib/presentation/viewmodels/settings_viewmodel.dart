@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../domain/usecases/manage_settings_usecase.dart';
 
@@ -13,12 +12,14 @@ class SettingsViewModel extends ChangeNotifier {
   // State
   ThemeMode _themeMode = ThemeMode.system;
   double _fontSize = 14.0;
+  double _appearanceSize = 1.0; // Default appearance size multiplier
   bool _isLoading = false;
   String? _error;
   
   // Getters
   ThemeMode get themeMode => _themeMode;
   double get fontSize => _fontSize;
+  double get appearanceSize => _appearanceSize;
   bool get isLoading => _isLoading;
   String? get error => _error;
   bool get hasError => _error != null;
@@ -35,6 +36,7 @@ class SettingsViewModel extends ChangeNotifier {
     try {
       _themeMode = await _manageSettingsUseCase.getThemeMode();
       _fontSize = await _manageSettingsUseCase.getFontSize();
+      _appearanceSize = await _manageSettingsUseCase.getAppearanceSize();
       
       _isLoading = false;
       notifyListeners();
@@ -78,6 +80,21 @@ class SettingsViewModel extends ChangeNotifier {
     }
   }
   
+  /// Set appearance size
+  Future<void> setAppearanceSize(double appearanceSize) async {
+    if (_appearanceSize == appearanceSize) return;
+    
+    _clearError();
+    
+    try {
+      await _manageSettingsUseCase.setAppearanceSize(appearanceSize);
+      _appearanceSize = appearanceSize;
+      notifyListeners();
+    } catch (e) {
+      _setError('Failed to set appearance size: ${e.toString()}');
+    }
+  }
+  
   /// Reset all settings to defaults
   Future<void> resetSettings() async {
     _setLoading(true);
@@ -89,6 +106,7 @@ class SettingsViewModel extends ChangeNotifier {
       // Reset to default values
       _themeMode = ThemeMode.system;
       _fontSize = 14.0;
+      _appearanceSize = 1.0;
       
       notifyListeners();
     } catch (e) {

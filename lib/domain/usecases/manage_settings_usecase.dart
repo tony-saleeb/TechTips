@@ -60,6 +60,39 @@ class ManageSettingsUseCase {
     }
   }
   
+  /// Get current appearance size
+  Future<double> getAppearanceSize() async {
+    try {
+      final appearanceSize = await _repository.getAppearanceSize();
+      
+      // Validate appearance size is within acceptable range
+      if (appearanceSize < 0.5 || appearanceSize > 1.2) {
+        return 1.0; // Default appearance size
+      }
+      
+      return appearanceSize;
+    } catch (e) {
+      // Return default appearance size on error
+      return 1.0;
+    }
+  }
+  
+  /// Set appearance size
+  Future<void> setAppearanceSize(double appearanceSize) async {
+    // Validate appearance size
+    if (appearanceSize < 0.5 || appearanceSize > 1.2) {
+      throw ArgumentError(
+        'Appearance size must be between 0.5 and 1.2',
+      );
+    }
+    
+    try {
+      await _repository.setAppearanceSize(appearanceSize);
+    } catch (e) {
+      throw Exception('Failed to set appearance size: $e');
+    }
+  }
+  
   /// Get app version
   String getAppVersion() {
     return _repository.getAppVersion();
