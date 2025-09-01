@@ -66,7 +66,7 @@ class ManageSettingsUseCase {
       final appearanceSize = await _repository.getAppearanceSize();
       
       // Validate appearance size is within acceptable range
-      if (appearanceSize < 0.5 || appearanceSize > 1.2) {
+      if (appearanceSize < 0.5 || appearanceSize > 2.0) {
         return 1.0; // Default appearance size
       }
       
@@ -80,9 +80,9 @@ class ManageSettingsUseCase {
   /// Set appearance size
   Future<void> setAppearanceSize(double appearanceSize) async {
     // Validate appearance size
-    if (appearanceSize < 0.5 || appearanceSize > 1.2) {
+    if (appearanceSize < 0.5 || appearanceSize > 2.0) {
       throw ArgumentError(
-        'Appearance size must be between 0.5 and 1.2',
+        'Appearance size must be between 0.5 and 2.0',
       );
     }
     

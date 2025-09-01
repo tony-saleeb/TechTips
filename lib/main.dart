@@ -26,7 +26,8 @@ class TechShortcutsApp extends StatelessWidget {
       providers: DependencyInjection.getProviders(),
       child: Consumer<SettingsViewModel>(
         builder: (context, settingsViewModel, _) {
-          return MaterialApp(
+          return RepaintBoundary(
+            child: MaterialApp(
             title: AppConstants.appName,
             debugShowCheckedModeBanner: false,
             
@@ -51,6 +52,7 @@ class TechShortcutsApp extends StatelessWidget {
                 child: child!,
               );
             },
+            ),
           );
         },
       ),

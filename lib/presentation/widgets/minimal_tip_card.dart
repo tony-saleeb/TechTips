@@ -45,7 +45,8 @@ class _MinimalTipCardState extends State<MinimalTipCard> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     
-    return Consumer<TipsViewModel>(
+    return RepaintBoundary(
+      child: Consumer<TipsViewModel>(
         builder: (context, tipsViewModel, _) {
           final isFavorite = tipsViewModel.isFavorite(widget.tip.id);
           
@@ -297,6 +298,7 @@ class _MinimalTipCardState extends State<MinimalTipCard> {
             ),
           );
         },
+      ),
     );
   }
 

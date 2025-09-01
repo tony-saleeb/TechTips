@@ -81,7 +81,8 @@ class _EmptyStateWidgetState extends State<EmptyStateWidget>
       ? AppColors.getOSColor(widget.osTheme!)
       : AppColors.primary;
 
-    return FadeTransition(
+    return RepaintBoundary(
+      child: FadeTransition(
       opacity: _fadeAnimation,
       child: Center(
         child: Padding(
@@ -178,6 +179,7 @@ class _EmptyStateWidgetState extends State<EmptyStateWidget>
             ],
           ),
         ),
+      ),
       ),
     );
   }

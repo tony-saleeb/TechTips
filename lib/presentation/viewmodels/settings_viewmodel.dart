@@ -26,7 +26,7 @@ class SettingsViewModel extends ChangeNotifier {
   String get appVersion => _manageSettingsUseCase.getAppVersion();
   String get buildNumber => _manageSettingsUseCase.getBuildNumber();
   
-  /// Initialize settings by loading from storage
+  /// Initialize settings by loading from storage - Ultra performance optimized
   Future<void> initialize() async {
     if (_isLoading) return; // Prevent multiple initialization calls
     
@@ -34,17 +34,26 @@ class SettingsViewModel extends ChangeNotifier {
     _error = null;
     
     try {
-      _themeMode = await _manageSettingsUseCase.getThemeMode();
-      _fontSize = await _manageSettingsUseCase.getFontSize();
-      _appearanceSize = await _manageSettingsUseCase.getAppearanceSize();
+      // Load all settings concurrently for maximum performance
+      final futures = await Future.wait([
+        _manageSettingsUseCase.getThemeMode(),
+        _manageSettingsUseCase.getFontSize(),
+        _manageSettingsUseCase.getAppearanceSize(),
+      ], eagerError: true); // Fail fast if any request fails
+      
+      _themeMode = futures[0] as ThemeMode;
+      _fontSize = futures[1] as double;
+      _appearanceSize = futures[2] as double;
       
       _isLoading = false;
       notifyListeners();
     } catch (e) {
+      debugPrint('Settings initialization error: $e');
       _error = 'Failed to load settings: ${e.toString()}';
       // Use default values on error
       _themeMode = ThemeMode.system;
       _fontSize = 14.0;
+      _appearanceSize = 1.0;
       _isLoading = false;
       notifyListeners();
     }

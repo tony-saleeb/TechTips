@@ -88,7 +88,8 @@ class _EnhancedSearchDialogState extends State<EnhancedSearchDialog>
   Widget build(BuildContext context) {
     final osColor = AppColors.getOSColor(widget.os);
     
-    return Dialog(
+    return RepaintBoundary(
+      child: Dialog(
       backgroundColor: Colors.transparent,
       elevation: 0,
       child: AnimatedBuilder(
@@ -140,6 +141,7 @@ class _EnhancedSearchDialogState extends State<EnhancedSearchDialog>
             ),
           );
         },
+      ),
       ),
     );
   }

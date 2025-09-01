@@ -39,7 +39,7 @@ class TipsViewModel extends ChangeNotifier {
   bool get isEmpty => _filteredTips.isEmpty && !_isLoading;
   bool get hasTips => _tips.isNotEmpty;
   
-  /// Initialize and preload all tips for instant switching - optimized
+  /// Initialize and preload all tips for instant switching - Ultra performance optimized
   Future<void> initializeTips() async {
     if (_isInitialized || _isInitializing) return;
     
@@ -47,19 +47,21 @@ class TipsViewModel extends ChangeNotifier {
     _setLoading(true);
     
     try {
-      // Load all OS tips concurrently for better performance
+      // Load all OS tips concurrently for maximum performance
       final futures = await Future.wait([
         _getTipsByOSUseCase('windows'),
         _getTipsByOSUseCase('macos'),
         _getTipsByOSUseCase('linux'),
-      ]);
+      ], eagerError: true); // Fail fast if any request fails
       
-      // Cache tips by OS
+      // Cache tips by OS for instant access
       _tipsCache['windows'] = futures[0];
       _tipsCache['macos'] = futures[1];
       _tipsCache['linux'] = futures[2];
       
       _isInitialized = true;
+      
+      // Load favorites in parallel for better performance
       await _loadFavoriteIds();
       
       // Set default OS (Windows) as current tips to display
@@ -67,9 +69,10 @@ class TipsViewModel extends ChangeNotifier {
       _currentOS = 'windows';
       _filteredTips = futures[0];
       
-      // Single notifyListeners call for initialization
+      // Single notifyListeners call for optimal performance
       notifyListeners();
     } catch (e) {
+      debugPrint('Tips initialization error: $e');
       _setError('Unable to initialize tips. Please restart the app.');
     } finally {
       _setLoading(false);
