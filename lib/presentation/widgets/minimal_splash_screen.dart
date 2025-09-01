@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../core/constants/app_constants.dart';
-import '../../core/constants/app_colors.dart';
-import '../../core/utils/animation_extensions.dart';
 
 /// Visually stunning splash screen with beautiful animations
 class MinimalSplashScreen extends StatefulWidget {
@@ -221,7 +218,6 @@ class _MinimalSplashScreenState extends State<MinimalSplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     
     return Scaffold(
       backgroundColor: Colors.transparent,
