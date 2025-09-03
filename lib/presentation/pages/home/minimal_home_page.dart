@@ -300,7 +300,7 @@ class _MinimalHomePageState extends State<MinimalHomePage>
             child: Icon(
               _getOSIcon(currentOS),
               color: Colors.white,
-              size: context.ri(20),
+              size: context.ri(18),
             ),
           ),
           
@@ -326,10 +326,10 @@ class _MinimalHomePageState extends State<MinimalHomePage>
             child: Text(
               '${_getOSDisplayName(currentOS)} Tips',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w800,
+                fontWeight: FontWeight.w700,
                 color: Colors.white,
-                letterSpacing: -0.6,
-                fontSize: context.rs(18),
+                letterSpacing: -0.3,
+                fontSize: context.rs(16),
               ),
             ),
           ),
@@ -386,7 +386,9 @@ class _MinimalHomePageState extends State<MinimalHomePage>
           topRight: Radius.circular(50),
           bottomRight: Radius.circular(50),
         ),
-        child: Container(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -617,8 +619,8 @@ class _MinimalHomePageState extends State<MinimalHomePage>
     return Builder(
       builder: (BuildContext context) {
     return Container(
-          width: context.rw(56),
-          height: context.rh(56),
+          width: context.rw(48),
+          height: context.rh(48),
       decoration: BoxDecoration(
         gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -663,12 +665,12 @@ class _MinimalHomePageState extends State<MinimalHomePage>
               },
               borderRadius: BorderRadius.circular(context.rbr(20)),
               child: SizedBox(
-                width: context.rw(56),
-                height: context.rh(56),
+                width: context.rw(48),
+                height: context.rh(48),
                 child: Center(
                   child: Icon(
                     Icons.menu_rounded,
-                    size: context.ri(26),
+                    size: context.ri(22),
                     color: isDark 
                       ? Colors.white.withValues(alpha: 0.95) 
                       : AppColors.getOSColor(currentOS),
@@ -690,8 +692,8 @@ class _MinimalHomePageState extends State<MinimalHomePage>
     bool isSearchActive = _getCurrentPageSearchState();
     
     return Container(
-      width: context.rw(56),
-      height: context.rh(56),
+      width: context.rw(48),
+      height: context.rh(48),
         decoration: BoxDecoration(
         gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -736,12 +738,12 @@ class _MinimalHomePageState extends State<MinimalHomePage>
           },
           borderRadius: BorderRadius.circular(context.rbr(20)),
                       child: SizedBox(
-              width: context.rw(56),
-              height: context.rh(56),
+              width: context.rw(48),
+              height: context.rh(48),
               child: Center(
                 child: Icon(
                   isSearchActive ? Icons.close_rounded : Icons.search_rounded,
-                  size: context.ri(26),
+                  size: context.ri(22),
                   color: isSearchActive 
                     ? AppColors.getOSColor(currentOS)
                     : (isDark ? Colors.white.withValues(alpha: 0.95) : AppColors.getOSColor(currentOS)),
@@ -793,74 +795,404 @@ class _MinimalHomePageState extends State<MinimalHomePage>
     setState(() {});
   }
 
-  /// Toggle theme
+  /// Toggle theme with smooth transition
   void _toggleTheme(BuildContext context) {
     final settingsViewModel = context.read<SettingsViewModel>();
     final currentMode = settingsViewModel.themeMode;
     final newMode = currentMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+    
+    // Add smooth transition animation
+    setState(() {
+      // Trigger rebuild with animation
+    });
+    
+    // Set theme mode
     settingsViewModel.setThemeMode(newMode);
   }
 
-  /// Show about dialog
+  /// Show creative modern about dialog
   void _showAbout(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                gradient: LinearGradient(
-                                colors: [
-                                  AppColors.accentDark,
-                                  AppColors.accentDark.withValues(alpha: 0.8),
+      barrierDismissible: true,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.85,
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.8,
+          ),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: isDark
+                ? [
+                    Colors.black.withOpacity(0.95),
+                    Color(0xFF1A1A2E).withOpacity(0.98),
+                    Colors.black.withOpacity(0.95),
+                  ]
+                : [
+                    Colors.white.withOpacity(0.98),
+                    Color(0xFFF8F9FA).withOpacity(0.95),
+                    Colors.white.withOpacity(0.98),
+                  ],
+            ),
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(
+              color: isDark 
+                ? Colors.cyan.withOpacity(0.3)
+                : Colors.cyan.withOpacity(0.2),
+              width: 1.5,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: isDark 
+                  ? Colors.black.withOpacity(0.5)
+                  : Colors.black.withOpacity(0.2),
+                blurRadius: 30,
+                spreadRadius: 5,
+              ),
+              BoxShadow(
+                color: Colors.cyan.withOpacity(0.1),
+                blurRadius: 20,
+                spreadRadius: 2,
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Creative header with animated icon
+              Container(
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: isDark
+                      ? [
+                          Colors.cyan.withOpacity(0.2),
+                          Colors.blue.withOpacity(0.1),
+                          Colors.cyan.withOpacity(0.15),
+                        ]
+                      : [
+                          Colors.cyan.withOpacity(0.1),
+                          Colors.blue.withOpacity(0.05),
+                          Colors.cyan.withOpacity(0.08),
+                        ],
+                  ),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    topRight: Radius.circular(24),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    // Animated app icon
+                    Container(
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: RadialGradient(
+                          colors: [
+                            Colors.cyan.withOpacity(0.3),
+                            Colors.blue.withOpacity(0.2),
+                            Colors.transparent,
+                          ],
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.cyan.withOpacity(0.3),
+                            blurRadius: 20,
+                            spreadRadius: 5,
+                          ),
+                        ],
+                      ),
+                      child: Icon(
+                        Icons.terminal_rounded,
+                        size: 40,
+                        color: Colors.cyan,
+                      ),
+                    ),
+                    
+                    const SizedBox(height: 20),
+                    
+                    // App name with gradient text
+                    ShaderMask(
+                      shaderCallback: (bounds) => LinearGradient(
+                        colors: [Colors.cyan, Colors.blue],
+                      ).createShader(bounds),
+                      child: Text(
+                        AppConstants.appName,
+                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 28,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    
+                    const SizedBox(height: 8),
+                    
+                    // Tagline
+                    Text(
+                      'Your Ultimate Tech Shortcuts Companion',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: isDark 
+                          ? Colors.white.withOpacity(0.8)
+                          : Colors.black.withOpacity(0.7),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ],
                 ),
-                borderRadius: BorderRadius.circular(12),
               ),
-              child: const Icon(
-                Icons.lightbulb_rounded,
-                color: Colors.white,
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Text(AppConstants.appName),
-          ],
-        ),
-        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+              
+              // Content section
+              Flexible(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Description
+                      Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: isDark 
+                            ? Colors.white.withOpacity(0.05)
+                            : Colors.black.withOpacity(0.03),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: isDark 
+                              ? Colors.white.withOpacity(0.1)
+                              : Colors.black.withOpacity(0.08),
+                            width: 1,
+                          ),
+                        ),
+                        child: Text(
+                          AppConstants.appDescription,
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: isDark 
+                              ? Colors.white.withOpacity(0.9)
+                              : Colors.black.withOpacity(0.8),
+                            height: 1.6,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      
+                      const SizedBox(height: 24),
+                      
+                      // Features section
+                      Text(
+                        '✨ Key Features',
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.cyan,
+                        ),
+                      ),
+                      
+                      const SizedBox(height: 16),
+                      
+                      // Feature cards
+                      _buildFeatureCard(
+                        context,
+                        icon: Icons.computer,
+                        title: 'Multi-OS Support',
+                        description: 'Windows, macOS & Linux tips',
+                        isDark: isDark,
+                      ),
+                      
+                      const SizedBox(height: 12),
+                      
+                      _buildFeatureCard(
+                        context,
+                        icon: Icons.favorite,
+                        title: 'Smart Favorites',
+                        description: 'Save and organize your shortcuts',
+                        isDark: isDark,
+                      ),
+                      
+                      const SizedBox(height: 12),
+                      
+                      _buildFeatureCard(
+                        context,
+                        icon: Icons.palette,
+                        title: 'Theme Engine',
+                        description: 'Dark & light themes with smooth transitions',
+                        isDark: isDark,
+                      ),
+                      
+                      const SizedBox(height: 12),
+                      
+                      _buildFeatureCard(
+                        context,
+                        icon: Icons.design_services,
+                        title: 'Modern Design',
+                        description: 'Clean, minimal, and responsive interface',
+                        isDark: isDark,
+                      ),
+                      
+                      const SizedBox(height: 24),
+                      
+                      // Version info
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: isDark
+                              ? [
+                                  Colors.cyan.withOpacity(0.1),
+                                  Colors.blue.withOpacity(0.05),
+                                ]
+                              : [
+                                  Colors.cyan.withOpacity(0.05),
+                                  Colors.blue.withOpacity(0.02),
+                                ],
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: Colors.cyan.withOpacity(0.2),
+                            width: 1,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-            Text(AppConstants.appDescription),
-            const SizedBox(height: 16),
-            Text(
-              'Features:',
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(height: 8),
-            const Text('• Windows, macOS & Linux tips'),
-            const Text('• Save your favorite shortcuts'),
-            const Text('• Dark & light themes'),
-            const Text('• Clean, minimal design'),
-            const SizedBox(height: 16),
+                            Icon(
+                              Icons.info_outline,
+                              color: Colors.cyan,
+                              size: 20,
+                            ),
+                            const SizedBox(width: 12),
                             Text(
-              'Version 1.0.0',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Theme.of(context).brightness == Brightness.dark 
-                                      ? AppColors.textDarkSecondary
-                  : AppColors.textSecondary,
+                              'Version 1.0.0 • Built with Flutter',
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                color: Colors.cyan.withOpacity(0.8),
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           ],
                         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              
+              // Close button
+              Container(
+                padding: const EdgeInsets.all(24),
+                child: ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.cyan,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    elevation: 8,
+                    shadowColor: Colors.cyan.withOpacity(0.3),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.check_circle, size: 20),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Got it!',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+  
+  /// Build feature card for about dialog
+  Widget _buildFeatureCard(
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required String description,
+    required bool isDark,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isDark 
+          ? Colors.white.withOpacity(0.03)
+          : Colors.black.withOpacity(0.02),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: isDark 
+            ? Colors.white.withOpacity(0.08)
+            : Colors.black.withOpacity(0.06),
+          width: 1,
+        ),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.cyan, Colors.blue],
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(
+              icon,
+              color: Colors.white,
+              size: 20,
+            ),
+          ),
+          
+          const SizedBox(width: 16),
+          
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: isDark 
+                      ? Colors.white.withOpacity(0.9)
+                      : Colors.black.withOpacity(0.8),
+                  ),
+                ),
+                
+                const SizedBox(height: 4),
+                
+                Text(
+                  description,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: isDark 
+                      ? Colors.white.withOpacity(0.7)
+                      : Colors.black.withOpacity(0.6),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

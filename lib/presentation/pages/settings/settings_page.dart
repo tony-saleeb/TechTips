@@ -27,28 +27,28 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       
       body: ListView(
-            padding: context.re(16),
-              children: [
+        padding: context.re(16),
+        children: [
           // Preferences Section
           _buildSectionHeader('Preferences'),
-                context.rsb(height: 8),
-                
+          context.rsb(height: 8),
+          
           _buildPreferencesCard(),
-                context.rsb(height: 24),
-                
+          context.rsb(height: 24),
+          
           // About Section
           _buildSectionHeader('About'),
-                context.rsb(height: 8),
-                
+          context.rsb(height: 8),
+          
           _buildAboutCard(),
-                context.rsb(height: 24),
-                
+          context.rsb(height: 24),
+          
           // Actions Section
           _buildSectionHeader('Actions'),
           context.rsb(height: 8),
-                
+          
           _buildActionsCard(context),
-              ],
+        ],
       ),
     );
   }
@@ -71,7 +71,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget _buildPreferencesCard() {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: context.re(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -127,7 +127,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget _buildAboutCard() {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: context.re(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -183,7 +183,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget _buildActionsCard(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: context.re(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

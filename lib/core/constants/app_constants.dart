@@ -7,6 +7,7 @@ class AppConstants {
   static const String themeKey = 'theme_mode';
   static const String fontSizeKey = 'font_size';
   static const String favoritesKey = 'favorites';
+  static const String onboardingCompletedKey = 'onboarding_completed';
   
   // Animation durations
   static const Duration shortAnimationDuration = Duration(milliseconds: 200);

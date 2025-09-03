@@ -7,7 +7,9 @@ enum DeviceCategory {
   smallPhone,   // < 360px
   mediumPhone,  // 360-400px
   largePhone,   // 400-600px
-  tablet,       // 600px+
+  tablet,       // 600-900px
+  smallDesktop, // 900-1200px
+  largeDesktop, // 1200px+
 }
 
 /// Extension methods for enhanced functionality
@@ -59,7 +61,9 @@ extension BuildContextExtensions on BuildContext {
     if (width < 360) return DeviceCategory.smallPhone;
     if (width < 400) return DeviceCategory.mediumPhone;
     if (width < 600) return DeviceCategory.largePhone;
-    return DeviceCategory.tablet;
+    if (width < 900) return DeviceCategory.tablet;
+    if (width < 1200) return DeviceCategory.smallDesktop;
+    return DeviceCategory.largeDesktop;
   }
   
   /// Get scaling factor based on device category and user preference
@@ -88,6 +92,12 @@ extension BuildContextExtensions on BuildContext {
         break;
       case DeviceCategory.tablet:
         deviceScaleFactor = 1.1;
+        break;
+      case DeviceCategory.smallDesktop:
+        deviceScaleFactor = 1.2;
+        break;
+      case DeviceCategory.largeDesktop:
+        deviceScaleFactor = 1.3;
         break;
     }
     
@@ -152,12 +162,54 @@ extension BuildContextExtensions on BuildContext {
     );
   }
   
-  /// Responsive container with padding
-  Widget rc(Widget child, {double? padding}) {
+  /// Responsive container with custom padding
+  Widget rcc(Widget child, {EdgeInsets? padding}) {
+    if (padding == null) return child;
     return Container(
-      padding: padding != null ? EdgeInsets.all(padding * scaleFactor) : null,
+      padding: EdgeInsets.only(
+        left: padding.left * scaleFactor,
+        top: padding.top * scaleFactor,
+        right: padding.right * scaleFactor,
+        bottom: padding.bottom * scaleFactor,
+      ),
       child: child,
     );
+  }
+  
+  /// Responsive grid layout helper
+  int get responsiveGridColumns {
+    switch (deviceCategory) {
+      case DeviceCategory.smallPhone:
+        return 1;
+      case DeviceCategory.mediumPhone:
+        return 1;
+      case DeviceCategory.largePhone:
+        return 2;
+      case DeviceCategory.tablet:
+        return 3;
+      case DeviceCategory.smallDesktop:
+        return 4;
+      case DeviceCategory.largeDesktop:
+        return 5;
+    }
+  }
+  
+  /// Responsive aspect ratio for cards
+  double get responsiveCardAspectRatio {
+    switch (deviceCategory) {
+      case DeviceCategory.smallPhone:
+        return 1.2;
+      case DeviceCategory.mediumPhone:
+        return 1.3;
+      case DeviceCategory.largePhone:
+        return 1.4;
+      case DeviceCategory.tablet:
+        return 1.5;
+      case DeviceCategory.smallDesktop:
+        return 1.6;
+      case DeviceCategory.largeDesktop:
+        return 1.7;
+    }
   }
   
   /// Get theme data

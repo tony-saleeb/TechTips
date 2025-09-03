@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../core/widgets/custom_error_widget.dart';
 import '../../../core/widgets/custom_search_bar.dart';
+import '../../../core/utils/extensions.dart';
 import '../../widgets/empty_state_widget.dart';
 import '../../widgets/animated_tips_list.dart';
 import '../../viewmodels/tips_viewmodel.dart';
@@ -186,7 +187,10 @@ class _TipsListPageState extends State<TipsListPage> {
       children: [
         // Search bar
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: EdgeInsets.symmetric(
+            horizontal: context.rp(16),
+            vertical: context.rp(8),
+          ),
           child: CustomSearchBar(
             controller: _searchController,
             hintText: 'Search ${_getOSDisplayName(widget.os)} tips...',

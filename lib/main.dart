@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'core/theme/app_theme.dart';
 import 'core/constants/app_constants.dart';
 import 'presentation/providers/dependency_injection.dart';
@@ -7,6 +8,7 @@ import 'presentation/viewmodels/settings_viewmodel.dart';
 import 'presentation/viewmodels/tips_viewmodel.dart';
 import 'presentation/pages/home/minimal_home_page.dart';
 import 'presentation/widgets/minimal_splash_screen.dart';
+import 'presentation/pages/onboarding/onboarding_page.dart';
 
 void main() {
   // Enable performance optimizations
@@ -31,10 +33,14 @@ class TechShortcutsApp extends StatelessWidget {
             title: AppConstants.appName,
             debugShowCheckedModeBanner: false,
             
-            // Theme configuration
+            // Theme configuration with smooth transitions
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             themeMode: settingsViewModel.themeMode,
+            
+            // Smooth theme transitions
+            themeAnimationDuration: const Duration(milliseconds: 300),
+            themeAnimationCurve: Curves.easeInOut,
             
             // Home page
             home: const AppInitializer(),
@@ -70,6 +76,13 @@ class AppInitializer extends StatefulWidget {
 
 class _AppInitializerState extends State<AppInitializer> {
   bool _isInitialized = false;
+  bool _showOnboarding = false;
+  
+  void _onOnboardingComplete() {
+    setState(() {
+      _showOnboarding = false;
+    });
+  }
   
   @override
   void initState() {
@@ -91,8 +104,15 @@ class _AppInitializerState extends State<AppInitializer> {
         await tipsViewModel.initializeTips();
       }
       
-      // Minimal loading time for smooth experience
-      await Future.delayed(const Duration(milliseconds: 25));
+      // Always show onboarding (removed completion check)
+      if (mounted) {
+        setState(() {
+          _showOnboarding = true;
+        });
+      }
+      
+      // Wait for splash screen animation to complete (total time: 2 seconds)
+      await Future.delayed(const Duration(milliseconds: 2000));
       
       if (mounted) {
         setState(() {
@@ -114,6 +134,10 @@ class _AppInitializerState extends State<AppInitializer> {
   Widget build(BuildContext context) {
     if (!_isInitialized) {
       return const MinimalSplashScreen();
+    }
+    
+    if (_showOnboarding) {
+      return OnboardingPage(onOnboardingComplete: _onOnboardingComplete);
     }
     
     return const MinimalHomePage();
