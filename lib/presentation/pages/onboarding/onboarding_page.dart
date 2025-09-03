@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-import 'package:flutter/services.dart';
-import '../../../core/constants/app_colors.dart';
-import '../../../core/constants/app_constants.dart';
-import 'dart:math' as math;
+
 
 /// Interactive TechTips Command Center Onboarding
 class OnboardingPage extends StatefulWidget {
@@ -36,9 +33,8 @@ class _OnboardingPageState extends State<OnboardingPage>
   late Animation<double> _completionScale;
   late Animation<double> _completionOpacity;
   late Animation<double> _textSlide;
-  late Animation<double> _hologramOpacity;
-  late Animation<double> _matrixOpacity;
-  late Animation<double> _orbitRotation;
+
+
 
   final TextEditingController _commandController = TextEditingController();
   final FocusNode _commandFocus = FocusNode();
@@ -48,11 +44,9 @@ class _OnboardingPageState extends State<OnboardingPage>
   int _currentZoneIndex = 0;
   bool _isTyping = false;
   String _currentCommand = '';
-  int _commandIndex = 0;
+
   bool _showCompletion = false;
-  List<Firework> _fireworks = [];
-  List<MatrixRain> _matrixDrops = [];
-  List<OrbitingParticle> _orbitingParticles = [];
+
 
   @override
   void initState() {
@@ -177,29 +171,9 @@ class _OnboardingPageState extends State<OnboardingPage>
                 curve: Curves.easeOutCubic,
               ));
 
-    _hologramOpacity = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _hologramController,
-      curve: Curves.easeInOut,
-    ));
 
-    _matrixOpacity = Tween<double>(
-      begin: 0.0,
-      end: 0.3,
-    ).animate(CurvedAnimation(
-      parent: _matrixController,
-      curve: Curves.easeInOut,
-    ));
 
-    _orbitRotation = Tween<double>(
-      begin: 0.0,
-      end: 2 * math.pi,
-    ).animate(CurvedAnimation(
-      parent: _orbitController,
-      curve: Curves.linear,
-    ));
+
   }
 
   void _initializeCommandZones() {
@@ -324,44 +298,7 @@ class _OnboardingPageState extends State<OnboardingPage>
     }
   }
 
-  void _generateFireworks() {
-    _fireworks.clear();
-    for (int i = 0; i < 15; i++) {
-      _fireworks.add(Firework(
-        x: math.Random().nextDouble() * MediaQuery.of(context).size.width,
-        y: MediaQuery.of(context).size.height,
-        targetX: math.Random().nextDouble() * MediaQuery.of(context).size.width,
-        targetY: math.Random().nextDouble() * MediaQuery.of(context).size.height * 0.7,
-        color: [Colors.cyan, Colors.blue, Colors.purple, Colors.green][math.Random().nextInt(4)],
-        delay: i * 200.0,
-      ));
-    }
-  }
 
-  void _generateMatrixRain() {
-    _matrixDrops.clear();
-    for (int i = 0; i < 50; i++) {
-      _matrixDrops.add(MatrixRain(
-        x: math.Random().nextDouble() * MediaQuery.of(context).size.width,
-        y: -50 - math.Random().nextDouble() * 200,
-        speed: 1 + math.Random().nextDouble() * 2,
-        opacity: 0.1 + math.Random().nextDouble() * 0.4,
-      ));
-    }
-  }
-
-  void _generateOrbitingParticles() {
-    _orbitingParticles.clear();
-    for (int i = 0; i < 20; i++) {
-      _orbitingParticles.add(OrbitingParticle(
-        radius: 100 + math.Random().nextDouble() * 200,
-        speed: 0.5 + math.Random().nextDouble() * 1.5,
-        offset: math.Random().nextDouble() * 2 * math.pi,
-        color: [Colors.cyan, Colors.blue, Colors.purple][math.Random().nextInt(3)],
-        size: 2 + math.Random().nextDouble() * 4,
-      ));
-    }
-  }
 
   @override
   void dispose() {
@@ -476,12 +413,12 @@ class _OnboardingPageState extends State<OnboardingPage>
                   fontWeight: FontWeight.bold,
                   color: Colors.cyan,
                   letterSpacing: isMobile ? 4 : isTablet ? 6 : 8,
-                  shadows: [
-                    Shadow(
-                      color: Colors.cyan.withOpacity(0.8),
-                      blurRadius: 20 + _glowIntensity.value * 10,
-                    ),
-                  ],
+                                      shadows: [
+                      Shadow(
+                        color: Colors.cyan.withValues(alpha: 0.8),
+                        blurRadius: 20 + _glowIntensity.value * 10,
+                      ),
+                    ],
                 ),
               ),
               SizedBox(height: isMobile ? 12 : isTablet ? 14 : 16),
@@ -490,7 +427,7 @@ class _OnboardingPageState extends State<OnboardingPage>
                 style: TextStyle(
                   fontSize: isMobile ? 14 : isTablet ? 16 : 18,
                   fontWeight: FontWeight.w300,
-                  color: Colors.cyan.withOpacity(0.7),
+                  color: Colors.cyan.withValues(alpha: 0.7),
                   letterSpacing: isMobile ? 2 : isTablet ? 3 : 4,
                 ),
               ),
@@ -514,18 +451,18 @@ class _OnboardingPageState extends State<OnboardingPage>
               height: isMobile ? 300 : isTablet ? 350 : 400,
               decoration: BoxDecoration(
                 color: isDark 
-                  ? Colors.black.withOpacity(0.8)
-                  : Colors.white.withOpacity(0.9),
+                  ? Colors.black.withValues(alpha: 0.8)
+                  : Colors.white.withValues(alpha: 0.9),
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color: Colors.cyan.withOpacity(0.6),
+                  color: Colors.cyan.withValues(alpha: 0.6),
                   width: 2,
                 ),
                 boxShadow: [
                   BoxShadow(
                     color: isDark
-                      ? Colors.cyan.withOpacity(0.3)
-                      : Colors.cyan.withOpacity(0.2),
+                      ? Colors.cyan.withValues(alpha: 0.3)
+                      : Colors.cyan.withValues(alpha: 0.2),
                     blurRadius: 20,
                     spreadRadius: 5,
                   ),
@@ -538,8 +475,8 @@ class _OnboardingPageState extends State<OnboardingPage>
                     padding: EdgeInsets.all(isMobile ? 12 : isTablet ? 14 : 16),
                     decoration: BoxDecoration(
                       color: isDark 
-                        ? Colors.cyan.withOpacity(0.1)
-                        : Colors.cyan.withOpacity(0.05),
+                        ? Colors.cyan.withValues(alpha: 0.1)
+                        : Colors.cyan.withValues(alpha: 0.05),
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(14),
                         topRight: Radius.circular(14),
@@ -578,8 +515,8 @@ class _OnboardingPageState extends State<OnboardingPage>
                           'TechTips Terminal',
                           style: TextStyle(
                             color: isDark 
-                              ? Colors.cyan.withOpacity(0.8)
-                              : Colors.cyan.withOpacity(0.7),
+                              ? Colors.cyan.withValues(alpha: 0.8)
+                              : Colors.cyan.withValues(alpha: 0.7),
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
@@ -605,9 +542,9 @@ class _OnboardingPageState extends State<OnboardingPage>
                                   child: Text(
                                     _terminalHistory[index],
                                     style: TextStyle(
-                                      color: isDark 
-                                        ? Colors.green.withOpacity(0.8)
-                                        : Colors.green.withOpacity(0.8),
+                                                                          color: isDark 
+                                      ? Colors.green.withValues(alpha: 0.8)
+                                      : Colors.green.withValues(alpha: 0.8),
                                       fontSize: 14,
                                       fontFamily: 'monospace',
                                     ),
@@ -635,7 +572,7 @@ class _OnboardingPageState extends State<OnboardingPage>
                                   style: TextStyle(
                                     color: isDark 
                                       ? Colors.white
-                                      : Colors.black.withOpacity(0.8),
+                                      : Colors.black.withValues(alpha: 0.8),
                                     fontSize: 16,
                                     fontFamily: 'monospace',
                                   ),
@@ -648,7 +585,7 @@ class _OnboardingPageState extends State<OnboardingPage>
                                   decoration: BoxDecoration(
                                     color: isDark 
                                       ? Colors.cyan
-                                      : Colors.cyan.withOpacity(0.8),
+                                      : Colors.cyan.withValues(alpha: 0.8),
                                     borderRadius: BorderRadius.circular(2),
                                   ),
                                 ),
@@ -682,29 +619,29 @@ class _OnboardingPageState extends State<OnboardingPage>
                   end: Alignment.bottomRight,
                   colors: isDark
                     ? [
-                        Colors.black.withOpacity(0.8),
-                        Color(0xFF0A0A0A).withOpacity(0.9),
-                        Colors.black.withOpacity(0.8),
+                        Colors.black.withValues(alpha: 0.8),
+                        Color(0xFF0A0A0A).withValues(alpha: 0.9),
+                        Colors.black.withValues(alpha: 0.8),
                       ]
                     : [
-                        Colors.white.withOpacity(0.9),
-                        Color(0xFFF0F0F0).withOpacity(0.95),
-                        Colors.white.withOpacity(0.9),
+                        Colors.white.withValues(alpha: 0.9),
+                        Color(0xFFF0F0F0).withValues(alpha: 0.95),
+                        Colors.white.withValues(alpha: 0.9),
                       ],
                 ),
                 borderRadius: BorderRadius.circular(25),
                 border: Border.all(
-                  color: Colors.cyan.withOpacity(0.4),
+                  color: Colors.cyan.withValues(alpha: 0.4),
                   width: 1.5,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.cyan.withOpacity(0.2),
+                    color: Colors.cyan.withValues(alpha: 0.2),
                     blurRadius: 15,
                     spreadRadius: 2,
                   ),
                   BoxShadow(
-                    color: Colors.blue.withOpacity(0.1),
+                    color: Colors.blue.withValues(alpha: 0.1),
                     blurRadius: 10,
                     spreadRadius: 1,
                   ),
@@ -723,7 +660,7 @@ class _OnboardingPageState extends State<OnboardingPage>
                       borderRadius: BorderRadius.circular(8),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.cyan.withOpacity(0.5),
+                          color: Colors.cyan.withValues(alpha: 0.5),
                           blurRadius: 8,
                           spreadRadius: 1,
                         ),
@@ -743,15 +680,15 @@ class _OnboardingPageState extends State<OnboardingPage>
                     'SYSTEM INITIALIZATION: ${_currentZoneIndex + 1}/${_zones.length}',
                     style: TextStyle(
                       color: isDark 
-                        ? Colors.cyan.withOpacity(0.95)
-                        : Colors.cyan.withOpacity(1.0),
+                        ? Colors.cyan.withValues(alpha: 0.95)
+                        : Colors.cyan.withValues(alpha: 1.0),
                       fontSize: isMobile ? 12 : isTablet ? 13 : 14,
                       fontWeight: FontWeight.w800,
                       letterSpacing: isMobile ? 1.2 : isTablet ? 1.5 : 2,
                       fontFamily: 'monospace',
                       shadows: [
                         Shadow(
-                          color: Colors.cyan.withOpacity(0.5 + _glowIntensity.value * 0.4),
+                          color: Colors.cyan.withValues(alpha: 0.5 + _glowIntensity.value * 0.4),
                           blurRadius: 12 + _glowIntensity.value * 8,
                         ),
                       ],
@@ -766,7 +703,7 @@ class _OnboardingPageState extends State<OnboardingPage>
         SizedBox(height: isMobile ? 24 : isTablet ? 28 : 32),
         
         // Ultra modern tech progress bar
-        Container(
+        SizedBox(
           width: isMobile ? 340 : isTablet ? 400 : 460,
           height: isMobile ? 24 : isTablet ? 28 : 32,
           child: Stack(
@@ -779,17 +716,17 @@ class _OnboardingPageState extends State<OnboardingPage>
                   borderRadius: BorderRadius.circular(isMobile ? 20 : isTablet ? 24 : 28),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.cyan.withOpacity(0.4),
+                      color: Colors.cyan.withValues(alpha: 0.4),
                       blurRadius: 25,
                       spreadRadius: 8,
                     ),
                     BoxShadow(
-                      color: Colors.blue.withOpacity(0.3),
+                      color: Colors.blue.withValues(alpha: 0.3),
                       blurRadius: 20,
                       spreadRadius: 5,
                     ),
                     BoxShadow(
-                      color: Colors.purple.withOpacity(0.2),
+                      color: Colors.purple.withValues(alpha: 0.2),
                       blurRadius: 15,
                       spreadRadius: 3,
                     ),
@@ -819,7 +756,7 @@ class _OnboardingPageState extends State<OnboardingPage>
                   ),
                   borderRadius: BorderRadius.circular(isMobile ? 20 : isTablet ? 24 : 28),
                   border: Border.all(
-                    color: Colors.cyan.withOpacity(0.5),
+                    color: Colors.cyan.withValues(alpha: 0.5),
                     width: 2,
                   ),
                 ),
@@ -838,38 +775,38 @@ class _OnboardingPageState extends State<OnboardingPage>
                       ),
                     ),
                     
-                                                              // Advanced tech progress fill with precise step filling
-                     Builder(
-                       builder: (context) {
-                         final progressBarWidth = isMobile ? 340.0 : isTablet ? 400.0 : 460.0;
-                         return AnimatedContainer(
-                           duration: const Duration(milliseconds: 1500),
-                           curve: Curves.easeOutCubic,
-                           width: progressBarWidth * ((_currentZoneIndex + 1) / _zones.length),
-                           height: double.infinity,
-                           child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(isMobile ? 20 : isTablet ? 24 : 28),
-                          gradient: LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [
-                              Colors.cyan,
-                              Colors.cyan.withOpacity(0.95),
-                              Colors.blue.withOpacity(0.9),
-                              Colors.purple.withOpacity(0.85),
-                              Colors.indigo.withOpacity(0.8),
-                              Colors.cyan.withOpacity(0.9),
-                            ],
-                            stops: const [0.0, 0.2, 0.4, 0.6, 0.8, 1.0],
-                          ),
-                        ),
-                        child: Stack(
-                          children: [
-                            // Advanced tech shine effect
-                            Positioned.fill(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(isMobile ? 20 : isTablet ? 24 : 28),
+                    // Advanced tech progress fill with precise step filling
+                    Builder(
+                      builder: (context) {
+                        final progressBarWidth = isMobile ? 340.0 : isTablet ? 400.0 : 460.0;
+                        return AnimatedContainer(
+                          duration: const Duration(milliseconds: 1500),
+                          curve: Curves.easeOutCubic,
+                          width: progressBarWidth * ((_currentZoneIndex + 1) / _zones.length),
+                          height: double.infinity,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(isMobile ? 20 : isTablet ? 24 : 28),
+                              gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [
+                                  Colors.cyan,
+                                  Colors.cyan.withValues(alpha: 0.95),
+                                  Colors.blue.withValues(alpha: 0.9),
+                                  Colors.purple.withValues(alpha: 0.85),
+                                  Colors.indigo.withValues(alpha: 0.8),
+                                  Colors.cyan.withValues(alpha: 0.9),
+                                ],
+                                stops: const [0.0, 0.2, 0.4, 0.6, 0.8, 1.0],
+                              ),
+                            ),
+                            child: Stack(
+                              children: [
+                                // Advanced tech shine effect
+                                Positioned.fill(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(isMobile ? 20 : isTablet ? 24 : 28),
                                 child: CustomPaint(
                                   painter: AdvancedTechShinePainter(
                                     animation: _glowController,
@@ -917,11 +854,11 @@ class _OnboardingPageState extends State<OnboardingPage>
                                         width: size,
                                         height: size,
                                         decoration: BoxDecoration(
-                                          color: color.withOpacity(0.9),
+                                          color: color.withValues(alpha: 0.9),
                                           shape: BoxShape.circle,
                                           boxShadow: [
                                             BoxShadow(
-                                              color: color.withOpacity(0.7),
+                                              color: color.withValues(alpha: 0.7),
                                               blurRadius: 8,
                                               spreadRadius: 2,
                                             ),
@@ -939,7 +876,7 @@ class _OnboardingPageState extends State<OnboardingPage>
                               right: 0,
                               top: 0,
                               bottom: 0,
-                              child: Container(
+                              child: SizedBox(
                                 width: 6,
                                 child: CustomPaint(
                                   painter: AdvancedDataStreamPainter(
@@ -954,7 +891,7 @@ class _OnboardingPageState extends State<OnboardingPage>
                               left: 0,
                               top: 0,
                               bottom: 0,
-                              child: Container(
+                              child: SizedBox(
                                 width: 8,
                                 child: CustomPaint(
                                   painter: TechEnergyPulsePainter(
@@ -1023,8 +960,8 @@ class _OnboardingPageState extends State<OnboardingPage>
                   height: size,
                   decoration: BoxDecoration(
                     color: isDark 
-                      ? Colors.cyan.withOpacity(opacity)
-                      : Colors.cyan.withOpacity(opacity * 0.6),
+                      ? Colors.cyan.withValues(alpha: opacity)
+                      : Colors.cyan.withValues(alpha: opacity * 0.6),
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -1041,7 +978,7 @@ class _OnboardingPageState extends State<OnboardingPage>
       animation: _completionController,
       builder: (context, child) {
         return Container(
-          color: isDark ? Colors.black : Colors.white.withOpacity(0.98),
+          color: isDark ? Colors.black : Colors.white.withValues(alpha: 0.98),
           child: Center(
             child: Transform.scale(
               scale: _completionScale.value,
@@ -1063,8 +1000,8 @@ class _OnboardingPageState extends State<OnboardingPage>
                               shape: BoxShape.circle,
                               gradient: RadialGradient(
                                 colors: [
-                                  Colors.cyan.withOpacity(0.4 * _completionOpacity.value),
-                                  Colors.cyan.withOpacity(0.1 * _completionOpacity.value),
+                                  Colors.cyan.withValues(alpha: 0.4 * _completionOpacity.value),
+                                  Colors.cyan.withValues(alpha: 0.1 * _completionOpacity.value),
                                   Colors.transparent,
                                 ],
                               ),
@@ -1095,8 +1032,8 @@ class _OnboardingPageState extends State<OnboardingPage>
                                   fontSize: isMobile ? 28 : isTablet ? 32 : 36,
                                   fontWeight: FontWeight.w300,
                                   color: isDark 
-                                    ? Colors.white.withOpacity(0.7)
-                                    : Colors.black.withOpacity(0.6),
+                                    ? Colors.white.withValues(alpha: 0.7)
+                                    : Colors.black.withValues(alpha: 0.6),
                                   letterSpacing: isMobile ? 6 : isTablet ? 8 : 10,
                                 ),
                                 textAlign: TextAlign.center,
@@ -1148,8 +1085,8 @@ class _OnboardingPageState extends State<OnboardingPage>
                                 style: TextStyle(
                                   fontSize: isMobile ? 16 : isTablet ? 18 : 20,
                                   color: isDark 
-                                    ? Colors.white.withOpacity(0.5)
-                                    : Colors.black.withOpacity(0.4),
+                                    ? Colors.white.withValues(alpha: 0.5)
+                                    : Colors.black.withValues(alpha: 0.4),
                                   fontWeight: FontWeight.w400,
                                   letterSpacing: isMobile ? 2 : isTablet ? 2.5 : 3,
                                 ),
@@ -1162,8 +1099,8 @@ class _OnboardingPageState extends State<OnboardingPage>
                                 style: TextStyle(
                                   fontSize: isMobile ? 14 : isTablet ? 16 : 18,
                                   color: isDark 
-                                    ? Colors.white.withOpacity(0.4)
-                                    : Colors.black.withOpacity(0.3),
+                                    ? Colors.white.withValues(alpha: 0.4)
+                                    : Colors.black.withValues(alpha: 0.3),
                                   fontWeight: FontWeight.w300,
                                   letterSpacing: isMobile ? 1 : isTablet ? 1.5 : 2,
                                 ),
@@ -1183,411 +1120,15 @@ class _OnboardingPageState extends State<OnboardingPage>
     );
   }
 
-  Widget _buildHolographicRocket() {
-    return AnimatedBuilder(
-      animation: _glowController,
-      builder: (context, child) {
-        return Container(
-          padding: const EdgeInsets.all(30),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: RadialGradient(
-              colors: [
-                Colors.cyan.withOpacity(0.3),
-                Colors.blue.withOpacity(0.2),
-                Colors.transparent,
-              ],
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.cyan.withOpacity(0.6 + _glowIntensity.value * 0.4),
-                blurRadius: 50 + _glowIntensity.value * 30,
-                spreadRadius: 15,
-              ),
-              BoxShadow(
-                color: Colors.blue.withOpacity(0.4 + _glowIntensity.value * 0.2),
-                blurRadius: 30 + _glowIntensity.value * 20,
-                spreadRadius: 10,
-              ),
-            ],
-          ),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              // Holographic rings
-              for (int i = 0; i < 3; i++)
-                AnimatedBuilder(
-                  animation: _hologramController,
-                  builder: (context, child) {
-                    return Transform.rotate(
-                      angle: _hologramController.value * 2 * math.pi * (i + 1),
-                      child: Container(
-                        width: 120 + i * 40,
-                        height: 120 + i * 40,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.cyan.withOpacity(0.3 - i * 0.1),
-                            width: 2,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              
-              // Main rocket icon
-              Icon(
-                Icons.rocket_launch,
-                size: 120,
-                color: Colors.cyan,
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
 
-  Widget _buildModernTitle() {
-    return AnimatedBuilder(
-      animation: _textRevealController,
-      builder: (context, child) {
-        return Transform.translate(
-          offset: Offset(0, _textSlide.value),
-          child: Column(
-            children: [
-              // Main title with gradient text
-              ShaderMask(
-                shaderCallback: (bounds) => LinearGradient(
-                  colors: [Colors.cyan, Colors.blue, Colors.purple],
-                ).createShader(bounds),
-                child: Text(
-                  'COMMAND CENTER',
-                  style: TextStyle(
-                    fontSize: 48,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 8,
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              
-              const SizedBox(height: 16),
-              
-              Text(
-                'ACTIVATED',
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.cyan,
-                  letterSpacing: 6,
-                  shadows: [
-                    Shadow(
-                      color: Colors.cyan.withOpacity(0.8),
-                      blurRadius: 20,
-                    ),
-                  ],
-                ),
-                textAlign: TextAlign.center,
-              ),
-              
-              const SizedBox(height: 24),
-              
-              // Status indicator
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.green.withOpacity(0.2), Colors.cyan.withOpacity(0.2)],
-                  ),
-                  borderRadius: BorderRadius.circular(30),
-                  border: Border.all(
-                    color: Colors.green.withOpacity(0.6),
-                    width: 3,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.green.withOpacity(0.3),
-                      blurRadius: 20,
-                      spreadRadius: 5,
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      width: 12,
-                      height: 12,
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.green.withOpacity(0.8),
-                            blurRadius: 10,
-                            spreadRadius: 2,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Text(
-                      'ALL SYSTEMS ONLINE',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.green,
-                        letterSpacing: 2,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
 
-  Widget _buildAchievementCards() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _buildAchievementCard('🎯', 'Windows', 'Mastery', Colors.blue),
-        const SizedBox(width: 20),
-        _buildAchievementCard('🍎', 'Mac', 'Productivity', Colors.grey),
-        const SizedBox(width: 20),
-        _buildAchievementCard('🐧', 'Linux', 'Power', Colors.orange),
-      ],
-    );
-  }
 
-  Widget _buildAchievementCard(String emoji, String os, String status, Color color) {
-    return Container(
-      width: 120,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
-        ),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: color.withOpacity(0.6),
-          width: 2,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: color.withOpacity(0.3),
-            blurRadius: 15,
-            spreadRadius: 2,
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Text(
-            emoji,
-            style: TextStyle(fontSize: 32),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            os,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: color,
-            ),
-          ),
-          Text(
-            status,
-            style: TextStyle(
-              fontSize: 14,
-              color: color.withOpacity(0.8),
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
-  Widget _buildWelcomeButton() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.cyan, Colors.blue, Colors.purple],
-        ),
-        borderRadius: BorderRadius.circular(30),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.cyan.withOpacity(0.5),
-            blurRadius: 25,
-            spreadRadius: 8,
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            Icons.celebration,
-            color: Colors.white,
-            size: 24,
-          ),
-          const SizedBox(width: 12),
-          Text(
-            'Welcome to TechTips, Commander!',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              letterSpacing: 1,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
-  Widget _buildHolographicGrid() {
-    return AnimatedBuilder(
-      animation: _hologramController,
-      builder: (context, child) {
-        return CustomPaint(
-          painter: HolographicGridPainter(
-            opacity: _hologramOpacity.value,
-            animation: _hologramController.value,
-          ),
-          size: Size.infinite,
-        );
-      },
-    );
-  }
 
-  Widget _buildMatrixRain() {
-    return AnimatedBuilder(
-      animation: _matrixController,
-      builder: (context, child) {
-        return Stack(
-          children: _matrixDrops.map((drop) {
-            final y = drop.y + (_matrixController.value * 1000 * drop.speed);
-            if (y > MediaQuery.of(context).size.height) return const SizedBox.shrink();
-            
-            return Positioned(
-              left: drop.x,
-              top: y,
-              child: Text(
-                String.fromCharCode(0x30A0 + (drop.x * drop.y).round() % 96),
-                style: TextStyle(
-                  color: Colors.green.withOpacity(drop.opacity),
-                  fontSize: 16,
-                  fontFamily: 'monospace',
-                ),
-              ),
-            );
-          }).toList(),
-        );
-      },
-    );
-  }
 
-  Widget _buildOrbitingParticles() {
-    return AnimatedBuilder(
-      animation: _orbitController,
-      builder: (context, child) {
-        return Stack(
-          children: _orbitingParticles.map((particle) {
-            final angle = _orbitController.value * 2 * math.pi * particle.speed + particle.offset;
-            final x = MediaQuery.of(context).size.width / 2 + math.cos(angle) * particle.radius;
-            final y = MediaQuery.of(context).size.height / 2 + math.sin(angle) * particle.radius;
-            
-            return Positioned(
-              left: x - particle.size / 2,
-              top: y - particle.size / 2,
-              child: Container(
-                width: particle.size,
-                height: particle.size,
-                decoration: BoxDecoration(
-                  color: particle.color,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: particle.color.withOpacity(0.8),
-                      blurRadius: 10,
-                      spreadRadius: 2,
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }).toList(),
-        );
-      },
-    );
-  }
 
-  Widget _buildFireworks() {
-    return AnimatedBuilder(
-      animation: _fireworksController,
-      builder: (context, child) {
-        return Stack(
-          children: _fireworks.map((firework) {
-            final progress = (_fireworksController.value - firework.delay / 3000).clamp(0.0, 1.0);
-            final x = firework.x + (firework.targetX - firework.x) * progress;
-            final y = firework.y + (firework.targetY - firework.y) * progress;
-            
-            if (progress >= 1.0) {
-              // Explosion effect
-              return Positioned(
-                left: x - 20,
-                top: y - 20,
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: [
-                        firework.color.withOpacity(0.8),
-                        firework.color.withOpacity(0.4),
-                        Colors.transparent,
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            }
-            
-            // Rocket trail
-            return Positioned(
-              left: x - 2,
-              top: y - 2,
-              child: Container(
-                width: 4,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: firework.color,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: firework.color.withOpacity(0.8),
-                      blurRadius: 8,
-                      spreadRadius: 2,
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }).toList(),
-        );
-      },
-    );
-  }
+
   
   /// Returns exact 1/3 step progress for perfect filling
   double _getExactProgress() {
@@ -1685,7 +1226,7 @@ class HolographicGridPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.cyan.withOpacity(opacity * 0.3)
+      ..color = Colors.cyan.withValues(alpha: opacity * 0.3)
       ..strokeWidth = 1
       ..style = PaintingStyle.stroke;
 
@@ -1721,8 +1262,8 @@ class TechCircuitPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = isDark 
-        ? Colors.cyan.withOpacity(0.08)
-        : Colors.cyan.withOpacity(0.05)
+        ? Colors.cyan.withValues(alpha: 0.08)
+        : Colors.cyan.withValues(alpha: 0.05)
       ..strokeWidth = 1
       ..style = PaintingStyle.stroke;
 
@@ -1770,12 +1311,12 @@ class TechShinePainter extends CustomPainter {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: [
-          Colors.white.withOpacity(0.0),
-          Colors.white.withOpacity(0.4),
-          Colors.cyan.withOpacity(0.6),
-          Colors.blue.withOpacity(0.5),
-          Colors.white.withOpacity(0.4),
-          Colors.white.withOpacity(0.0),
+          Colors.white.withValues(alpha: 0.0),
+          Colors.white.withValues(alpha: 0.4),
+          Colors.cyan.withValues(alpha: 0.6),
+          Colors.blue.withValues(alpha: 0.5),
+          Colors.white.withValues(alpha: 0.4),
+          Colors.white.withValues(alpha: 0.0),
         ],
         stops: const [0.0, 0.15, 0.4, 0.6, 0.85, 1.0],
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))
@@ -1813,13 +1354,13 @@ class AdvancedTechShinePainter extends CustomPainter {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: [
-          Colors.white.withOpacity(0.0),
-          Colors.white.withOpacity(0.5),
-          Colors.cyan.withOpacity(0.7),
-          Colors.blue.withOpacity(0.6),
-          Colors.purple.withOpacity(0.5),
-          Colors.white.withOpacity(0.4),
-          Colors.white.withOpacity(0.0),
+          Colors.white.withValues(alpha: 0.0),
+          Colors.white.withValues(alpha: 0.5),
+          Colors.cyan.withValues(alpha: 0.7),
+          Colors.blue.withValues(alpha: 0.6),
+          Colors.purple.withValues(alpha: 0.5),
+          Colors.white.withValues(alpha: 0.4),
+          Colors.white.withValues(alpha: 0.0),
         ],
         stops: const [0.0, 0.1, 0.3, 0.5, 0.7, 0.9, 1.0],
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))
@@ -1859,7 +1400,7 @@ class TechCircuitOverlayPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.cyan.withOpacity(0.1)
+      ..color = Colors.cyan.withValues(alpha: 0.1)
       ..strokeWidth = 1
       ..style = PaintingStyle.stroke;
 
@@ -1915,14 +1456,14 @@ class AdvancedDataStreamPainter extends CustomPainter {
     
     for (int i = 0; i < 8; i++) {
       final paint = Paint()
-        ..color = colors[i % colors.length].withOpacity(0.6 + (i % 3) * 0.1)
+        ..color = colors[i % colors.length].withValues(alpha: 0.6 + (i % 3) * 0.1)
         ..strokeWidth = 1.5
         ..style = PaintingStyle.stroke;
 
       final y = (i * 6.0 + animation.value * 25) % size.height;
       final opacity = 0.4 + (0.6 * (1 - (i / 8.0)));
       
-      paint.color = paint.color.withOpacity(opacity);
+      paint.color = paint.color.withValues(alpha: opacity);
       
       // Draw data stream with varying lengths
       final streamLength = size.width * (0.7 + (i % 3) * 0.1);
@@ -1947,7 +1488,7 @@ class TechEnergyPulsePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.cyan.withOpacity(0.8)
+      ..color = Colors.cyan.withValues(alpha: 0.8)
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
 
@@ -1956,7 +1497,7 @@ class TechEnergyPulsePainter extends CustomPainter {
       final y = (i * 12.0 + animation.value * 30) % size.height;
       final opacity = 0.3 + (0.7 * (1 - (i / 5.0)));
       
-      paint.color = Colors.cyan.withOpacity(opacity);
+      paint.color = Colors.cyan.withValues(alpha: opacity);
       
       // Draw pulse wave
       final pulseWidth = 8.0 + (i % 2) * 4;
@@ -1981,7 +1522,7 @@ class TechScanningLinesPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.cyan.withOpacity(0.15)
+      ..color = Colors.cyan.withValues(alpha: 0.15)
       ..strokeWidth = 1
       ..style = PaintingStyle.stroke;
 
@@ -1990,7 +1531,7 @@ class TechScanningLinesPainter extends CustomPainter {
       final x = (i * 60.0 + animation.value * 120) % size.width;
       final opacity = 0.1 + (0.2 * (1 - (i / 6.0)));
       
-      paint.color = Colors.cyan.withOpacity(opacity);
+      paint.color = Colors.cyan.withValues(alpha: opacity);
       
       // Draw scanning line
       canvas.drawLine(
@@ -2014,7 +1555,7 @@ class DataStreamPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.cyan.withOpacity(0.8)
+      ..color = Colors.cyan.withValues(alpha: 0.8)
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
 
@@ -2023,7 +1564,7 @@ class DataStreamPainter extends CustomPainter {
       final y = (i * 8.0 + animation.value * 20) % size.height;
       final opacity = 0.3 + (0.7 * (1 - (i / 6.0)));
       
-      paint.color = Colors.cyan.withOpacity(opacity);
+      paint.color = Colors.cyan.withValues(alpha: opacity);
       
       canvas.drawLine(
         Offset(0, y),
@@ -2058,7 +1599,7 @@ class ElectricalCircuitPainter extends CustomPainter {
 
     if (isCompleted) {
       // Completed state - active cyan electrical circuits
-      paint.color = Colors.cyan.withOpacity(0.8);
+      paint.color = Colors.cyan.withValues(alpha: 0.8);
       
       // Main electrical grid - horizontal and vertical lines
       canvas.drawLine(
@@ -2083,7 +1624,7 @@ class ElectricalCircuitPainter extends CustomPainter {
       );
       
       // Inner electrical connections - cross pattern
-      paint.color = Colors.blue.withOpacity(0.6);
+      paint.color = Colors.blue.withValues(alpha: 0.6);
       canvas.drawLine(
         Offset(center.dx - 12, center.dy - 12),
         Offset(center.dx + 12, center.dy + 12),
@@ -2096,7 +1637,7 @@ class ElectricalCircuitPainter extends CustomPainter {
       );
       
       // Electrical connection points - small rectangles
-      paint.color = Colors.purple.withOpacity(0.7);
+      paint.color = Colors.purple.withValues(alpha: 0.7);
       paint.style = PaintingStyle.fill;
       
       // Corner connection points
@@ -2136,7 +1677,7 @@ class ElectricalCircuitPainter extends CustomPainter {
       
     } else if (isCurrent) {
       // Current state - pulsing cyan electrical circuits
-      paint.color = Colors.cyan.withOpacity(0.6 + animation.value * 0.4);
+      paint.color = Colors.cyan.withValues(alpha: 0.6 + animation.value * 0.4);
       
       // Pulsing electrical grid
       final pulseSize = 16 + animation.value * 4;
@@ -2162,7 +1703,7 @@ class ElectricalCircuitPainter extends CustomPainter {
       );
       
       // Pulsing cross connection
-      paint.color = Colors.blue.withOpacity(0.6);
+      paint.color = Colors.blue.withValues(alpha: 0.6);
       canvas.drawLine(
         Offset(center.dx - 8, center.dy - 8),
         Offset(center.dx + 8, center.dy + 8),
@@ -2176,7 +1717,7 @@ class ElectricalCircuitPainter extends CustomPainter {
       
     } else {
       // Pending state - subtle grey electrical circuits
-      paint.color = Colors.grey.withOpacity(0.4);
+      paint.color = Colors.grey.withValues(alpha: 0.4);
       
       // Basic electrical grid
       canvas.drawLine(
@@ -2227,7 +1768,7 @@ class LivingTechOrganismPainter extends CustomPainter {
     final barWidth = size.width;
     
     // Main horizontal circuit lines (top and bottom)
-    paint.color = Colors.cyan.withOpacity(0.8);
+    paint.color = Colors.cyan.withValues(alpha: 0.8);
     canvas.drawLine(
       Offset(0, 2),
       Offset(barWidth, 2),
@@ -2243,7 +1784,7 @@ class LivingTechOrganismPainter extends CustomPainter {
     paint.strokeWidth = 2.0;
     
     // Primary energy stream
-    paint.color = Colors.cyan.withOpacity(0.8);
+    paint.color = Colors.cyan.withValues(alpha: 0.8);
     final primaryStream = Path();
     primaryStream.moveTo(0, barHeight / 2);
     
@@ -2255,7 +1796,7 @@ class LivingTechOrganismPainter extends CustomPainter {
     canvas.drawPath(primaryStream, paint);
     
     // Secondary energy streams
-    paint.color = Colors.blue.withOpacity(0.6);
+    paint.color = Colors.blue.withValues(alpha: 0.6);
     for (int j = 0; j < 3; j++) {
       final streamOffset = j * (barHeight / 4);
       final streamPath = Path();
@@ -2279,7 +1820,7 @@ class LivingTechOrganismPainter extends CustomPainter {
       final size = 4.0 + (i % 2) * 2.0;
       final rotation = animation.value * 360 + (i * 45);
       
-      paint.color = Colors.purple.withOpacity(0.7);
+      paint.color = Colors.purple.withValues(alpha: 0.7);
       _drawRotatedTriangle(canvas, Offset(x, y), size, rotation, paint);
     }
     
@@ -2290,7 +1831,7 @@ class LivingTechOrganismPainter extends CustomPainter {
       final size = 3.0 + (i % 2) * 1.5;
       final rotation = animation.value * 180 + (i * 60);
       
-      paint.color = Colors.cyan.withOpacity(0.8);
+      paint.color = Colors.cyan.withValues(alpha: 0.8);
       _drawRotatedDiamond(canvas, Offset(x, y), size, rotation, paint);
     }
     
@@ -2301,7 +1842,7 @@ class LivingTechOrganismPainter extends CustomPainter {
       final size = 1.0 + (i % 4) * 0.5;
       final opacity = 0.4 + (0.6 * (1 - (i / 25.0)));
       
-      paint.color = Colors.cyan.withOpacity(opacity);
+      paint.color = Colors.cyan.withValues(alpha: opacity);
       canvas.drawCircle(
         Offset(x, y),
         size,
@@ -2313,7 +1854,7 @@ class LivingTechOrganismPainter extends CustomPainter {
     final activeWidth = barWidth * currentProgress;
     if (activeWidth > 0) {
       // Active circuit area with enhanced glow
-      paint.color = Colors.cyan.withOpacity(0.9);
+      paint.color = Colors.cyan.withValues(alpha: 0.9);
       paint.strokeWidth = 2.0;
       
       // Enhanced main lines in active area
@@ -2329,7 +1870,7 @@ class LivingTechOrganismPainter extends CustomPainter {
       );
       
       // Enhanced vertical connections in active area
-      paint.color = Colors.blue.withOpacity(0.8);
+      paint.color = Colors.blue.withValues(alpha: 0.8);
       for (int i = 0; i <= activeWidth / 20; i++) {
         final x = i * 20.0;
         if (x <= activeWidth) {
@@ -2342,7 +1883,7 @@ class LivingTechOrganismPainter extends CustomPainter {
       }
       
       // Enhanced horizontal connections in active area
-      paint.color = Colors.purple.withOpacity(0.7);
+      paint.color = Colors.purple.withValues(alpha: 0.7);
       for (int i = 1; i < barHeight / 8; i++) {
         final y = i * 8.0;
         if (y < barHeight) {
@@ -2356,7 +1897,7 @@ class LivingTechOrganismPainter extends CustomPainter {
     }
     
     // Animated electrical pulse effect
-    paint.color = Colors.cyan.withOpacity(0.4 + (0.3 * animation.value));
+    paint.color = Colors.cyan.withValues(alpha: 0.4 + (0.3 * animation.value));
     paint.strokeWidth = 1.0;
     
     // Pulsing horizontal lines that move across the bar
@@ -2374,7 +1915,7 @@ class LivingTechOrganismPainter extends CustomPainter {
     
     // Circuit connection points (small rectangles) at intersections
     paint.style = PaintingStyle.fill;
-    paint.color = Colors.cyan.withOpacity(0.8);
+    paint.color = Colors.cyan.withValues(alpha: 0.8);
     
     for (int i = 0; i <= barWidth / 20; i++) {
       final x = i * 20.0;

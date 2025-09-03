@@ -193,14 +193,14 @@ class _MinimalSplashScreenState extends State<MinimalSplashScreen>
                       boxShadow: isDark 
                         ? [
                         BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
+                              color: Colors.black.withValues(alpha: 0.3),
                               blurRadius: 20,
                               spreadRadius: 5,
                             ),
                           ]
                         : [
                         BoxShadow(
-                              color: Colors.black.withOpacity(0.05),
+                              color: Colors.black.withValues(alpha: 0.05),
                               blurRadius: 30,
                               spreadRadius: 10,
                         ),
@@ -237,7 +237,7 @@ class _MinimalSplashScreenState extends State<MinimalSplashScreen>
                 height: context.rh(60),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Color(0xFFE3F2FD).withOpacity(0.3),
+                  color: Color(0xFFE3F2FD).withValues(alpha: 0.3),
                 ),
               ),
             ),
@@ -249,7 +249,7 @@ class _MinimalSplashScreenState extends State<MinimalSplashScreen>
                 height: context.rh(40),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Color(0xFFF3E5F5).withOpacity(0.2),
+                  color: Color(0xFFF3E5F5).withValues(alpha: 0.2),
                 ),
               ),
             ),
@@ -261,7 +261,7 @@ class _MinimalSplashScreenState extends State<MinimalSplashScreen>
                 height: context.rh(80),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Color(0xFFE8F5E8).withOpacity(0.25),
+                  color: Color(0xFFE8F5E8).withValues(alpha: 0.25),
                   ),
                 ),
               ),

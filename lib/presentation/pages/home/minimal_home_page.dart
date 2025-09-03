@@ -831,33 +831,33 @@ class _MinimalHomePageState extends State<MinimalHomePage>
               end: Alignment.bottomRight,
               colors: isDark
                 ? [
-                    Colors.black.withOpacity(0.95),
-                    Color(0xFF1A1A2E).withOpacity(0.98),
-                    Colors.black.withOpacity(0.95),
+                    Colors.black.withValues(alpha: 0.95),
+                    Color(0xFF1A1A2E).withValues(alpha: 0.98),
+                    Colors.black.withValues(alpha: 0.95),
                   ]
                 : [
-                    Colors.white.withOpacity(0.98),
-                    Color(0xFFF8F9FA).withOpacity(0.95),
-                    Colors.white.withOpacity(0.98),
+                    Colors.white.withValues(alpha: 0.98),
+                    Color(0xFFF8F9FA).withValues(alpha: 0.95),
+                    Colors.white.withValues(alpha: 0.98),
                   ],
             ),
             borderRadius: BorderRadius.circular(24),
             border: Border.all(
               color: isDark 
-                ? Colors.cyan.withOpacity(0.3)
-                : Colors.cyan.withOpacity(0.2),
+                ? Colors.cyan.withValues(alpha: 0.3)
+                : Colors.cyan.withValues(alpha: 0.2),
               width: 1.5,
             ),
             boxShadow: [
               BoxShadow(
                 color: isDark 
-                  ? Colors.black.withOpacity(0.5)
-                  : Colors.black.withOpacity(0.2),
+                  ? Colors.black.withValues(alpha: 0.5)
+                  : Colors.black.withValues(alpha: 0.2),
                 blurRadius: 30,
                 spreadRadius: 5,
               ),
               BoxShadow(
-                color: Colors.cyan.withOpacity(0.1),
+                color: Colors.cyan.withValues(alpha: 0.1),
                 blurRadius: 20,
                 spreadRadius: 2,
               ),
@@ -875,14 +875,14 @@ class _MinimalHomePageState extends State<MinimalHomePage>
                     end: Alignment.bottomRight,
                     colors: isDark
                       ? [
-                          Colors.cyan.withOpacity(0.2),
-                          Colors.blue.withOpacity(0.1),
-                          Colors.cyan.withOpacity(0.15),
+                          Colors.cyan.withValues(alpha: 0.2),
+                          Colors.blue.withValues(alpha: 0.1),
+                          Colors.cyan.withValues(alpha: 0.15),
                         ]
                       : [
-                          Colors.cyan.withOpacity(0.1),
-                          Colors.blue.withOpacity(0.05),
-                          Colors.cyan.withOpacity(0.08),
+                          Colors.cyan.withValues(alpha: 0.1),
+                          Colors.blue.withValues(alpha: 0.05),
+                          Colors.cyan.withValues(alpha: 0.08),
                         ],
                   ),
                   borderRadius: const BorderRadius.only(
@@ -900,14 +900,14 @@ class _MinimalHomePageState extends State<MinimalHomePage>
                         shape: BoxShape.circle,
                         gradient: RadialGradient(
                           colors: [
-                            Colors.cyan.withOpacity(0.3),
-                            Colors.blue.withOpacity(0.2),
+                            Colors.cyan.withValues(alpha: 0.3),
+                            Colors.blue.withValues(alpha: 0.2),
                             Colors.transparent,
                           ],
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.cyan.withOpacity(0.3),
+                            color: Colors.cyan.withValues(alpha: 0.3),
                             blurRadius: 20,
                             spreadRadius: 5,
                           ),
@@ -944,8 +944,8 @@ class _MinimalHomePageState extends State<MinimalHomePage>
                       'Your Ultimate Tech Shortcuts Companion',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: isDark 
-                          ? Colors.white.withOpacity(0.8)
-                          : Colors.black.withOpacity(0.7),
+                          ? Colors.white.withValues(alpha: 0.8)
+                          : Colors.black.withValues(alpha: 0.7),
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
@@ -967,13 +967,13 @@ class _MinimalHomePageState extends State<MinimalHomePage>
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           color: isDark 
-                            ? Colors.white.withOpacity(0.05)
-                            : Colors.black.withOpacity(0.03),
+                            ? Colors.white.withValues(alpha: 0.05)
+                            : Colors.black.withValues(alpha: 0.03),
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
                             color: isDark 
-                              ? Colors.white.withOpacity(0.1)
-                              : Colors.black.withOpacity(0.08),
+                              ? Colors.white.withValues(alpha: 0.1)
+                              : Colors.black.withValues(alpha: 0.08),
                             width: 1,
                           ),
                         ),
@@ -981,8 +981,8 @@ class _MinimalHomePageState extends State<MinimalHomePage>
                           AppConstants.appDescription,
                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             color: isDark 
-                              ? Colors.white.withOpacity(0.9)
-                              : Colors.black.withOpacity(0.8),
+                              ? Colors.white.withValues(alpha: 0.9)
+                              : Colors.black.withValues(alpha: 0.8),
                             height: 1.6,
                           ),
                           textAlign: TextAlign.center,
@@ -1050,17 +1050,17 @@ class _MinimalHomePageState extends State<MinimalHomePage>
                           gradient: LinearGradient(
                             colors: isDark
                               ? [
-                                  Colors.cyan.withOpacity(0.1),
-                                  Colors.blue.withOpacity(0.05),
+                                  Colors.cyan.withValues(alpha: 0.1),
+                                  Colors.blue.withValues(alpha: 0.05),
                                 ]
                               : [
-                                  Colors.cyan.withOpacity(0.05),
-                                  Colors.blue.withOpacity(0.02),
+                                  Colors.cyan.withValues(alpha: 0.05),
+                                  Colors.blue.withValues(alpha: 0.02),
                                 ],
                           ),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: Colors.cyan.withOpacity(0.2),
+                            color: Colors.cyan.withValues(alpha: 0.2),
                             width: 1,
                           ),
                         ),
@@ -1076,7 +1076,7 @@ class _MinimalHomePageState extends State<MinimalHomePage>
                             Text(
                               'Version 1.0.0 • Built with Flutter',
                               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: Colors.cyan.withOpacity(0.8),
+                                color: Colors.cyan.withValues(alpha: 0.8),
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -1101,7 +1101,7 @@ class _MinimalHomePageState extends State<MinimalHomePage>
                       borderRadius: BorderRadius.circular(16),
                     ),
                     elevation: 8,
-                    shadowColor: Colors.cyan.withOpacity(0.3),
+                    shadowColor: Colors.cyan.withValues(alpha: 0.3),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -1138,13 +1138,13 @@ class _MinimalHomePageState extends State<MinimalHomePage>
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: isDark 
-          ? Colors.white.withOpacity(0.03)
-          : Colors.black.withOpacity(0.02),
+          ? Colors.white.withValues(alpha: 0.03)
+          : Colors.black.withValues(alpha: 0.02),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: isDark 
-            ? Colors.white.withOpacity(0.08)
-            : Colors.black.withOpacity(0.06),
+            ? Colors.white.withValues(alpha: 0.08)
+            : Colors.black.withValues(alpha: 0.06),
           width: 1,
         ),
       ),
@@ -1176,8 +1176,8 @@ class _MinimalHomePageState extends State<MinimalHomePage>
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: isDark 
-                      ? Colors.white.withOpacity(0.9)
-                      : Colors.black.withOpacity(0.8),
+                      ? Colors.white.withValues(alpha: 0.9)
+                      : Colors.black.withValues(alpha: 0.8),
                   ),
                 ),
                 
@@ -1187,8 +1187,8 @@ class _MinimalHomePageState extends State<MinimalHomePage>
                   description,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: isDark 
-                      ? Colors.white.withOpacity(0.7)
-                      : Colors.black.withOpacity(0.6),
+                      ? Colors.white.withValues(alpha: 0.7)
+                      : Colors.black.withValues(alpha: 0.6),
                   ),
                 ),
               ],
