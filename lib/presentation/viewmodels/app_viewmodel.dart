@@ -70,15 +70,15 @@ class AppViewModel extends ChangeNotifier {
     }
   }
   
-  /// Get tab icon for OS
+  /// Get tab icon for OS - Distinctive and recognizable
   IconData getOSIcon(String os) {
     switch (os.toLowerCase()) {
       case 'windows':
-        return Icons.laptop_windows;
+        return Icons.window; // Windows window icon - distinctive
       case 'macos':
-        return Icons.laptop_mac;
+        return Icons.apple; // Apple logo - instantly recognizable
       case 'linux':
-        return Icons.computer;
+        return Icons.terminal; // Terminal icon that represents Linux command line - distinctive
       default:
         return Icons.computer;
     }

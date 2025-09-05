@@ -6,7 +6,7 @@ import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_icons.dart';
 import '../../core/utils/extensions.dart';
 import '../viewmodels/tips_viewmodel.dart';
-import '../viewmodels/settings_viewmodel.dart';
+import '../pages/tip_details/minimal_tip_details_page.dart';
 
 /// The most beautiful tip card ever created - Premium Glassmorphism Design
 class MinimalTipCard extends StatefulWidget {
@@ -429,14 +429,13 @@ class _MinimalTipCardState extends State<MinimalTipCard> {
     }
   }
 
-  /// Navigate to tip details with premium bottom sheet
+  /// Navigate to tip details with futuristic page
   void _navigateToDetails(BuildContext context) {
     try {
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        builder: (context) => _buildPremiumTipDetailsSheet(context),
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => MinimalTipDetailsPage(tip: widget.tip),
+        ),
       );
     } catch (e) {
       debugPrint('Error navigating to details: $e');
@@ -449,793 +448,10 @@ class _MinimalTipCardState extends State<MinimalTipCard> {
     }
   }
 
-  /// Build premium tip details bottom sheet
-  Widget _buildPremiumTipDetailsSheet(BuildContext context) {
-    return Consumer<SettingsViewModel>(
-      builder: (context, settingsViewModel, _) {
-        final isDark = Theme.of(context).brightness == Brightness.dark;
-        
-        return DraggableScrollableSheet(
-      initialChildSize: 0.95,
-      minChildSize: 0.8,
-      maxChildSize: 0.99,
-      builder: (context, scrollController) {
-    return Container(
-      decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: isDark
-                ? [
-                    AppColors.backgroundDark,
-                    AppColors.surfaceDark.withValues(alpha: 0.9),
-                    AppColors.backgroundDark.withValues(alpha: 0.95),
-                    AppColors.surfaceDark.withValues(alpha: 0.7),
-                    AppColors.backgroundDark,
-                  ]
-                : [
-                    AppColors.backgroundLight,
-                    AppColors.neutral50,
-                    AppColors.backgroundLight.withValues(alpha: 0.99),
-                    AppColors.neutral50.withValues(alpha: 0.8),
-                    AppColors.backgroundLight,
-                  ],
-              stops: const [0.0, 0.25, 0.5, 0.75, 1.0],
-            ),
-            borderRadius: BorderRadius.vertical(top: Radius.circular(context.rbr(40))),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.5),
-                blurRadius: 50,
-                offset: const Offset(0, -20),
-                spreadRadius: 10,
-              ),
-              BoxShadow(
-                color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.15),
-                blurRadius: 80,
-                offset: const Offset(0, -30),
-                spreadRadius: 20,
-              ),
-              BoxShadow(
-                color: AppColors.accentDark.withValues(alpha: 0.1),
-                blurRadius: 100,
-                offset: const Offset(0, -40),
-                spreadRadius: 30,
-              ),
-            ],
-          ),
-          child: Column(
-            children: [
-              // Handle bar indicator
-              Container(
-                margin: context.ro(top: 24),
-                width: context.rw(80),
-                height: context.rh(8),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [
-                      AppColors.getOSColor(widget.tip.os),
-                      AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.8),
-                      AppColors.accentDark,
-                      AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.6),
-                      AppColors.accentDark.withValues(alpha: 0.8),
-                    ],
-                    stops: const [0.0, 0.25, 0.5, 0.75, 1.0],
-                  ),
-                  borderRadius: BorderRadius.circular(context.rbr(6)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.5),
-                      blurRadius: 20,
-                      offset: const Offset(0, 6),
-                      spreadRadius: 3,
-                    ),
-                  ],
-                ),
-              ),
-              
-              // Premium header container with enhanced design
-              Container(
-                margin: context.re(28),
-                padding: context.re(24),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: isDark
-                      ? [
-                          AppColors.accentDark.withValues(alpha: 0.1),
-                          AppColors.accentDark.withValues(alpha: 0.05),
-                          AppColors.surfaceDark.withValues(alpha: 0.8),
-                        ]
-                      : [
-                          AppColors.accentDark.withValues(alpha: 0.08),
-                          AppColors.accentDark.withValues(alpha: 0.03),
-                          AppColors.neutral50.withValues(alpha: 0.9),
-                        ],
-                    stops: const [0.0, 0.3, 1.0],
-                  ),
-                                    borderRadius: BorderRadius.circular(context.rbr(24)),
-                  border: Border.all(
-                    color: isDark 
-                      ? AppColors.accentDark.withValues(alpha: 0.3)
-                      : AppColors.accentDark.withValues(alpha: 0.2),
-                    width: context.rw(2),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: isDark 
-                        ? AppColors.accentDark.withValues(alpha: 0.2)
-                        : AppColors.accentDark.withValues(alpha: 0.15),
-                      blurRadius: 20,
-                      offset: const Offset(0, 8),
-                      spreadRadius: 2,
-                    ),
-                    BoxShadow(
-                      color: isDark 
-                        ? Colors.black.withValues(alpha: 0.15)
-                        : Colors.black.withValues(alpha: 0.06),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                      spreadRadius: 0,
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // OS Badge with enhanced design
-                    Row(
-                      children: [
-                        // Enhanced OS Icon Container
-                        Container(
-                          padding: context.re(12),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.2),
-                                AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.1),
-                              ],
-                            ),
-                            borderRadius: BorderRadius.circular(context.rbr(16)),
-                            border: Border.all(
-                              color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.4),
-                              width: context.rw(2),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.3),
-                                blurRadius: 8,
-                                offset: const Offset(0, 2),
-                                spreadRadius: 0,
-                              ),
-                            ],
-                          ),
-                                                     child: Icon(
-                             AppIcons.getOSIcon(widget.tip.os),
-                             size: context.ri(24),
-                             color: AppColors.getOSColor(widget.tip.os),
-                           ),
-                        ),
-                        context.rsb(width: 16),
-                        // Enhanced OS Name Badge
-                        Container(
-                          padding: context.rse(horizontal: 16, vertical: 8),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.15),
-                                AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.08),
-                              ],
-                            ),
-                            borderRadius: BorderRadius.circular(context.rbr(20)),
-                            border: Border.all(
-                              color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.4),
-                              width: context.rw(1.5),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.2),
-                                blurRadius: 6,
-                                offset: const Offset(0, 2),
-                                spreadRadius: 0,
-                              ),
-                            ],
-                          ),
-                          child: Text(
-                            _getOSDisplayName(widget.tip.os),
-                            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                              color: AppColors.getOSColor(widget.tip.os),
-                              fontWeight: FontWeight.w800,
-                              fontSize: context.rs(14),
-                              letterSpacing: 0.3,
-                            ),
-                          ),
-                        ),
-                        const Spacer(),
-                        // Tip Type Indicator
-                        Container(
-                          padding: context.rse(horizontal: 12, vertical: 6),
-                          decoration: BoxDecoration(
-                            color: isDark 
-                              ? Colors.white.withValues(alpha: 0.1)
-                              : Colors.white.withValues(alpha: 0.8),
-                                                        borderRadius: BorderRadius.circular(context.rbr(12)),
-                            border: Border.all(
-                              color: isDark 
-                                ? Colors.white.withValues(alpha: 0.2)
-                                : Colors.white.withValues(alpha: 0.6),
-                              width: context.rw(1),
-                            ),
-      ),
-                          child: Text(
-                            'Tip',
-                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              color: isDark 
-                                ? Colors.white.withValues(alpha: 0.8)
-                                : AppColors.textSecondary,
-                              fontWeight: FontWeight.w600,
-                              fontSize: context.rs(11),
-                              letterSpacing: 0.5,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    context.rsb(height: 20),
-                    // Enhanced Title
-                    Text(
-                      widget.tip.title,
-                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.w900,
-                        color: isDark 
-                          ? Colors.white
-                          : AppColors.textPrimary,
-                        fontSize: context.rs(22),
-                        letterSpacing: -0.5,
-                        height: 1.2,
-                      ),
-                    ),
-                    context.rsb(height: 8),
-                    // Subtitle with step count
-                    Row(
-        children: [
-                        Icon(
-                          Icons.format_list_numbered_rounded,
-                          size: context.ri(16),
-                          color: isDark 
-                            ? Colors.white.withValues(alpha: 0.7)
-                            : AppColors.textSecondary,
-                        ),
-                        context.rsb(width: 8),
-          Text(
-                          '${widget.tip.steps.length} steps to master',
-                                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: isDark 
-                              ? Colors.white.withValues(alpha: 0.7)
-                              : AppColors.textSecondary,
-                            fontWeight: FontWeight.w600,
-                            fontSize: context.rs(14),
-                            letterSpacing: 0.2,
-                          ),
-          ),
-        ],
-      ),
-                  ],
-                ),
-              ),
-              
-              // Ultra-premium content with enhanced animations
-              Expanded(
-                child: SingleChildScrollView(
-                  controller: scrollController,
-                  padding: context.rse(horizontal: 24),
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                                             // Premium description card
-                       Container(
-                         margin: context.ro(bottom: 36),
-                         padding: context.re(28),
-      decoration: BoxDecoration(
-                           gradient: LinearGradient(
-                             begin: Alignment.topLeft,
-                             end: Alignment.bottomRight,
-                             colors: [
-                               AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.15),
-                               AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.08),
-                               AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.05),
-                               AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.02),
-                             ],
-                             stops: const [0.0, 0.33, 0.66, 1.0],
-                           ),
-                           borderRadius: BorderRadius.circular(context.rbr(25)),
-                           border: Border.all(
-                             color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.25),
-                             width: context.rw(1.5),
-                           ),
-                           boxShadow: [
-                             BoxShadow(
-                               color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.15),
-                               blurRadius: 25,
-                               offset: const Offset(0, 8),
-                               spreadRadius: 3,
-                             ),
-                             BoxShadow(
-                               color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.05),
-                               blurRadius: 40,
-                               offset: const Offset(0, 15),
-                               spreadRadius: 5,
-                             ),
-                           ],
-                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-                            Row(
-                              children: [
-                                Container(
-                                  padding: context.re(8),
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        AppColors.getOSColor(widget.tip.os),
-                                        AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.8),
-                                      ],
-                                    ),
-                                    borderRadius: BorderRadius.circular(context.rbr(10)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.3),
-                                        blurRadius: 8,
-                                        offset: const Offset(0, 2),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Icon(
-                                    Icons.info_outline_rounded,
-                                    size: context.ri(18),
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const SizedBox(width: 12),
-          Text(
-                                  'Description',
-                                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    color: AppColors.getOSColor(widget.tip.os),
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 16,
-                                    letterSpacing: 0.5,
-            ),
-          ),
-        ],
-      ),
-                            const SizedBox(height: 16),
-                            Text(
-                              widget.tip.description,
-                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                color: isDark ? AppColors.textDarkSecondary : AppColors.textSecondary,
-                                height: 1.8,
-                                fontSize: 16,
-                                letterSpacing: 0.2,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      
-                                             // Ultra-premium steps section
-                       Container(
-                         margin: context.ro(bottom: 36),
-                         child: Column(
-                           crossAxisAlignment: CrossAxisAlignment.start,
-                           children: [
-                             Container(
-                               padding: context.re(20),
-                               decoration: BoxDecoration(
-                                 gradient: LinearGradient(
-                                   begin: Alignment.topLeft,
-                                   end: Alignment.bottomRight,
-                                   colors: [
-                                     AppColors.accentDark,
-                                     AppColors.accentDark.withValues(alpha: 0.9),
-                                     AppColors.accentDark.withValues(alpha: 0.8),
-                                     AppColors.accentDark.withValues(alpha: 0.7),
-                                   ],
-                                   stops: const [0.0, 0.33, 0.66, 1.0],
-                                 ),
-                                 borderRadius: BorderRadius.circular(context.rbr(20)),
-                                 boxShadow: [
-                                   BoxShadow(
-                                     color: AppColors.accentDark.withValues(alpha: 0.4),
-                                     blurRadius: 20,
-                                     offset: const Offset(0, 8),
-                                     spreadRadius: 3,
-                                   ),
-                                   BoxShadow(
-                                     color: AppColors.accentDark.withValues(alpha: 0.2),
-                                     blurRadius: 35,
-                                     offset: const Offset(0, 15),
-                                     spreadRadius: 5,
-                                   ),
-                                 ],
-                               ),
-      child: Row(
-        children: [
-                                   Container(
-                                     padding: context.re(12),
-                                     decoration: BoxDecoration(
-                                       color: Colors.white.withValues(alpha: 0.2),
-                                       borderRadius: BorderRadius.circular(context.rbr(15)),
-                                       boxShadow: [
-                                         BoxShadow(
-                                           color: Colors.white.withValues(alpha: 0.1),
-                                           blurRadius: 10,
-                                           offset: const Offset(0, 3),
-                                         ),
-                                       ],
-                                     ),
-                                                                            child: Icon(
-                                         Icons.format_list_numbered_rounded,
-                                         size: context.ri(24),
-                                         color: Colors.white,
-                                       ),
-                                   ),
-                                   const SizedBox(width: 16),
-                                   Expanded(
-                                     child: Text(
-                                       'Step-by-Step Master Guide',
-                                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                         color: Colors.white,
-                                         fontWeight: FontWeight.w900,
-                                         fontSize: context.rs(22),
-                                         letterSpacing: -0.5,
-                                       ),
-                                     ),
-                                   ),
-                                   Container(
-                                     padding: context.rse(horizontal: 12, vertical: 6),
-                                     decoration: BoxDecoration(
-                                       color: Colors.white.withValues(alpha: 0.2),
-                                       borderRadius: BorderRadius.circular(context.rbr(12)),
-                                     ),
-                                     child: Text(
-                                       '${widget.tip.steps.length}',
-                                       style: TextStyle(
-                                         color: Colors.white,
-                                         fontWeight: FontWeight.w900,
-                                         fontSize: context.rs(16),
-                                       ),
-                                     ),
-                                   ),
-                                 ],
-                               ),
-                             ),
-                             context.rsb(height: 28),
-                            ...widget.tip.steps.asMap().entries.map(
-                              (entry) => _buildUltraPremiumStep(context, entry.key, entry.value, isDark),
-                            ),
-                          ],
-                        ),
-                      ),
-                      
-                      // Premium tags section
-                      if (widget.tip.tags.isNotEmpty) ...[
-                        Container(
-                          margin: context.ro(bottom: 32),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    padding: context.re(8),
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          AppColors.getOSColor(widget.tip.os),
-                                          AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.8),
-                                        ],
-                                      ),
-                                      borderRadius: BorderRadius.circular(context.rbr(10)),
-                                    ),
-                                                                          child: Icon(
-                                        Icons.label_rounded,
-                                        size: context.ri(18),
-                                        color: Colors.white,
-                                      ),
-                                  ),
-                                  const SizedBox(width: 12),
-          Text(
-                                    'Tags',
-                                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                      color: AppColors.getOSColor(widget.tip.os),
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 16,
-                                      letterSpacing: 0.5,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 16),
-                              Wrap(
-                                spacing: 12,
-                                runSpacing: 10,
-                                children: widget.tip.tags.map((tag) => _buildPremiumTag(context, tag)).toList(),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                      
-                                             // Ultra-premium footer with action buttons
-                       Container(
-                         margin: context.ro(bottom: 50),
-                         padding: context.re(28),
-                         decoration: BoxDecoration(
-                           gradient: LinearGradient(
-                             begin: Alignment.topLeft,
-                             end: Alignment.bottomRight,
-                             colors: isDark
-                               ? [
-                                   Colors.white.withValues(alpha: 0.12),
-                                   Colors.white.withValues(alpha: 0.08),
-                                   Colors.white.withValues(alpha: 0.05),
-                                   Colors.white.withValues(alpha: 0.02),
-                                 ]
-                               : [
-                                   Colors.white.withValues(alpha: 0.9),
-                                   Colors.white.withValues(alpha: 0.8),
-                                   Colors.white.withValues(alpha: 0.7),
-                                   Colors.white.withValues(alpha: 0.6),
-                                 ],
-                             stops: const [0.0, 0.33, 0.66, 1.0],
-                           ),
-                           borderRadius: BorderRadius.circular(context.rbr(25)),
-                           border: Border.all(
-                             color: isDark
-                               ? Colors.white.withValues(alpha: 0.15)
-                               : Colors.white.withValues(alpha: 0.4),
-                             width: context.rw(1.5),
-                           ),
-                           boxShadow: [
-                             BoxShadow(
-                               color: isDark 
-                                 ? Colors.black.withValues(alpha: 0.2)
-                                 : Colors.black.withValues(alpha: 0.1),
-                               blurRadius: 20,
-                               offset: const Offset(0, 8),
-                               spreadRadius: 3,
-                             ),
-                           ],
-                         ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: ElevatedButton.icon(
-                                onPressed: () {
-                                  // Share functionality
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('Sharing ${widget.tip.title}...'),
-                                      backgroundColor: AppColors.accentDark,
-                                    ),
-                                  );
-                                },
-                                icon: Icon(
-                                  Icons.share_rounded,
-                                  size: context.ri(20),
-                                  color: Colors.white,
-                                ),
-                                label: Text(
-                                  'Share',
-                                                                    style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: context.rs(16),
-                                  ),
-                                ),
-                                                                 style: ElevatedButton.styleFrom(
-                                   backgroundColor: AppColors.getOSColor(widget.tip.os),
-                                   foregroundColor: Colors.white,
-                                   padding: const EdgeInsets.symmetric(vertical: 18),
-                                   shape: RoundedRectangleBorder(
-                                     borderRadius: BorderRadius.circular(context.rbr(18)),
-                                   ),
-                                   elevation: 12,
-                                   shadowColor: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.5),
-                                 ),
-                              ),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: ElevatedButton.icon(
-                                onPressed: () {
-                                  // Copy functionality
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('Copied to clipboard!'),
-                                      backgroundColor: AppColors.accentDark,
-                                    ),
-                                  );
-                                },
-                                icon: Icon(
-                                  Icons.copy_rounded,
-                                  size: context.ri(20),
-                                  color: AppColors.getOSColor(widget.tip.os),
-                                ),
-                                label: Text(
-                                  'Copy',
-                                  style: TextStyle(
-                                    color: AppColors.getOSColor(widget.tip.os),
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: context.rs(16),
-                                  ),
-                                ),
-                                                                 style: ElevatedButton.styleFrom(
-                                   backgroundColor: Colors.transparent,
-                                   foregroundColor: AppColors.getOSColor(widget.tip.os),
-                                   padding: const EdgeInsets.symmetric(vertical: 18),
-                                   shape: RoundedRectangleBorder(
-                                     borderRadius: BorderRadius.circular(18),
-                                     side: BorderSide(
-                                       color: AppColors.getOSColor(widget.tip.os),
-                                       width: 2.5,
-                                     ),
-                                   ),
-                                   elevation: 0,
-                                 ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-            ),
-          ),
-        ],
-      ),
-        );
-        },
-      );
-      },
-    );
-  }
 
-  /// Build ultra-premium step with enhanced design
-  Widget _buildUltraPremiumStep(BuildContext context, int index, String step, bool isDark) {
-    return Container(
-      margin: context.ro(bottom: 24),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Ultra-premium step number with glow effect
-          Container(
-            width: context.rw(48),
-            height: context.rh(48),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  AppColors.accentDark,
-                  AppColors.accentDark.withValues(alpha: 0.9),
-                  AppColors.accentDark.withValues(alpha: 0.8),
-                  AppColors.getOSColor(widget.tip.os),
-                  AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.8),
-                ],
-                stops: const [0.0, 0.25, 0.5, 0.75, 1.0],
-              ),
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.accentDark.withValues(alpha: 0.5),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                  spreadRadius: 3,
-                ),
-                BoxShadow(
-                  color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.4),
-                  blurRadius: 30,
-                  offset: const Offset(0, 12),
-                  spreadRadius: 5,
-                ),
-                BoxShadow(
-                  color: AppColors.accentDark.withValues(alpha: 0.2),
-                  blurRadius: 40,
-                  offset: const Offset(0, 20),
-                  spreadRadius: 8,
-                ),
-              ],
-            ),
-            child: Center(
-              child: Text(
-                '${index + 1}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w900,
-                  fontSize: context.rs(20),
-                  letterSpacing: -0.8,
-                ),
-              ),
-            ),
-          ),
-          context.rsb(width: 24),
-          // Ultra-premium step content
-          Expanded(
-            child: Container(
-              padding: context.re(24),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: isDark
-                    ? [
-                        Colors.white.withValues(alpha: 0.12),
-                        Colors.white.withValues(alpha: 0.08),
-                        Colors.white.withValues(alpha: 0.05),
-                        Colors.white.withValues(alpha: 0.02),
-                      ]
-                    : [
-                        Colors.white.withValues(alpha: 0.95),
-                        Colors.white.withValues(alpha: 0.85),
-                        Colors.white.withValues(alpha: 0.75),
-                        Colors.white.withValues(alpha: 0.65),
-                      ],
-                  stops: const [0.0, 0.33, 0.66, 1.0],
-                ),
-                borderRadius: BorderRadius.circular(context.rbr(22)),
-                border: Border.all(
-                  color: isDark
-                    ? Colors.white.withValues(alpha: 0.15)
-                    : Colors.white.withValues(alpha: 0.4),
-                  width: context.rw(1.5),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: isDark 
-                      ? Colors.black.withValues(alpha: 0.25)
-                      : Colors.black.withValues(alpha: 0.1),
-                    blurRadius: 20,
-                    offset: const Offset(0, 8),
-                    spreadRadius: 3,
-                  ),
-                  BoxShadow(
-                    color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.05),
-                    blurRadius: 30,
-                    offset: const Offset(0, 15),
-                    spreadRadius: 5,
-                  ),
-                ],
-              ),
-              child: Text(
-                step,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: isDark ? AppColors.textDarkSecondary : AppColors.textSecondary,
-                  height: 1.8,
-                  fontSize: context.rs(17),
-                  letterSpacing: 0.2,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
-/// Premium favorite button with sophisticated animations
+/// Revolutionary Modern Favorite Button with Holographic Effects
 class _PremiumFavoriteButton extends StatefulWidget {
   final bool isFavorite;
   final VoidCallback onPressed;
@@ -1251,35 +467,88 @@ class _PremiumFavoriteButton extends StatefulWidget {
 
 class _PremiumFavoriteButtonState extends State<_PremiumFavoriteButton>
     with TickerProviderStateMixin {
+  late AnimationController _morphController;
+  late AnimationController _liquidController;
+  late AnimationController _hologramController;
+  late AnimationController _rippleController;
+  late AnimationController _shimmerController;
   late AnimationController _tapController;
-  late AnimationController _favoriteController;
-  late AnimationController _glowController;
   
+  late Animation<double> _morphAnimation;
+  late Animation<double> _hologramAnimation;
+  late Animation<double> _rippleAnimation;
+  late Animation<double> _shimmerAnimation;
+  late Animation<double> _tapAnimation;
   late Animation<double> _scaleAnimation;
-  late Animation<double> _favoriteScaleAnimation;
-  late Animation<double> _glowAnimation;
-  late Animation<double> _rotationAnimation;
 
   @override
   void initState() {
     super.initState();
     
-    _tapController = AnimationController(
-      duration: const Duration(milliseconds: 150),
+    _morphController = AnimationController(
+      duration: const Duration(milliseconds: 1200),
       vsync: this,
     );
     
-    _favoriteController = AnimationController(
-      duration: const Duration(milliseconds: 600),
+    _liquidController = AnimationController(
+      duration: const Duration(milliseconds: 2000),
       vsync: this,
     );
     
-    _glowController = AnimationController(
-      duration: const Duration(milliseconds: 400),
+    _hologramController = AnimationController(
+      duration: const Duration(milliseconds: 3000),
       vsync: this,
     );
 
-    _scaleAnimation = Tween<double>(
+    _rippleController = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+    
+    _shimmerController = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
+    
+    _tapController = AnimationController(
+      duration: const Duration(milliseconds: 100),
+      vsync: this,
+    );
+
+    _morphAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _morphController,
+      curve: Curves.easeInOutCubic,
+    ));
+
+
+    _hologramAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _hologramController,
+      curve: Curves.easeInOut,
+    ));
+
+    _rippleAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _rippleController,
+      curve: Curves.easeOutQuart,
+    ));
+    
+    _shimmerAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _shimmerController,
+      curve: Curves.easeInOut,
+    ));
+    
+    _tapAnimation = Tween<double>(
       begin: 1.0,
       end: 0.85,
     ).animate(CurvedAnimation(
@@ -1287,36 +556,24 @@ class _PremiumFavoriteButtonState extends State<_PremiumFavoriteButton>
       curve: Curves.easeInOut,
     ));
 
-    _favoriteScaleAnimation = Tween<double>(
+    _scaleAnimation = Tween<double>(
       begin: 1.0,
-      end: 1.4,
+      end: 1.1,
     ).animate(CurvedAnimation(
-      parent: _favoriteController,
+      parent: _morphController,
       curve: Curves.elasticOut,
     ));
 
-    _glowAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _glowController,
-      curve: Curves.easeOutCubic,
-    ));
-    
-    _rotationAnimation = Tween<double>(
-      begin: 0.0,
-      end: 0.25,
-    ).animate(CurvedAnimation(
-      parent: _favoriteController,
-      curve: Curves.easeOutCubic,
-    ));
   }
 
   @override
   void dispose() {
+    _morphController.dispose();
+    _liquidController.dispose();
+    _hologramController.dispose();
+    _rippleController.dispose();
+    _shimmerController.dispose();
     _tapController.dispose();
-    _favoriteController.dispose();
-    _glowController.dispose();
     super.dispose();
   }
 
@@ -1325,11 +582,17 @@ class _PremiumFavoriteButtonState extends State<_PremiumFavoriteButton>
     super.didUpdateWidget(oldWidget);
     if (widget.isFavorite != oldWidget.isFavorite) {
       if (widget.isFavorite) {
-        _favoriteController.forward();
-        _glowController.forward();
+        _morphController.forward();
+        _liquidController.forward();
+        _hologramController.repeat();
+        _rippleController.forward();
+        _shimmerController.repeat();
       } else {
-        _favoriteController.reverse();
-        _glowController.reverse();
+        _morphController.reverse();
+        _liquidController.reverse();
+        _hologramController.stop();
+        _rippleController.reverse();
+        _shimmerController.stop();
       }
     }
   }
@@ -1349,57 +612,247 @@ class _PremiumFavoriteButtonState extends State<_PremiumFavoriteButton>
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
     return GestureDetector(
       onTapDown: _onTapDown,
       onTapUp: _onTapUp,
       onTapCancel: _onTapCancel,
       child: AnimatedBuilder(
-        animation: Listenable.merge([_tapController, _favoriteController, _glowController]),
+        animation: Listenable.merge([
+          _morphController,
+          _liquidController,
+          _hologramController,
+          _rippleController,
+          _shimmerController,
+          _tapController,
+        ]),
         builder: (context, child) {
-          return Transform.scale(
-            scale: _scaleAnimation.value,
+          return Stack(
+            alignment: Alignment.center,
+            children: [
+              // Holographic background effects
+              if (widget.isFavorite) ..._buildHolographicEffects(isDark),
+              
+              // Liquid ripple effects
+              if (widget.isFavorite) ..._buildLiquidRipples(isDark),
+              
+              // Main morphing button
+              Transform.scale(
+                scale: _tapAnimation.value,
             child: Container(
-              padding: context.re(12),
+                  width: 48,
+                  height: 48,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(
+                      center: Alignment.center,
+                      radius: 1.0,
                   colors: widget.isFavorite
-                    ? [
-                        AppColors.favoriteRed.withValues(alpha: 0.1),
-                        AppColors.favoriteRed.withValues(alpha: 0.05),
-                      ]
-                    : [
+                        ? isDark
+                          ? [
+                              const Color(0xFF8B0000).withValues(alpha: 0.9), // Dark red wine
+                              const Color(0xFF722F37).withValues(alpha: 0.7), // Wine red
+                              const Color(0xFF5D1A1A).withValues(alpha: 0.5), // Deep wine
+                              const Color(0xFF4A1414).withValues(alpha: 0.3), // Dark wine
+                            ]
+                          : [
+                              const Color(0xFFB22222).withValues(alpha: 0.9), // Fire brick
+                              const Color(0xFF8B0000).withValues(alpha: 0.7), // Dark red
+                              const Color(0xFF722F37).withValues(alpha: 0.5), // Wine red
+                              const Color(0xFF5D1A1A).withValues(alpha: 0.3), // Deep wine
+                            ]
+                        : [
+                            isDark 
+                              ? Colors.white.withValues(alpha: 0.1)
+                              : Colors.grey[200]!.withValues(alpha: 0.3),
+                            isDark 
+                              ? Colors.white.withValues(alpha: 0.05)
+                              : Colors.grey[300]!.withValues(alpha: 0.2),
                         Colors.transparent,
                         Colors.transparent,
                       ],
                 ),
-                borderRadius: BorderRadius.circular(context.rbr(16)),
-                boxShadow: widget.isFavorite ? [
+                    boxShadow: [
+                      if (widget.isFavorite) ...[
                   BoxShadow(
-                    color: AppColors.favoriteRed.withValues(alpha: 0.3 * _glowAnimation.value),
+                          color: isDark
+                            ? const Color(0xFF8B0000).withValues(alpha: 0.5 * _morphAnimation.value)
+                            : const Color(0xFFB22222).withValues(alpha: 0.5 * _morphAnimation.value),
+                          blurRadius: 30,
+                          offset: const Offset(0, 0),
+                          spreadRadius: 5,
+                        ),
+                        BoxShadow(
+                          color: isDark
+                            ? const Color(0xFF722F37).withValues(alpha: 0.4 * _morphAnimation.value)
+                            : const Color(0xFF8B0000).withValues(alpha: 0.4 * _morphAnimation.value),
+                          blurRadius: 50,
+                          offset: const Offset(0, 0),
+                          spreadRadius: 8,
+                        ),
+                        BoxShadow(
+                          color: isDark
+                            ? const Color(0xFF5D1A1A).withValues(alpha: 0.3 * _morphAnimation.value)
+                            : const Color(0xFF722F37).withValues(alpha: 0.3 * _morphAnimation.value),
+                          blurRadius: 70,
+                          offset: const Offset(0, 0),
+                          spreadRadius: 12,
+                        ),
+                      ] else ...[
+                        BoxShadow(
+                          color: isDark 
+                            ? Colors.black.withValues(alpha: 0.2)
+                            : Colors.grey.withValues(alpha: 0.15),
                     blurRadius: 20,
                     offset: const Offset(0, 5),
                     spreadRadius: 2,
                   ),
-                ] : null,
-              ),
-              child: Transform.scale(
-                scale: _favoriteScaleAnimation.value,
-                child: Transform.rotate(
-                  angle: _rotationAnimation.value * 3.14159 * 2,
+                      ],
+                    ],
+                  ),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      // Shimmer effect
+                      if (widget.isFavorite)
+                        _buildShimmerEffect(isDark),
+                      
+                      // Main icon with smooth transition
+                      Transform.scale(
+                        scale: _scaleAnimation.value,
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          transitionBuilder: (Widget child, Animation<double> animation) {
+                            return ScaleTransition(
+                              scale: animation,
+                              child: FadeTransition(
+                                opacity: animation,
+                                child: child,
+                              ),
+                            );
+                          },
                 child: Icon(
                     widget.isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-                    size: context.ri(24),
+                            key: ValueKey(widget.isFavorite),
+                            size: 24,
                   color: widget.isFavorite 
-                    ? AppColors.favoriteRed 
-                    : (Theme.of(context).brightness == Brightness.dark 
+                              ? Colors.white
+                              : (isDark 
                           ? Colors.white.withValues(alpha: 0.7)
-                        : Colors.grey.shade600),
+                                  : Colors.grey[600]),
                   ),
                 ),
               ),
+                    ],
             ),
+            ),
+              ),
+            ],
           );
         },
+      ),
+    );
+  }
+  
+  List<Widget> _buildHolographicEffects(bool isDark) {
+    return List.generate(3, (index) {
+      final delay = index * 0.3;
+      final animationValue = (_hologramAnimation.value + delay) % 1.0;
+      
+      return Transform.scale(
+        scale: 1.0 + (animationValue * 0.5),
+        child: Opacity(
+          opacity: (1.0 - animationValue).clamp(0.0, 1.0),
+          child: Container(
+            width: 60 + (index * 15),
+            height: 60 + (index * 15),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: isDark
+                  ? [
+                      Colors.purple[400]!,
+                      Colors.purple[500]!,
+                      Colors.indigo[500]!,
+                    ][index].withValues(alpha: 0.3)
+                  : [
+                      Colors.blue[400]!,
+                      Colors.blue[500]!,
+                      Colors.blue[600]!,
+                    ][index].withValues(alpha: 0.3),
+                width: 2,
+              ),
+            ),
+          ),
+        ),
+      );
+    });
+  }
+  
+  List<Widget> _buildLiquidRipples(bool isDark) {
+    return List.generate(4, (index) {
+      final delay = index * 0.2;
+      final animationValue = (_rippleAnimation.value + delay).clamp(0.0, 1.0);
+      final scale = 1.0 + (animationValue * 2.0);
+      final opacity = (1.0 - animationValue).clamp(0.0, 1.0);
+      
+      return Transform.scale(
+        scale: scale,
+        child: Opacity(
+          opacity: opacity * 0.6,
+          child: Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: RadialGradient(
+                colors: isDark
+                  ? [
+                      Colors.purple[400]!.withValues(alpha: 0.4),
+                      Colors.purple[500]!.withValues(alpha: 0.2),
+                      Colors.transparent,
+                    ]
+                  : [
+                      Colors.blue[400]!.withValues(alpha: 0.4),
+                      Colors.blue[500]!.withValues(alpha: 0.2),
+                      Colors.transparent,
+                    ],
+              ),
+            ),
+          ),
+        ),
+      );
+    });
+  }
+  
+  Widget _buildShimmerEffect(bool isDark) {
+    return Transform.rotate(
+      angle: _shimmerAnimation.value * 3.14159 * 2,
+      child: Container(
+        width: 52,
+        height: 52,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          gradient: SweepGradient(
+            colors: isDark
+              ? [
+                  Colors.transparent,
+                  Colors.purple[300]!.withValues(alpha: 0.3),
+                  Colors.purple[200]!.withValues(alpha: 0.6),
+                  Colors.purple[300]!.withValues(alpha: 0.3),
+                  Colors.transparent,
+                ]
+              : [
+                  Colors.transparent,
+                  Colors.blue[300]!.withValues(alpha: 0.3),
+                  Colors.blue[200]!.withValues(alpha: 0.6),
+                  Colors.blue[300]!.withValues(alpha: 0.3),
+                  Colors.transparent,
+                ],
+            stops: const [0.0, 0.3, 0.5, 0.7, 1.0],
+          ),
+        ),
       ),
     );
   }

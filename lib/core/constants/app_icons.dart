@@ -45,15 +45,15 @@ class AppIcons {
   static const IconData folder = Icons.folder_outlined;
   static const IconData file = Icons.description_outlined;
   
-  /// Get OS specific icon
+  /// Get OS specific icon - Distinctive and recognizable
   static IconData getOSIcon(String os) {
     switch (os.toLowerCase()) {
       case 'windows':
-        return Icons.laptop_windows_rounded;
+        return Icons.window; // Windows window icon - distinctive
       case 'macos':
-        return Icons.laptop_mac_rounded;
+        return Icons.apple; // Apple logo - instantly recognizable
       case 'linux':
-        return Icons.computer_rounded;
+        return Icons.terminal; // Terminal icon that represents Linux command line - distinctive
       default:
         return Icons.computer_rounded;
     }

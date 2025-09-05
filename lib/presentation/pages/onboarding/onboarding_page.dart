@@ -413,12 +413,12 @@ class _OnboardingPageState extends State<OnboardingPage>
                   fontWeight: FontWeight.bold,
                   color: Colors.cyan,
                   letterSpacing: isMobile ? 4 : isTablet ? 6 : 8,
-                                      shadows: [
-                      Shadow(
+                  shadows: [
+                    Shadow(
                         color: Colors.cyan.withValues(alpha: 0.8),
-                        blurRadius: 20 + _glowIntensity.value * 10,
-                      ),
-                    ],
+                      blurRadius: 20 + _glowIntensity.value * 10,
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: isMobile ? 12 : isTablet ? 14 : 16),
@@ -542,7 +542,7 @@ class _OnboardingPageState extends State<OnboardingPage>
                                   child: Text(
                                     _terminalHistory[index],
                                     style: TextStyle(
-                                                                          color: isDark 
+                                      color: isDark 
                                       ? Colors.green.withValues(alpha: 0.8)
                                       : Colors.green.withValues(alpha: 0.8),
                                       fontSize: 14,
@@ -775,38 +775,38 @@ class _OnboardingPageState extends State<OnboardingPage>
                       ),
                     ),
                     
-                    // Advanced tech progress fill with precise step filling
-                    Builder(
-                      builder: (context) {
-                        final progressBarWidth = isMobile ? 340.0 : isTablet ? 400.0 : 460.0;
-                        return AnimatedContainer(
-                          duration: const Duration(milliseconds: 1500),
-                          curve: Curves.easeOutCubic,
-                          width: progressBarWidth * ((_currentZoneIndex + 1) / _zones.length),
-                          height: double.infinity,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(isMobile ? 20 : isTablet ? 24 : 28),
-                              gradient: LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                colors: [
-                                  Colors.cyan,
+                                                              // Advanced tech progress fill with precise step filling
+                     Builder(
+                       builder: (context) {
+                         final progressBarWidth = isMobile ? 340.0 : isTablet ? 400.0 : 460.0;
+                         return AnimatedContainer(
+                           duration: const Duration(milliseconds: 1500),
+                           curve: Curves.easeOutCubic,
+                           width: progressBarWidth * ((_currentZoneIndex + 1) / _zones.length),
+                           height: double.infinity,
+                           child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(isMobile ? 20 : isTablet ? 24 : 28),
+                          gradient: LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: [
+                              Colors.cyan,
                                   Colors.cyan.withValues(alpha: 0.95),
                                   Colors.blue.withValues(alpha: 0.9),
                                   Colors.purple.withValues(alpha: 0.85),
                                   Colors.indigo.withValues(alpha: 0.8),
                                   Colors.cyan.withValues(alpha: 0.9),
-                                ],
-                                stops: const [0.0, 0.2, 0.4, 0.6, 0.8, 1.0],
-                              ),
-                            ),
-                            child: Stack(
-                              children: [
-                                // Advanced tech shine effect
-                                Positioned.fill(
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(isMobile ? 20 : isTablet ? 24 : 28),
+                            ],
+                            stops: const [0.0, 0.2, 0.4, 0.6, 0.8, 1.0],
+                          ),
+                        ),
+                        child: Stack(
+                          children: [
+                            // Advanced tech shine effect
+                            Positioned.fill(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(isMobile ? 20 : isTablet ? 24 : 28),
                                 child: CustomPaint(
                                   painter: AdvancedTechShinePainter(
                                     animation: _glowController,
