@@ -20,18 +20,12 @@ class MinimalHomePage extends StatefulWidget {
 class _MinimalHomePageState extends State<MinimalHomePage>
     with TickerProviderStateMixin {
   int _selectedIndex = 0;
-  bool _showSearch = false;
   late PageController _pageController;
   
   // Callbacks to control search in TipsListPages
   VoidCallback? _windowsToggleSearch;
   VoidCallback? _macosToggleSearch;
   VoidCallback? _linuxToggleSearch;
-  
-  // Search state callbacks
-  bool Function()? _windowsIsSearchActive;
-  bool Function()? _macosIsSearchActive;
-  bool Function()? _linuxIsSearchActive;
 
   @override
   void initState() {
@@ -80,48 +74,23 @@ class _MinimalHomePageState extends State<MinimalHomePage>
     
     return Scaffold(
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+      appBar: _buildAwesomeAppBar(isDark),
       drawer: _buildDrawer(context),
       drawerEdgeDragWidth: 80, // Increase drag area for easier closing
       body: Stack(
         children: [
           // Main content
-          Column(
-            children: [
-              // App bar
-              _buildStaticAppBar(context),
-              
-              // PageView for tabs - Optimized for performance
-              Expanded(
-                child: PageView.builder(
-                  controller: _pageController,
-                  onPageChanged: _onPageChanged,
-                  physics: const ClampingScrollPhysics(), // Better performance than BouncingScrollPhysics
-                  itemCount: 3,
-                  itemBuilder: (context, index) {
-                    final os = ['windows', 'macos', 'linux'][index];
-                    return RepaintBoundary(
-                      child: _buildTipsListPage(index, os),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-          
-          // Floating buttons - Optimized with RepaintBoundary
-          Positioned(
-            top: MediaQuery.of(context).padding.top + context.rp(8),
-            left: context.rp(16),
-            child: RepaintBoundary(
-              child: _buildMenuButton(context),
-            ),
-          ),
-          Positioned(
-            top: MediaQuery.of(context).padding.top + context.rp(8),
-            right: context.rp(16),
-            child: RepaintBoundary(
-              child: _buildSearchButton(context),
-            ),
+          PageView.builder(
+            controller: _pageController,
+            onPageChanged: _onPageChanged,
+            physics: const ClampingScrollPhysics(), // Better performance than BouncingScrollPhysics
+            itemCount: 3,
+            itemBuilder: (context, index) {
+              final os = ['windows', 'macos', 'linux'][index];
+              return RepaintBoundary(
+                child: _buildTipsListPage(index, os),
+              );
+            },
           ),
           
           // Bottom navigation - Optimized with RepaintBoundary
@@ -138,73 +107,82 @@ class _MinimalHomePageState extends State<MinimalHomePage>
     );
   }
 
-  /// Build static app bar with OS title
-  Widget _buildStaticAppBar(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final currentOS = ['windows', 'macos', 'linux'][_selectedIndex];
-    
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: isDark
-            ? [
-                Colors.white.withValues(alpha: 0.2),
-                AppColors.getOSColor(currentOS).withValues(alpha: 0.18),
-                Colors.white.withValues(alpha: 0.12),
-              ]
-            : [
-                Colors.white.withValues(alpha: 0.9),
-                AppColors.getOSColor(currentOS).withValues(alpha: 0.12),
-                Colors.white.withValues(alpha: 0.8),
-              ],
-          stops: const [0.0, 0.5, 1.0],
-        ),
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(context.rbr(50)),
-          bottomRight: Radius.circular(context.rbr(50)),
-        ),
-        border: Border.all(
-          color: isDark 
-            ? AppColors.getOSColor(currentOS).withValues(alpha: 0.5)
-            : AppColors.getOSColor(currentOS).withValues(alpha: 0.35),
-          width: context.rw(1.5),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: isDark
-              ? Colors.black.withValues(alpha: 0.3)
-              : Colors.black.withValues(alpha: 0.15),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-            spreadRadius: 0,
+  /// Build awesome app bar - matches tip details exactly
+  PreferredSizeWidget _buildAwesomeAppBar(bool isDark) {
+    return PreferredSize(
+      preferredSize: const Size.fromHeight(120), // Give it proper height to match main screen
+      child: Container(
+        height: 120, // Explicit height to ensure visibility
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: isDark
+              ? [
+                  Colors.white.withValues(alpha: 0.2),
+                  AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.18),
+                  Colors.white.withValues(alpha: 0.12),
+                ]
+              : [
+                  Colors.white.withValues(alpha: 0.9),
+                  AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.12),
+                  Colors.white.withValues(alpha: 0.8),
+                ],
+            stops: const [0.0, 0.5, 1.0],
           ),
-        ],
-      ),
-      child: SafeArea(
-        child: Padding(
-          padding: context.rse(horizontal: 20, vertical: 2),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              context.rsb(width: 40),
-              Expanded(
-                child: Center(
-                  child: _buildModernTitle(currentOS),
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(context.rbr(50)),
+            bottomRight: Radius.circular(context.rbr(50)),
+          ),
+          border: Border.all(
+            color: isDark 
+              ? AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.5)
+              : AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.35),
+            width: context.rw(1.5),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: isDark
+                ? Colors.black.withValues(alpha: 0.3)
+                : Colors.black.withValues(alpha: 0.15),
+              blurRadius: 20,
+              offset: const Offset(0, 8),
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: context.rse(horizontal: 20, vertical: 2),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Drawer button
+                _buildDrawerButton(isDark),
+                
+                const SizedBox(width: 12),
+                
+                // Title
+                Expanded(
+                  child: Center(
+                    child: _buildModernTitle(isDark),
+                  ),
                 ),
-              ),
-              context.rsb(width: 40),
-            ],
+                
+                const SizedBox(width: 12),
+                
+                // Search button
+                _buildAppBarSearchButton(isDark),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  /// Build modern title with OS-specific styling
-  Widget _buildModernTitle(String currentOS) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+  /// Build modern title with OS-specific styling - matches tip details exactly
+  Widget _buildModernTitle(bool isDark) {
     
     return Container(
       padding: context.rse(horizontal: 18, vertical: 10),
@@ -229,7 +207,7 @@ class _MinimalHomePageState extends State<MinimalHomePage>
         border: Border.all(
           color: isDark 
             ? Colors.white.withValues(alpha: 0.3)
-            : AppColors.getOSColor(currentOS).withValues(alpha: 0.4),
+            : AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.4),
           width: context.rw(2.0),
         ),
         boxShadow: [
@@ -242,13 +220,13 @@ class _MinimalHomePageState extends State<MinimalHomePage>
             spreadRadius: 0,
           ),
           BoxShadow(
-            color: AppColors.getOSColor(currentOS).withValues(alpha: 0.3),
+            color: AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.3),
             blurRadius: 35,
             offset: const Offset(0, 15),
             spreadRadius: 2,
           ),
           BoxShadow(
-            color: AppColors.getOSColor(currentOS).withValues(alpha: 0.2),
+            color: AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.2),
             blurRadius: 20,
             offset: const Offset(0, 0),
             spreadRadius: -8,
@@ -298,7 +276,7 @@ class _MinimalHomePageState extends State<MinimalHomePage>
               ],
             ),
             child: Icon(
-              _getOSIcon(currentOS),
+              _getOSIcon(['windows', 'macos', 'linux'][_selectedIndex]),
               color: Colors.white,
               size: context.ri(18),
             ),
@@ -317,14 +295,14 @@ class _MinimalHomePageState extends State<MinimalHomePage>
                     Colors.white.withValues(alpha: 0.9),
                   ]
                 : [
-                    AppColors.getOSColor(currentOS),
-                    AppColors.getOSColor(currentOS).withValues(alpha: 0.9),
-                    AppColors.getOSColor(currentOS).withValues(alpha: 0.8),
+                    AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]),
+                    AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.9),
+                    AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.8),
                   ],
               stops: const [0.0, 0.5, 1.0],
             ).createShader(bounds),
             child: Text(
-              '${_getOSDisplayName(currentOS)} Tips',
+              '${_getOSDisplayName(['windows', 'macos', 'linux'][_selectedIndex])} Tips',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w700,
                 color: Colors.white,
@@ -353,19 +331,6 @@ class _MinimalHomePageState extends State<MinimalHomePage>
             break;
           case 2:
             _linuxToggleSearch = callback;
-            break;
-        }
-      },
-      onSearchStateCallback: (callback) {
-        switch (index) {
-          case 0:
-            _windowsIsSearchActive = callback;
-            break;
-          case 1:
-            _macosIsSearchActive = callback;
-            break;
-          case 2:
-            _linuxIsSearchActive = callback;
             break;
         }
       },
@@ -611,189 +576,8 @@ class _MinimalHomePageState extends State<MinimalHomePage>
     );
   }
 
-  /// Build optimized floating menu button - No animations for smooth performance
-  Widget _buildMenuButton(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final currentOS = ['windows', 'macos', 'linux'][_selectedIndex];
-    
-    return Builder(
-      builder: (BuildContext context) {
-    return Container(
-          width: context.rw(48),
-          height: context.rh(48),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-          colors: isDark
-            ? [
-                    Colors.white.withValues(alpha: 0.35),
-                    Colors.white.withValues(alpha: 0.25),
-                    Colors.white.withValues(alpha: 0.15),
-                  ]
-                : [
-                    Colors.white.withValues(alpha: 0.98),
-                Colors.white.withValues(alpha: 0.95),
-                    Colors.white.withValues(alpha: 0.9),
-              ],
-          stops: const [0.0, 0.5, 1.0],
-        ),
-            borderRadius: BorderRadius.circular(context.rbr(20)),
-            border: Border.all(
-              color: isDark 
-                ? Colors.white.withValues(alpha: 0.4)
-                : AppColors.getOSColor(currentOS).withValues(alpha: 0.6),
-              width: context.rw(2.0),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: isDark
-                  ? Colors.black.withValues(alpha: 0.2)
-                  : Colors.black.withValues(alpha: 0.1),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-            spreadRadius: 0,
-          ),
-            ],
-          ),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () {
-                HapticFeedback.lightImpact();
-                Scaffold.of(context).openDrawer();
-              },
-              borderRadius: BorderRadius.circular(context.rbr(20)),
-              child: SizedBox(
-                width: context.rw(48),
-                height: context.rh(48),
-                child: Center(
-                  child: Icon(
-                    Icons.menu_rounded,
-                    size: context.ri(22),
-                    color: isDark 
-                      ? Colors.white.withValues(alpha: 0.95) 
-                      : AppColors.getOSColor(currentOS),
-                  ),
-                ),
-          ),
-        ),
-      ),
-        );
-      },
-    );
-  }
 
-  /// Build optimized floating search button - Minimal animations for smooth performance
-  Widget _buildSearchButton(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final currentOS = ['windows', 'macos', 'linux'][_selectedIndex];
-    
-    bool isSearchActive = _getCurrentPageSearchState();
-    
-    return Container(
-      width: context.rw(48),
-      height: context.rh(48),
-        decoration: BoxDecoration(
-        gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-          colors: isDark
-            ? [
-                Colors.white.withValues(alpha: 0.35),
-                Colors.white.withValues(alpha: 0.25),
-                Colors.white.withValues(alpha: 0.15),
-              ]
-            : [
-                Colors.white.withValues(alpha: 0.98),
-                Colors.white.withValues(alpha: 0.95),
-                Colors.white.withValues(alpha: 0.9),
-              ],
-          stops: const [0.0, 0.5, 1.0],
-        ),
-          borderRadius: BorderRadius.circular(context.rbr(20)),
-          border: Border.all(
-          color: isDark 
-            ? Colors.white.withValues(alpha: 0.4)
-            : AppColors.getOSColor(currentOS).withValues(alpha: 0.6),
-          width: context.rw(2.0),
-        ),
-        boxShadow: [
-                BoxShadow(
-            color: isDark 
-              ? Colors.black.withValues(alpha: 0.2)
-              : Colors.black.withValues(alpha: 0.1),
-            blurRadius: 10,
-                  offset: const Offset(0, 4),
-                  spreadRadius: 0,
-                ),
-        ],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: () {
-            HapticFeedback.lightImpact();
-            _toggleSearch();
-          },
-          borderRadius: BorderRadius.circular(context.rbr(20)),
-                      child: SizedBox(
-              width: context.rw(48),
-              height: context.rh(48),
-              child: Center(
-                child: Icon(
-                  isSearchActive ? Icons.close_rounded : Icons.search_rounded,
-                  size: context.ri(22),
-                  color: isSearchActive 
-                    ? AppColors.getOSColor(currentOS)
-                    : (isDark ? Colors.white.withValues(alpha: 0.95) : AppColors.getOSColor(currentOS)),
-                ),
-              ),
-          ),
-        ),
-      ),
-    );
-  }
 
-  /// Get search state from the currently active page
-  bool _getCurrentPageSearchState() {
-    switch (_selectedIndex) {
-      case 0:
-        return _windowsIsSearchActive?.call() ?? false;
-      case 1:
-        return _macosIsSearchActive?.call() ?? false;
-      case 2:
-        return _linuxIsSearchActive?.call() ?? false;
-      default:
-        return false;
-    }
-  }
-
-  /// Toggle search functionality
-  void _toggleSearch() {
-    setState(() {
-      _showSearch = !_showSearch;
-    });
-    
-    _triggerSearchOnCurrentPage();
-  }
-  
-  /// Trigger search on the currently active page
-  void _triggerSearchOnCurrentPage() {
-    switch (_selectedIndex) {
-      case 0:
-        _windowsToggleSearch?.call();
-        break;
-      case 1:
-        _macosToggleSearch?.call();
-        break;
-      case 2:
-        _linuxToggleSearch?.call();
-        break;
-    }
-    
-    setState(() {});
-  }
 
   /// Toggle theme with smooth transition
   void _toggleTheme(BuildContext context) {
@@ -1812,6 +1596,152 @@ class _MinimalHomePageState extends State<MinimalHomePage>
                 ),
               ),
             ),
+      ),
+    );
+  }
+
+  /// Build drawer button - styled for app bar
+  Widget _buildDrawerButton(bool isDark) {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: isDark
+            ? [
+                Colors.white.withValues(alpha: 0.35),
+                Colors.white.withValues(alpha: 0.25),
+                Colors.white.withValues(alpha: 0.15),
+              ]
+            : [
+                Colors.white.withValues(alpha: 0.98),
+                Colors.white.withValues(alpha: 0.95),
+                Colors.white.withValues(alpha: 0.9),
+              ],
+          stops: const [0.0, 0.5, 1.0],
+        ),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: isDark 
+            ? Colors.white.withValues(alpha: 0.4)
+            : AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.6),
+          width: 2.0,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: isDark
+              ? Colors.black.withValues(alpha: 0.2)
+              : Colors.black.withValues(alpha: 0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+            spreadRadius: 0,
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: Builder(
+          builder: (BuildContext scaffoldContext) {
+            return InkWell(
+              onTap: () {
+                HapticFeedback.lightImpact();
+                Scaffold.of(scaffoldContext).openDrawer();
+              },
+              borderRadius: BorderRadius.circular(12),
+              child: SizedBox(
+                width: 40,
+                height: 40,
+                child: Center(
+                  child: Icon(
+                    Icons.menu_rounded,
+                    size: 18,
+                    color: isDark 
+                      ? Colors.white.withValues(alpha: 0.95) 
+                      : AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  /// Build search button - styled for app bar
+  Widget _buildAppBarSearchButton(bool isDark) {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: isDark
+            ? [
+                Colors.white.withValues(alpha: 0.35),
+                Colors.white.withValues(alpha: 0.25),
+                Colors.white.withValues(alpha: 0.15),
+              ]
+            : [
+                Colors.white.withValues(alpha: 0.98),
+                Colors.white.withValues(alpha: 0.95),
+                Colors.white.withValues(alpha: 0.9),
+              ],
+          stops: const [0.0, 0.5, 1.0],
+        ),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: isDark 
+            ? Colors.white.withValues(alpha: 0.4)
+            : AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.6),
+          width: 2.0,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: isDark
+              ? Colors.black.withValues(alpha: 0.2)
+              : Colors.black.withValues(alpha: 0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+            spreadRadius: 0,
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            HapticFeedback.lightImpact();
+            // Toggle search for current OS
+            final osNames = ['windows', 'macos', 'linux'];
+            final currentOS = osNames[_selectedIndex];
+            
+            if (currentOS == 'windows' && _windowsToggleSearch != null) {
+              _windowsToggleSearch!();
+            } else if (currentOS == 'macos' && _macosToggleSearch != null) {
+              _macosToggleSearch!();
+            } else if (currentOS == 'linux' && _linuxToggleSearch != null) {
+              _linuxToggleSearch!();
+            }
+          },
+          borderRadius: BorderRadius.circular(12),
+          child: SizedBox(
+            width: 40,
+            height: 40,
+            child: Center(
+              child: Icon(
+                Icons.search_rounded,
+                size: 18,
+                color: isDark 
+                  ? Colors.white.withValues(alpha: 0.95) 
+                  : AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

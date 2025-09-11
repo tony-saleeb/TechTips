@@ -8,7 +8,7 @@ import 'presentation/viewmodels/settings_viewmodel.dart';
 import 'presentation/viewmodels/tips_viewmodel.dart';
 import 'presentation/pages/home/minimal_home_page.dart';
 import 'presentation/widgets/minimal_splash_screen.dart';
-import 'presentation/pages/onboarding/onboarding_page.dart';
+import 'presentation/widgets/system_online_screen.dart';
 
 void main() {
   // Enable performance optimizations
@@ -76,11 +76,11 @@ class AppInitializer extends StatefulWidget {
 
 class _AppInitializerState extends State<AppInitializer> {
   bool _isInitialized = false;
-  bool _showOnboarding = false;
+  bool _showSystemOnline = false;
   
-  void _onOnboardingComplete() {
+  void _onSystemOnlineComplete() {
     setState(() {
-      _showOnboarding = false;
+      _showSystemOnline = false;
     });
   }
   
@@ -104,19 +104,13 @@ class _AppInitializerState extends State<AppInitializer> {
         await tipsViewModel.initializeTips();
       }
       
-      // Always show onboarding (removed completion check)
-      if (mounted) {
-        setState(() {
-          _showOnboarding = true;
-        });
-      }
-      
       // Wait for splash screen animation to complete (total time: 2 seconds)
       await Future.delayed(const Duration(milliseconds: 2000));
       
       if (mounted) {
         setState(() {
           _isInitialized = true;
+          _showSystemOnline = true;
         });
       }
     } catch (e) {
@@ -125,6 +119,7 @@ class _AppInitializerState extends State<AppInitializer> {
       if (mounted) {
         setState(() {
           _isInitialized = true;
+          _showSystemOnline = true;
         });
       }
     }
@@ -136,8 +131,8 @@ class _AppInitializerState extends State<AppInitializer> {
       return const MinimalSplashScreen();
     }
     
-    if (_showOnboarding) {
-      return OnboardingPage(onOnboardingComplete: _onOnboardingComplete);
+    if (_showSystemOnline) {
+      return SystemOnlineScreen(onComplete: _onSystemOnlineComplete);
     }
     
     return const MinimalHomePage();
