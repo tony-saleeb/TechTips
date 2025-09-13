@@ -106,12 +106,29 @@ class _CreativeThemeSelectorState extends State<CreativeThemeSelector>
               position: _slideAnimation,
               child: ScaleTransition(
                 scale: _scaleAnimation,
-                child: ClipRRect(
+                child: Container(
+                  width: (size.width * 0.85).clamp(300.0, 500.0), // 85% of screen width, min 300px, max 500px
+                  decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(24),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeOutQuart,
-                    width: size.width,
+                    border: Border.all(
+                      color: Colors.lightBlue.withValues(alpha: 0.7),
+                      width: 2.5,
+                    ),
+                    boxShadow: [
+                      // Light blue ambient glow
+                      BoxShadow(
+                        color: Colors.lightBlue.withValues(alpha: 0.4),
+                        blurRadius: 30,
+                        offset: const Offset(0, 0),
+                        spreadRadius: 5,
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(21.5), // Slightly smaller to account for border
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 400),
+                      curve: Curves.easeOutCubic,
                     decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
@@ -131,38 +148,20 @@ class _CreativeThemeSelectorState extends State<CreativeThemeSelector>
                             ],
                       stops: const [0.0, 0.3, 0.7, 1.0],
                     ),
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(24),
-                      topRight: Radius.circular(24),
-                      bottomLeft: Radius.circular(24),
-                      bottomRight: Radius.circular(24),
-                    ),
-                    border: Border.all(
-                      color: Colors.lightBlue.withValues(alpha: 0.6),
-                      width: 2,
-                    ),
-                    boxShadow: [
-                      // Light blue ambient glow
-                      BoxShadow(
-                        color: Colors.lightBlue.withValues(alpha: 0.4),
-                        blurRadius: 30,
-                        offset: const Offset(0, 0),
-                        spreadRadius: 5,
+                  ),
+                      child: IntrinsicHeight(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            _buildHeader(context, isDark),
+                            _buildThemeOptions(context, isDark),
+                            _buildFooter(context, isDark),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                  child: IntrinsicHeight(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _buildHeader(context, isDark),
-                        _buildThemeOptions(context, isDark),
-                        _buildFooter(context, isDark),
-                      ],
                     ),
                   ),
-                ),
                 ),
               ),
             ),
@@ -173,7 +172,9 @@ class _CreativeThemeSelectorState extends State<CreativeThemeSelector>
   }
 
   Widget _buildHeader(BuildContext context, bool isDark) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeOutCubic,
       padding: const EdgeInsets.fromLTRB(40, 24, 40, 20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -227,53 +228,71 @@ class _CreativeThemeSelectorState extends State<CreativeThemeSelector>
               ],
             ),
           ),
-          GestureDetector(
+          TweenAnimationBuilder<double>(
+            duration: const Duration(milliseconds: 300),
+            tween: Tween<double>(begin: 0.0, end: 1.0),
+            curve: Curves.easeOutBack,
+            builder: (context, value, child) {
+              return Transform.scale(
+                scale: 0.8 + (0.2 * value),
+                child: GestureDetector(
+                  onTapDown: (_) => HapticFeedback.lightImpact(),
             onTap: () => Navigator.of(context).pop(),
             child: Container(
-              width: 44,
-              height: 44,
+                    width: 48,
+                    height: 48,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: isDark 
                       ? [
-                          AppColors.surfaceDark.withValues(alpha: 0.8),
-                          AppColors.cardDark.withValues(alpha: 0.6),
+                                AppColors.surfaceDark.withValues(alpha: 0.9),
+                                AppColors.cardDark.withValues(alpha: 0.7),
+                                AppColors.surfaceDark.withValues(alpha: 0.5),
                         ]
                       : [
-                          AppColors.neutral100.withValues(alpha: 0.9),
-                          AppColors.neutral200.withValues(alpha: 0.7),
+                                Colors.white.withValues(alpha: 0.95),
+                                AppColors.neutral50.withValues(alpha: 0.8),
+                                Colors.white.withValues(alpha: 0.6),
                         ],
+                        stops: const [0.0, 0.5, 1.0],
                 ),
-                borderRadius: BorderRadius.circular(22),
+                      borderRadius: BorderRadius.circular(24),
                 border: Border.all(
-                  color: isDark 
-                      ? AppColors.accentDark.withValues(alpha: 0.4)
-                      : AppColors.accentDark.withValues(alpha: 0.2),
-                  width: 1.5,
+                        color: AppColors.accentDark.withValues(alpha: 0.3),
+                        width: 2,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.shadowDark.withValues(alpha: 0.2),
-                    blurRadius: 12,
+                          color: AppColors.accentDark.withValues(alpha: 0.15),
+                          blurRadius: 20,
+                          offset: const Offset(0, 8),
+                          spreadRadius: 2,
+                        ),
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.1),
+                          blurRadius: 8,
                     offset: const Offset(0, 4),
                   ),
+                        // Inner highlight
                   BoxShadow(
-                    color: isDark 
-                        ? AppColors.accentDark.withValues(alpha: 0.1)
-                        : AppColors.accentDark.withValues(alpha: 0.05),
-                    blurRadius: 6,
-                    offset: const Offset(0, 2),
+                          color: Colors.white.withValues(alpha: isDark ? 0.1 : 0.3),
+                          blurRadius: 4,
+                          offset: const Offset(-1, -1),
+                          spreadRadius: -2,
                   ),
                 ],
               ),
               child: Icon(
                 Icons.close_rounded,
-                size: 22,
-                color: isDark ? AppColors.textDarkSecondary : AppColors.textSecondary,
+                      size: 24,
+                      color: AppColors.accentDark,
               ),
             ),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -344,77 +363,85 @@ class _CreativeThemeSelectorState extends State<CreativeThemeSelector>
         onTap();
       },
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.easeOutQuart,
+        duration: const Duration(milliseconds: 350),
+        curve: Curves.easeOutCubic,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           gradient: isSelected
               ? LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: isDark 
-                      ? [
+                  colors: [
                           AppColors.accentDark,
-                          AppColors.accentDark.withValues(alpha: 0.8),
-                          AppColors.accentDark.withValues(alpha: 0.6),
-                        ]
-                      : [
                           AppColors.accentDark.withValues(alpha: 0.9),
+                    AppColors.accentDark.withValues(alpha: 0.8),
                           AppColors.accentDark.withValues(alpha: 0.7),
-                          AppColors.accentDark.withValues(alpha: 0.5),
                         ],
-                  stops: const [0.0, 0.5, 1.0],
+                  stops: const [0.0, 0.3, 0.7, 1.0],
                 )
               : LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: isDark 
                       ? [
-                          AppColors.surfaceDark.withValues(alpha: 0.6),
-                          AppColors.cardDark.withValues(alpha: 0.4),
-                          AppColors.surfaceDark.withValues(alpha: 0.3),
+                          AppColors.surfaceDark.withValues(alpha: 0.8),
+                          AppColors.cardDark.withValues(alpha: 0.6),
+                          AppColors.surfaceDark.withValues(alpha: 0.4),
+                          AppColors.cardDark.withValues(alpha: 0.3),
                         ]
                       : [
-                          AppColors.neutral50.withValues(alpha: 0.9),
-                          AppColors.neutral100.withValues(alpha: 0.7),
-                          AppColors.neutral50.withValues(alpha: 0.5),
+                          Colors.white.withValues(alpha: 0.95),
+                          AppColors.neutral50.withValues(alpha: 0.8),
+                          Colors.white.withValues(alpha: 0.6),
+                          AppColors.neutral50.withValues(alpha: 0.4),
                         ],
-                  stops: const [0.0, 0.5, 1.0],
+                  stops: const [0.0, 0.3, 0.7, 1.0],
                 ),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(24),
           border: Border.all(
             color: isSelected
-                ? AppColors.accentDark
-                : (isDark 
-                    ? AppColors.borderDark.withValues(alpha: 0.3)
-                    : AppColors.borderLight.withValues(alpha: 0.4)),
-            width: isSelected ? 2.5 : 1.5,
+                ? AppColors.accentDark.withValues(alpha: 0.8)
+                : AppColors.accentDark.withValues(alpha: 0.2),
+            width: isSelected ? 3 : 2,
           ),
           boxShadow: isSelected ? [
             BoxShadow(
-              color: AppColors.accentDark.withValues(alpha: 0.4),
-              blurRadius: 20,
-              offset: const Offset(0, 8),
-              spreadRadius: 2,
+              color: AppColors.accentDark.withValues(alpha: 0.5),
+              blurRadius: 25,
+              offset: const Offset(0, 10),
+              spreadRadius: 3,
             ),
             BoxShadow(
-              color: AppColors.accentDark.withValues(alpha: 0.2),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-              spreadRadius: 1,
+              color: AppColors.accentDark.withValues(alpha: 0.3),
+              blurRadius: 50,
+              offset: const Offset(0, 0),
+              spreadRadius: 8,
+            ),
+            // Inner glow
+            BoxShadow(
+              color: Colors.white.withValues(alpha: 0.2),
+              blurRadius: 6,
+              offset: const Offset(-2, -2),
+              spreadRadius: -4,
             ),
           ] : [
             BoxShadow(
-              color: AppColors.shadowDark.withValues(alpha: 0.1),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-              spreadRadius: 0,
+              color: AppColors.accentDark.withValues(alpha: 0.08),
+              blurRadius: 15,
+              offset: const Offset(0, 6),
+              spreadRadius: 1,
             ),
             BoxShadow(
-              color: AppColors.shadowDark.withValues(alpha: 0.05),
-              blurRadius: 6,
-              offset: const Offset(0, 2),
-              spreadRadius: 0,
+              color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.05),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
+            ),
+            // Subtle inner highlight for unselected
+            BoxShadow(
+              color: Colors.white.withValues(alpha: isDark ? 0.05 : 0.3),
+              blurRadius: 4,
+              offset: const Offset(-1, -1),
+              spreadRadius: -2,
             ),
           ],
         ),
@@ -518,7 +545,7 @@ class _CreativeThemeSelectorState extends State<CreativeThemeSelector>
                     subtitle,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: isSelected
-                          ? (isDark ? Colors.white.withValues(alpha: 0.8) : AppColors.textSecondary)
+                          ? (isDark ? Colors.white.withValues(alpha: 0.8) : Colors.black)
                           : (isDark ? AppColors.textDarkSecondary : AppColors.textSecondary),
                       fontWeight: FontWeight.w500,
                     ),
@@ -575,7 +602,9 @@ class _CreativeThemeSelectorState extends State<CreativeThemeSelector>
   }
 
   Widget _buildFooter(BuildContext context, bool isDark) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeOutCubic,
       padding: const EdgeInsets.fromLTRB(40, 28, 40, 40),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -607,49 +636,159 @@ class _CreativeThemeSelectorState extends State<CreativeThemeSelector>
       child: Row(
         children: [
           Expanded(
-            child: OutlinedButton(
-              onPressed: () => Navigator.of(context).pop(),
-              style: OutlinedButton.styleFrom(
-                backgroundColor: Colors.transparent,
-                foregroundColor: isDark ? AppColors.textDarkSecondary : AppColors.textSecondary,
-                side: BorderSide(
-                  color: isDark 
-                      ? AppColors.accentDark.withValues(alpha: 0.3)
-                      : AppColors.accentDark.withValues(alpha: 0.2),
-                  width: 1.5,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                padding: const EdgeInsets.symmetric(vertical: 18),
-                elevation: 0,
-              ),
+            child: TweenAnimationBuilder<double>(
+              duration: const Duration(milliseconds: 400),
+              tween: Tween<double>(begin: 0.0, end: 1.0),
+              curve: Curves.easeOutBack,
+              builder: (context, value, child) {
+                return Transform.scale(
+                  scale: 0.9 + (0.1 * value),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: isDark 
+                            ? [
+                                AppColors.surfaceDark.withValues(alpha: 0.8),
+                                AppColors.cardDark.withValues(alpha: 0.6),
+                                AppColors.surfaceDark.withValues(alpha: 0.4),
+                              ]
+                            : [
+                                Colors.white.withValues(alpha: 0.9),
+                                AppColors.neutral50.withValues(alpha: 0.7),
+                                Colors.white.withValues(alpha: 0.5),
+                              ],
+                        stops: const [0.0, 0.5, 1.0],
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: AppColors.accentDark.withValues(alpha: 0.3),
+                        width: 2,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.accentDark.withValues(alpha: 0.1),
+                          blurRadius: 15,
+                          offset: const Offset(0, 6),
+                          spreadRadius: 1,
+                        ),
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.05),
+                          blurRadius: 8,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(20),
+                        onTap: () {
+                          HapticFeedback.lightImpact();
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 18),
+                          child: Center(
               child: Text(
                 'Cancel',
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
+                              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                                color: isDark ? AppColors.textDarkPrimary : AppColors.textPrimary,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.5,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
           ),
           const SizedBox(width: 16),
           Expanded(
-            child: ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.accentDark,
-                foregroundColor: AppColors.textInverse,
-                elevation: 0,
-                shadowColor: AppColors.accentDark,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
+            child: TweenAnimationBuilder<double>(
+              duration: const Duration(milliseconds: 500),
+              tween: Tween<double>(begin: 0.0, end: 1.0),
+              curve: Curves.easeOutBack,
+              builder: (context, value, child) {
+                return Transform.scale(
+                  scale: 0.9 + (0.1 * value),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          AppColors.accentDark,
+                          AppColors.accentDark.withValues(alpha: 0.8),
+                          AppColors.accentDark.withValues(alpha: 0.9),
+                        ],
+                        stops: const [0.0, 0.5, 1.0],
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.accentDark.withValues(alpha: 0.4),
+                          blurRadius: 20,
+                          offset: const Offset(0, 8),
+                          spreadRadius: 2,
+                        ),
+                        BoxShadow(
+                          color: AppColors.accentDark.withValues(alpha: 0.2),
+                          blurRadius: 40,
+                          offset: const Offset(0, 0),
+                          spreadRadius: 5,
+                        ),
+                        // Inner highlight
+                        BoxShadow(
+                          color: Colors.white.withValues(alpha: 0.2),
+                          blurRadius: 4,
+                          offset: const Offset(-1, -1),
+                          spreadRadius: -2,
+                        ),
+                      ],
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(20),
+                        onTap: () {
+                          HapticFeedback.mediumImpact();
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 18),
-              ),
-              child: Text(
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.check_rounded,
+                                  size: 20,
+                                  color: Colors.white,
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
                 'Done',
                 style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: AppColors.textInverse,
-                ),
-              ),
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                    letterSpacing: 0.5,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ],
@@ -661,8 +800,14 @@ class _CreativeThemeSelectorState extends State<CreativeThemeSelector>
     // Add smooth transition animation
     HapticFeedback.mediumImpact();
     
-    // Set the theme mode
+    // Add a slight delay to prevent glitching during theme transition
+    await Future.delayed(const Duration(milliseconds: 100));
+    
+    // Set the theme mode with smooth transition
     await settingsVM.setThemeMode(themeMode);
+    
+    // Small delay to allow theme to fully apply before any UI updates
+    await Future.delayed(const Duration(milliseconds: 50));
   }
 
   Widget _buildAnimatedIcon(IconData icon, bool isSelected, bool isDark) {
@@ -1109,29 +1254,44 @@ class _CreativeThemeSelectorState extends State<CreativeThemeSelector>
         return Stack(
           alignment: Alignment.center,
           children: [
-            // System icon base
-            Transform.scale(
-              scale: 1.0 + 0.1 * (1.0 + math.sin(_iconAnimationController.value * 2.0)) / 2,
+            // Main gear (larger, slower rotation)
+            Transform.rotate(
+              angle: _iconAnimationController.value * 2.0, // Slower rotation
               child: Icon(
-                Icons.settings_suggest_rounded,
-                size: 32,
+                Icons.settings_rounded,
+                size: 28,
                 color: isSelected
-                    ? AppColors.accentDark
-                    : (isDark ? AppColors.textDarkSecondary : AppColors.textSecondary),
+                    ? Colors.grey.shade800 // Realistic dark grey when selected
+                    : Colors.grey.shade600, // Regular grey when unselected
               ),
             ),
-            // Rotating gear
+            // Secondary gear (smaller, faster rotation, opposite direction)
             Positioned(
-              right: 8,
+              right: 6,
+              top: 6,
+              child: Transform.rotate(
+                angle: -_iconAnimationController.value * 3.0, // Faster, opposite rotation
+                child: Icon(
+                  Icons.settings_rounded,
+                  size: 16,
+                  color: isSelected 
+                      ? Colors.grey.shade700 // Realistic dark grey when selected
+                      : Colors.grey.shade500, // Regular grey when unselected
+                ),
+              ),
+            ),
+            // Third gear (smallest, medium speed)
+            Positioned(
+              left: 8,
               bottom: 8,
               child: Transform.rotate(
-                angle: _iconAnimationController.value * 4.0,
+                angle: _iconAnimationController.value * 2.5, // Medium speed
                 child: Icon(
                   Icons.settings_rounded,
                   size: 12,
                   color: isSelected
-                      ? Colors.white.withValues(alpha: 0.7)
-                      : (isDark ? AppColors.textDarkTertiary : AppColors.textTertiary),
+                      ? Colors.grey.shade600 // Realistic dark grey when selected
+                      : Colors.grey.shade400, // Regular grey when unselected
                 ),
               ),
             ),

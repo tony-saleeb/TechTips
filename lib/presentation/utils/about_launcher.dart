@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
-import '../pages/about/revolutionary_about_page.dart';
+import '../pages/about/modern_about_page.dart';
 
-/// Utility class to launch the revolutionary about page
+/// Utility class to launch the modern about page
 class AboutLauncher {
-  /// Show the revolutionary about page
-  static void showRevolutionaryAbout(BuildContext context) {
+  /// Show the modern about page (simple navigation)
+  static void showAbout(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const ModernAboutPage(),
+      ),
+    );
+  }
+
+  /// Show the modern about page with custom animation
+  static void showModernAbout(BuildContext context) {
     Navigator.of(context).push(
       PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => const RevolutionaryAboutPage(),
+        pageBuilder: (context, animation, secondaryAnimation) => const ModernAboutPage(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           const begin = Offset(0.0, 1.0);
           const end = Offset.zero;
@@ -30,8 +39,8 @@ class AboutLauncher {
     );
   }
 
-  /// Show the revolutionary about page as a modal
-  static void showRevolutionaryAboutModal(BuildContext context) {
+  /// Show the modern about page as a modal
+  static void showModernAboutModal(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -45,7 +54,7 @@ class AboutLauncher {
             borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
             color: Theme.of(context).scaffoldBackgroundColor,
           ),
-          child: const RevolutionaryAboutPage(),
+          child: const ModernAboutPage(),
         ),
       ),
     );

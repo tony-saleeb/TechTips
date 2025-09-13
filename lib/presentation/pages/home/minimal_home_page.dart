@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'dart:math' as math;
 import '../../../core/constants/app_constants.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/utils/extensions.dart';
@@ -9,6 +10,7 @@ import '../../viewmodels/tips_viewmodel.dart';
 import '../../viewmodels/settings_viewmodel.dart';
 import '../../widgets/minimal_tip_card.dart';
 import '../../widgets/creative_theme_selector.dart';
+import '../../utils/about_launcher.dart';
 
 /// Optimized home page with smooth performance
 class MinimalHomePage extends StatefulWidget {
@@ -516,7 +518,7 @@ class _MinimalHomePageState extends State<MinimalHomePage>
                         subtitle: 'Version & credits',
                         onTap: () {
                           Navigator.of(context).pop(); // Close drawer first
-                          _showAbout(context);
+                          AboutLauncher.showAbout(context);
                         },
           ),
         ],
@@ -592,449 +594,122 @@ class _MinimalHomePageState extends State<MinimalHomePage>
             opacity: animation,
             child: Material(
               color: Colors.transparent,
-              child: Container(
+              child: Stack(
+                children: [
+                  // Premium Backdrop with Multiple Layers
+                  Container(
                 width: double.infinity,
                 height: double.infinity,
                  decoration: BoxDecoration(
-                   gradient: LinearGradient(
-                     begin: Alignment.topCenter,
-                     end: Alignment.bottomCenter,
-                     colors: [
-                       Colors.black.withValues(alpha: 0.4),
-                       Colors.black.withValues(alpha: 0.3),
-                       Colors.black.withValues(alpha: 0.2),
-                       Colors.black.withValues(alpha: 0.1),
-                       Colors.white.withValues(alpha: 0.05),
-                     ],
-                     stops: const [0.0, 0.3, 0.5, 0.7, 1.0],
-                   ),
-                   borderRadius: BorderRadius.circular(24),
-                   border: Border.all(
-                     color: Colors.white.withValues(alpha: 0.3),
-                     width: 1.5,
-                   ),
-                   boxShadow: [
-                     BoxShadow(
-                       color: Colors.black.withValues(alpha: 0.3),
-                       blurRadius: 40,
-                       offset: const Offset(0, 20),
-                       spreadRadius: 10,
-                     ),
-                     BoxShadow(
-                       color: Colors.white.withValues(alpha: 0.1),
-                       blurRadius: 20,
-                       offset: const Offset(0, -10),
-                       spreadRadius: 5,
-                     ),
-                     BoxShadow(
-                       color: AppColors.accentDark.withValues(alpha: 0.2),
-                       blurRadius: 60,
-                       offset: const Offset(0, 0),
-                       spreadRadius: 15,
-                     ),
-                   ],
-                 ),
-                child: Center(
-                  child: SingleChildScrollView(
-                    child: CreativeThemeSelector(),
+                      gradient: RadialGradient(
+                        center: Alignment.center,
+                        radius: 1.2,
+                        colors: [
+                          AppColors.accentDark.withValues(alpha: 0.15),
+                          AppColors.accentDark.withValues(alpha: 0.10),
+                          AppColors.accentDark.withValues(alpha: 0.05),
+                          Colors.black.withValues(alpha: 0.7),
+                          Colors.black.withValues(alpha: 0.85),
+                        ],
+                        stops: const [0.0, 0.3, 0.5, 0.8, 1.0],
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  /// Show creative modern about dialog
-  void _showAbout(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) => Dialog(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+                  
+                  // Animated Blur Circles
+                  ...List.generate(6, (index) {
+                    final positions = [
+                      Alignment.topLeft,
+                      Alignment.topRight,
+                      Alignment.centerLeft,
+                      Alignment.centerRight,
+                      Alignment.bottomLeft,
+                      Alignment.bottomRight,
+                    ];
+                    final colors = [
+                      AppColors.accentDark.withValues(alpha: 0.1),
+                      AppColors.accentDark.withValues(alpha: 0.08),
+                      AppColors.accentDark.withValues(alpha: 0.06),
+                      AppColors.accentDark.withValues(alpha: 0.05),
+                      AppColors.accentDark.withValues(alpha: 0.04),
+                      AppColors.accentDark.withValues(alpha: 0.03),
+                    ];
+                    final sizes = [200.0, 150.0, 180.0, 160.0, 140.0, 120.0];
+                    
+                    return AnimatedBuilder(
+                      animation: animation,
+                      builder: (context, child) {
+                        final animatedOpacity = animation.value * (0.3 + (index * 0.1));
+                        final animatedScale = 0.8 + (animation.value * 0.4);
+                        
+                        return Positioned(
+                          left: positions[index] == Alignment.topLeft || positions[index] == Alignment.centerLeft || positions[index] == Alignment.bottomLeft 
+                              ? -50 : null,
+                          right: positions[index] == Alignment.topRight || positions[index] == Alignment.centerRight || positions[index] == Alignment.bottomRight 
+                              ? -50 : null,
+                          top: positions[index] == Alignment.topLeft || positions[index] == Alignment.topRight 
+                              ? 100 : positions[index] == Alignment.centerLeft || positions[index] == Alignment.centerRight 
+                              ? 300 : null,
+                          bottom: positions[index] == Alignment.bottomLeft || positions[index] == Alignment.bottomRight 
+                              ? 100 : null,
+                          child: Transform.scale(
+                            scale: animatedScale,
         child: Container(
-          width: MediaQuery.of(context).size.width * 0.85,
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.8,
-          ),
+                              width: sizes[index],
+                              height: sizes[index],
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: isDark
-                ? [
-                    Colors.black.withValues(alpha: 0.95),
-                    Color(0xFF1A1A2E).withValues(alpha: 0.98),
-                    Colors.black.withValues(alpha: 0.95),
-                  ]
-                : [
-                    Colors.white.withValues(alpha: 0.98),
-                    Color(0xFFF8F9FA).withValues(alpha: 0.95),
-                    Colors.white.withValues(alpha: 0.98),
-                  ],
-            ),
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(
-              color: isDark 
-                ? Colors.cyan.withValues(alpha: 0.3)
-                : Colors.cyan.withValues(alpha: 0.2),
-              width: 1.5,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: isDark 
-                  ? Colors.black.withValues(alpha: 0.5)
-                  : Colors.black.withValues(alpha: 0.2),
-                blurRadius: 30,
-                spreadRadius: 5,
-              ),
-              BoxShadow(
-                color: Colors.cyan.withValues(alpha: 0.1),
-                blurRadius: 20,
-                spreadRadius: 2,
-              ),
-            ],
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Creative header with animated icon
+                                gradient: RadialGradient(
+                                  colors: [
+                                    colors[index].withValues(alpha: animatedOpacity),
+                                    Colors.transparent,
+                                  ],
+                                  stops: const [0.0, 1.0],
+                                ),
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }),
+                  
+                  // Glass Morphism Effect
               Container(
-                padding: const EdgeInsets.all(24),
+                    width: double.infinity,
+                    height: double.infinity,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: isDark
-                      ? [
-                          Colors.cyan.withValues(alpha: 0.2),
-                          Colors.blue.withValues(alpha: 0.1),
-                          Colors.cyan.withValues(alpha: 0.15),
-                        ]
-                      : [
-                          Colors.cyan.withValues(alpha: 0.1),
-                          Colors.blue.withValues(alpha: 0.05),
-                          Colors.cyan.withValues(alpha: 0.08),
-                        ],
-                  ),
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(24),
-                    topRight: Radius.circular(24),
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    // Animated app icon
-                    Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: RadialGradient(
                           colors: [
-                            Colors.cyan.withValues(alpha: 0.3),
-                            Colors.blue.withValues(alpha: 0.2),
-                            Colors.transparent,
-                          ],
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.cyan.withValues(alpha: 0.3),
-                            blurRadius: 20,
-                            spreadRadius: 5,
-                          ),
+                          Colors.white.withValues(alpha: 0.05),
+                          Colors.white.withValues(alpha: 0.02),
+                          Colors.white.withValues(alpha: 0.01),
+                          Colors.black.withValues(alpha: 0.1),
                         ],
-                      ),
-                      child: Icon(
-                        Icons.terminal_rounded,
-                        size: 40,
-                        color: Colors.cyan,
+                        stops: const [0.0, 0.3, 0.7, 1.0],
                       ),
                     ),
-                    
-                    const SizedBox(height: 20),
-                    
-                    // App name with gradient text
-                    ShaderMask(
-                      shaderCallback: (bounds) => LinearGradient(
-                        colors: [Colors.cyan, Colors.blue],
-                      ).createShader(bounds),
-                      child: Text(
-                        AppConstants.appName,
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 28,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    
-                    const SizedBox(height: 8),
-                    
-                    // Tagline
-                    Text(
-                      'Your Ultimate Tech Shortcuts Companion',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: isDark 
-                          ? Colors.white.withValues(alpha: 0.8)
-                          : Colors.black.withValues(alpha: 0.7),
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
-              
-              // Content section
-              Flexible(
+                  ),
+                  
+                  // Main Content
+                  Center(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Description
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: isDark 
-                            ? Colors.white.withValues(alpha: 0.05)
-                            : Colors.black.withValues(alpha: 0.03),
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: isDark 
-                              ? Colors.white.withValues(alpha: 0.1)
-                              : Colors.black.withValues(alpha: 0.08),
-                            width: 1,
-                          ),
-                        ),
-                        child: Text(
-                          AppConstants.appDescription,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: isDark 
-                              ? Colors.white.withValues(alpha: 0.9)
-                              : Colors.black.withValues(alpha: 0.8),
-                            height: 1.6,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      
-                      const SizedBox(height: 24),
-                      
-                      // Features section
-                      Text(
-                        '✨ Key Features',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.cyan,
-                        ),
-                      ),
-                      
-                      const SizedBox(height: 16),
-                      
-                      // Feature cards
-                      _buildFeatureCard(
-                        context,
-                        icon: Icons.computer,
-                        title: 'Multi-OS Support',
-                        description: 'Windows, macOS & Linux tips',
-                        isDark: isDark,
-                      ),
-                      
-                      const SizedBox(height: 12),
-                      
-                      _buildFeatureCard(
-                        context,
-                        icon: Icons.favorite,
-                        title: 'Smart Favorites',
-                        description: 'Save and organize your shortcuts',
-                        isDark: isDark,
-                      ),
-                      
-                      const SizedBox(height: 12),
-                      
-                      _buildFeatureCard(
-                        context,
-                        icon: Icons.palette,
-                        title: 'Theme Engine',
-                        description: 'Dark & light themes with smooth transitions',
-                        isDark: isDark,
-                      ),
-                      
-                      const SizedBox(height: 12),
-                      
-                      _buildFeatureCard(
-                        context,
-                        icon: Icons.design_services,
-                        title: 'Modern Design',
-                        description: 'Clean, minimal, and responsive interface',
-                        isDark: isDark,
-                      ),
-                      
-                      const SizedBox(height: 24),
-                      
-                      // Version info
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: isDark
-                              ? [
-                                  Colors.cyan.withValues(alpha: 0.1),
-                                  Colors.blue.withValues(alpha: 0.05),
-                                ]
-                              : [
-                                  Colors.cyan.withValues(alpha: 0.05),
-                                  Colors.blue.withValues(alpha: 0.02),
-                                ],
-                          ),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: Colors.cyan.withValues(alpha: 0.2),
-                            width: 1,
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.info_outline,
-                              color: Colors.cyan,
-                              size: 20,
-                            ),
-                            const SizedBox(width: 12),
-                            Text(
-                              'Version 1.0.0 • Built with Flutter',
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: Colors.cyan.withValues(alpha: 0.8),
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              
-              // Close button
-              Container(
-                padding: const EdgeInsets.all(24),
-                child: ElevatedButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.cyan,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                      child: CreativeThemeSelector(),
                     ),
-                    elevation: 8,
-                    shadowColor: Colors.cyan.withValues(alpha: 0.3),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.check_circle, size: 20),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Got it!',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+                ],
         ),
       ),
     );
-  }
-  
-  /// Build feature card for about dialog
-  Widget _buildFeatureCard(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required String description,
-    required bool isDark,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: isDark 
-          ? Colors.white.withValues(alpha: 0.03)
-          : Colors.black.withValues(alpha: 0.02),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: isDark 
-            ? Colors.white.withValues(alpha: 0.08)
-            : Colors.black.withValues(alpha: 0.06),
-          width: 1,
-        ),
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.cyan, Colors.blue],
-              ),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Icon(
-              icon,
-              color: Colors.white,
-              size: 20,
-            ),
-          ),
-          
-          const SizedBox(width: 16),
-          
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: isDark 
-                      ? Colors.white.withValues(alpha: 0.9)
-                      : Colors.black.withValues(alpha: 0.8),
-                  ),
-                ),
-                
-                const SizedBox(height: 4),
-                
-                Text(
-                  description,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: isDark 
-                      ? Colors.white.withValues(alpha: 0.7)
-                      : Colors.black.withValues(alpha: 0.6),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+        },
+        transitionDuration: const Duration(milliseconds: 400),
+        reverseTransitionDuration: const Duration(milliseconds: 300),
       ),
     );
   }
+
 
   /// Clean and smooth bottom navigation
   Widget _buildElegantBottomNav() {
@@ -1248,17 +923,115 @@ class _MinimalHomePageState extends State<MinimalHomePage>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: AppColors.accentDark.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Icon(
-                Icons.favorite_border,
-                size: 64,
-                color: AppColors.accentDark,
-              ),
+            // Modern Creative Heart Icon
+            TweenAnimationBuilder<double>(
+              duration: const Duration(milliseconds: 2000),
+              tween: Tween<double>(begin: 0.0, end: 1.0),
+              curve: Curves.easeInOut,
+              builder: (context, value, child) {
+                return Container(
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    gradient: RadialGradient(
+                      center: Alignment.center,
+                      radius: 0.8,
+                      colors: [
+                        AppColors.accentDark.withValues(alpha: 0.15),
+                        AppColors.accentDark.withValues(alpha: 0.08),
+                        AppColors.accentDark.withValues(alpha: 0.03),
+                        Colors.transparent,
+                      ],
+                      stops: const [0.0, 0.4, 0.7, 1.0],
+                    ),
+                    borderRadius: BorderRadius.circular(60),
+                    border: Border.all(
+                      color: AppColors.accentDark.withValues(alpha: 0.2),
+                      width: 2,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.accentDark.withValues(alpha: 0.1),
+                        blurRadius: 30,
+                        offset: const Offset(0, 10),
+                        spreadRadius: 5,
+                      ),
+                      BoxShadow(
+                        color: AppColors.accentDark.withValues(alpha: 0.05),
+                        blurRadius: 60,
+                        offset: const Offset(0, 0),
+                        spreadRadius: 15,
+                      ),
+                    ],
+                  ),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      // Breathing pulse effect
+                      Transform.scale(
+                        scale: 1.0 + (0.1 * (1.0 + math.sin(value * 4 * math.pi)) / 2),
+                        child: Container(
+                          width: 80,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            gradient: RadialGradient(
+                              colors: [
+                                AppColors.accentDark.withValues(alpha: 0.1),
+                                Colors.transparent,
+                              ],
+                              stops: const [0.0, 1.0],
+                            ),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ),
+                      
+                      // Main heart icon with subtle rotation and scale
+                      Transform.rotate(
+                        angle: math.sin(value * 2 * math.pi) * 0.05,
+                        child: Transform.scale(
+                          scale: 1.0 + (0.05 * (1.0 + math.sin(value * 6 * math.pi)) / 2),
+                          child: Icon(
+                            Icons.favorite_border_rounded,
+                            size: 48,
+                            color: AppColors.accentDark,
+                          ),
+                        ),
+                      ),
+                      
+                      // Floating sparkle effects
+                      ...List.generate(6, (index) {
+                        final angle = (index * 60.0) * (math.pi / 180);
+                        final distance = 35 + (5 * math.sin(value * 3 * math.pi + index));
+                        final sparkleOpacity = (1.0 + math.sin(value * 4 * math.pi + index * 0.5)) / 2;
+                        
+                        return Transform.translate(
+                          offset: Offset(
+                            distance * math.cos(angle + value * math.pi),
+                            distance * math.sin(angle + value * math.pi),
+                          ),
+                          child: Transform.scale(
+                            scale: 0.3 + (0.4 * sparkleOpacity),
+                            child: Container(
+                              width: 6,
+                              height: 6,
+                              decoration: BoxDecoration(
+                                gradient: RadialGradient(
+                                  colors: [
+                                    AppColors.accentDark.withValues(alpha: sparkleOpacity * 0.8),
+                                    Colors.transparent,
+                                  ],
+                                ),
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                    ],
+                  ),
+                );
+              },
             ),
             const SizedBox(height: 24),
             Text(

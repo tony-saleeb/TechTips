@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import '../utils/about_launcher.dart';
 
-/// Example showing how to use the Revolutionary About Page
+/// Example showing how to use the Modern About Page
 /// 
 /// This demonstrates the different ways to launch the new about page:
 /// 
-/// 1. Full screen navigation:
+/// 1. Simple navigation (recommended):
 ///    ```dart
-///    AboutLauncher.showRevolutionaryAbout(context);
+///    AboutLauncher.showAbout(context);
 ///    ```
 /// 
-/// 2. Modal bottom sheet:
+/// 2. Custom animation:
 ///    ```dart
-///    AboutLauncher.showRevolutionaryAboutModal(context);
+///    AboutLauncher.showModernAbout(context);
+///    ```
+/// 
+/// 3. Modal bottom sheet:
+///    ```dart
+///    AboutLauncher.showModernAboutModal(context);
 ///    ```
 /// 
 /// Usage in your existing code:
@@ -31,27 +36,27 @@ import '../utils/about_launcher.dart';
 /// // NEW CODE:
 /// onTap: () {
 ///   Navigator.of(context).pop(); // Close drawer first
-///   AboutLauncher.showRevolutionaryAbout(context);  // Use this instead
+///   AboutLauncher.showAbout(context);  // Use this instead (simple & clean)
 /// },
 /// ```
 /// 
-/// The Revolutionary About Page features:
-/// - 🚀 Ultra-premium design with holographic effects
-/// - 🎨 Matches your app's purple/blue theme perfectly
-/// - ✨ Advanced animations and particle effects
-/// - 🌟 Modern glassmorphism and gradient effects
-/// - 💎 Premium statistics and feature sections
-/// - 🎪 Revolutionary background animations
-/// - 🔥 Smooth transitions and micro-interactions
+/// The Modern About Page features:
+/// - ✨ Clean, professional design that's satisfying to use
+/// - 🎨 Perfectly matches your app's design system
+/// - 📱 Responsive layout that looks great on all devices
+/// - 🚀 Smooth, subtle animations that feel natural
+/// - 📊 Clear information layout with stats and features
+/// - 🎯 Simple, focused content without overwhelming effects
+/// - ⚡ Fast loading and optimized performance
 /// 
-/// This is the most creative and modern about page ever created!
+/// This is a modern, creative, and satisfying about page that users will love!
 
 class AboutUsageExample {
   // Example usage in a button
   static Widget buildAboutButton(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => AboutLauncher.showRevolutionaryAbout(context),
-      child: const Text('Show Revolutionary About'),
+      onPressed: () => AboutLauncher.showAbout(context),
+      child: const Text('Show About'),
     );
   }
 
@@ -60,10 +65,10 @@ class AboutUsageExample {
     return ListTile(
       leading: const Icon(Icons.info_outline),
       title: const Text('About'),
-      subtitle: const Text('Revolutionary & modern'),
+      subtitle: const Text('Modern & clean'),
       onTap: () {
         Navigator.of(context).pop(); // Close drawer first
-        AboutLauncher.showRevolutionaryAbout(context);
+        AboutLauncher.showAbout(context);
       },
     );
   }
@@ -72,7 +77,7 @@ class AboutUsageExample {
   static Widget buildAboutAppBarAction(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.info_outline),
-      onPressed: () => AboutLauncher.showRevolutionaryAbout(context),
+      onPressed: () => AboutLauncher.showAbout(context),
     );
   }
 }
