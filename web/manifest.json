@@ -1,6 +1,6 @@
 {
-    "name": "hackboard",
-    "short_name": "hackboard",
+    "name": "TechTips",
+    "short_name": "TechTips",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -38,9 +38,9 @@ class TechShortcutsApp extends StatelessWidget {
             darkTheme: AppTheme.darkTheme,
             themeMode: settingsViewModel.themeMode,
             
-            // Smooth theme transitions
-            themeAnimationDuration: const Duration(milliseconds: 300),
-            themeAnimationCurve: Curves.easeInOut,
+            // Fast and elegant theme transitions
+            themeAnimationDuration: const Duration(milliseconds: 250),
+            themeAnimationCurve: Curves.easeOutQuart,
             
             // Home page
             home: const AppInitializer(),

@@ -1,4 +1,4 @@
-package com.example.hackboard
+package com.example.techtips
 
 import io.flutter.embedding.android.FlutterActivity
 

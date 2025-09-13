@@ -59,16 +59,19 @@ class SettingsViewModel extends ChangeNotifier {
     }
   }
   
-  /// Set theme mode
+  /// Set theme mode with smooth transition
   Future<void> setThemeMode(ThemeMode themeMode) async {
     if (_themeMode == themeMode) return;
     
     _clearError();
     
     try {
-      await _manageSettingsUseCase.setThemeMode(themeMode);
+      // Update theme mode immediately for smooth UI transition
       _themeMode = themeMode;
       notifyListeners();
+      
+      // Save to storage in background
+      await _manageSettingsUseCase.setThemeMode(themeMode);
     } catch (e) {
       _setError('Failed to set theme mode: ${e.toString()}');
     }

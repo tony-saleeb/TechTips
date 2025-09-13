@@ -8,6 +8,7 @@ import '../tips_list/tips_list_page.dart';
 import '../../viewmodels/tips_viewmodel.dart';
 import '../../viewmodels/settings_viewmodel.dart';
 import '../../widgets/minimal_tip_card.dart';
+import '../../widgets/creative_theme_selector.dart';
 
 /// Optimized home page with smooth performance
 class MinimalHomePage extends StatefulWidget {
@@ -504,7 +505,7 @@ class _MinimalHomePageState extends State<MinimalHomePage>
                         subtitle: 'Light, dark, or system',
                         onTap: () {
                           Navigator.of(context).pop(); // Close drawer first
-                          _toggleTheme(context);
+                          _showCreativeThemeSelector(context);
                         },
                       ),
                       _buildAppearanceSizeDrawerItem(context),
@@ -579,19 +580,71 @@ class _MinimalHomePageState extends State<MinimalHomePage>
 
 
 
-  /// Toggle theme with smooth transition
-  void _toggleTheme(BuildContext context) {
-    final settingsViewModel = context.read<SettingsViewModel>();
-    final currentMode = settingsViewModel.themeMode;
-    final newMode = currentMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
-    
-    // Add smooth transition animation
-    setState(() {
-      // Trigger rebuild with animation
-    });
-    
-    // Set theme mode
-    settingsViewModel.setThemeMode(newMode);
+  /// Show creative theme selector dialog
+  void _showCreativeThemeSelector(BuildContext context) {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        opaque: false,
+        barrierDismissible: true,
+        barrierColor: Colors.transparent,
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return FadeTransition(
+            opacity: animation,
+            child: Material(
+              color: Colors.transparent,
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                 decoration: BoxDecoration(
+                   gradient: LinearGradient(
+                     begin: Alignment.topCenter,
+                     end: Alignment.bottomCenter,
+                     colors: [
+                       Colors.black.withValues(alpha: 0.4),
+                       Colors.black.withValues(alpha: 0.3),
+                       Colors.black.withValues(alpha: 0.2),
+                       Colors.black.withValues(alpha: 0.1),
+                       Colors.white.withValues(alpha: 0.05),
+                     ],
+                     stops: const [0.0, 0.3, 0.5, 0.7, 1.0],
+                   ),
+                   borderRadius: BorderRadius.circular(24),
+                   border: Border.all(
+                     color: Colors.white.withValues(alpha: 0.3),
+                     width: 1.5,
+                   ),
+                   boxShadow: [
+                     BoxShadow(
+                       color: Colors.black.withValues(alpha: 0.3),
+                       blurRadius: 40,
+                       offset: const Offset(0, 20),
+                       spreadRadius: 10,
+                     ),
+                     BoxShadow(
+                       color: Colors.white.withValues(alpha: 0.1),
+                       blurRadius: 20,
+                       offset: const Offset(0, -10),
+                       spreadRadius: 5,
+                     ),
+                     BoxShadow(
+                       color: AppColors.accentDark.withValues(alpha: 0.2),
+                       blurRadius: 60,
+                       offset: const Offset(0, 0),
+                       spreadRadius: 15,
+                     ),
+                   ],
+                 ),
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: CreativeThemeSelector(),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 
   /// Show creative modern about dialog
@@ -1068,7 +1121,22 @@ class _MinimalHomePageState extends State<MinimalHomePage>
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => _buildFavoritesBottomSheet(context, favorites, currentOS),
+      isDismissible: true,
+      enableDrag: true,
+      builder: (context) => GestureDetector(
+        onTap: () {
+          Navigator.of(context).pop();
+        },
+        child: Container(
+          color: Colors.transparent,
+          child: GestureDetector(
+            onTap: () {
+              // Prevent tap from propagating to parent
+            },
+            child: _buildFavoritesBottomSheet(context, favorites, currentOS),
+          ),
+        ),
+      ),
     );
   }
   
