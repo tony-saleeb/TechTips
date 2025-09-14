@@ -105,7 +105,7 @@ class _ModernAboutPageState extends State<ModernAboutPage>
 
     _iconColorAnimation = ColorTween(
       begin: AppColors.accentDark,
-      end: AppColors.accentDark.withOpacity(0.7),
+      end: AppColors.accentDark.withValues(alpha:0.7),
     ).animate(CurvedAnimation(
       parent: _pulseController,
       curve: Curves.easeInOut,
@@ -316,7 +316,7 @@ class _ModernAboutPageState extends State<ModernAboutPage>
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.accentDark.withOpacity(0.1),
+                      color: AppColors.accentDark.withValues(alpha:0.1),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -330,7 +330,7 @@ class _ModernAboutPageState extends State<ModernAboutPage>
                       HapticFeedback.lightImpact();
                       Navigator.of(context).pop();
                     },
-                    child: Container(
+                    child: SizedBox(
                       width: context.rw(44),
                       height: context.rh(44),
                       child: Icon(
@@ -368,7 +368,7 @@ class _ModernAboutPageState extends State<ModernAboutPage>
                         end: Alignment.bottomCenter,
                         colors: [
                           AppColors.accentDark,
-                          AppColors.accentDark.withOpacity(0.6),
+                          AppColors.accentDark.withValues(alpha:0.6),
                         ],
                       ),
                       borderRadius: BorderRadius.circular(context.rbr(2)),
@@ -410,10 +410,10 @@ class _ModernAboutPageState extends State<ModernAboutPage>
                 child: Container(
                   padding: context.rse(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: AppColors.accentDark.withOpacity(0.1),
+                    color: AppColors.accentDark.withValues(alpha:0.1),
                     borderRadius: BorderRadius.circular(context.rbr(8)),
                     border: Border.all(
-                      color: AppColors.accentDark.withOpacity(0.2),
+                      color: AppColors.accentDark.withValues(alpha:0.2),
                       width: 1,
                     ),
                   ),
@@ -476,32 +476,32 @@ class _ModernAboutPageState extends State<ModernAboutPage>
           end: Alignment.bottomRight,
           colors: isDark
               ? [
-                  AppColors.cardDark.withOpacity(0.8),
+                  AppColors.cardDark.withValues(alpha:0.8),
                   AppColors.cardDark,
-                  AppColors.cardDark.withOpacity(0.9),
+                  AppColors.cardDark.withValues(alpha:0.9),
                 ]
               : [
                   AppColors.cardLight,
-                  AppColors.cardLight.withOpacity(0.95),
+                  AppColors.cardLight.withValues(alpha:0.95),
                   AppColors.cardLight,
                 ],
         ),
         borderRadius: BorderRadius.circular(context.rbr(24)),
         border: Border.all(
           color: isDark 
-              ? AppColors.borderDark.withOpacity(0.5)
-              : AppColors.borderLight.withOpacity(0.8),
+              ? AppColors.borderDark.withValues(alpha:0.5)
+              : AppColors.borderLight.withValues(alpha:0.8),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: (isDark ? Colors.black : Colors.grey).withOpacity(0.1),
+            color: (isDark ? Colors.black : Colors.grey).withValues(alpha:0.1),
             blurRadius: 20,
             offset: const Offset(0, 8),
             spreadRadius: 2,
           ),
           BoxShadow(
-            color: AppColors.accentDark.withOpacity(0.05),
+            color: AppColors.accentDark.withValues(alpha:0.05),
             blurRadius: 40,
             offset: const Offset(0, 16),
           ),
@@ -544,15 +544,15 @@ class _ModernAboutPageState extends State<ModernAboutPage>
                                   gradient: RadialGradient(
                                     colors: _showSurprise
                                         ? [
-                                            Colors.purple.withOpacity(0.8),
-                                            Colors.pink.withOpacity(0.6),
-                                            Colors.orange.withOpacity(0.4),
+                                            Colors.purple.withValues(alpha:0.8),
+                                            Colors.pink.withValues(alpha:0.6),
+                                            Colors.orange.withValues(alpha:0.4),
                                             Colors.transparent,
                                           ]
                                         : [
                                             (_iconColorAnimation.value ?? AppColors.accentDark),
-                                            (_iconColorAnimation.value ?? AppColors.accentDark).withOpacity(0.7),
-                                            (_iconColorAnimation.value ?? AppColors.accentDark).withOpacity(0.4),
+                                            (_iconColorAnimation.value ?? AppColors.accentDark).withValues(alpha:0.7),
+                                            (_iconColorAnimation.value ?? AppColors.accentDark).withValues(alpha:0.4),
                                           ],
                                     stops: _showSurprise 
                                         ? const [0.0, 0.5, 0.8, 1.0]
@@ -562,34 +562,34 @@ class _ModernAboutPageState extends State<ModernAboutPage>
                                   boxShadow: [
                                     BoxShadow(
                                       color: _showSurprise
-                                          ? Colors.purple.withOpacity(0.6 * _surpriseAnimation.value)
-                                          : (_iconColorAnimation.value ?? AppColors.accentDark).withOpacity(0.4),
+                                          ? Colors.purple.withValues(alpha:0.6 * _surpriseAnimation.value)
+                                          : (_iconColorAnimation.value ?? AppColors.accentDark).withValues(alpha:0.4),
                                       blurRadius: (30 + (_showSurprise ? 20 * _surpriseAnimation.value : 0)) * _pulseAnimation.value,
                                       offset: const Offset(0, 10),
                                       spreadRadius: (5 + (_showSurprise ? 10 * _surpriseAnimation.value : 0)) * _pulseAnimation.value,
                                     ),
                                     if (_showSurprise) ...[
                                       BoxShadow(
-                                        color: Colors.pink.withOpacity(0.4 * _surpriseAnimation.value),
+                                        color: Colors.pink.withValues(alpha:0.4 * _surpriseAnimation.value),
                                         blurRadius: 60,
                                         offset: const Offset(0, 0),
                                         spreadRadius: 15,
                                       ),
                                       BoxShadow(
-                                        color: Colors.orange.withOpacity(0.3 * _surpriseAnimation.value),
+                                        color: Colors.orange.withValues(alpha:0.3 * _surpriseAnimation.value),
                                         blurRadius: 80,
                                         offset: const Offset(0, 0),
                                         spreadRadius: 20,
                                       ),
                                     ],
                                     BoxShadow(
-                                      color: (_iconColorAnimation.value ?? AppColors.accentDark).withOpacity(0.2),
+                                      color: (_iconColorAnimation.value ?? AppColors.accentDark).withValues(alpha:0.2),
                                       blurRadius: 50,
                                       offset: const Offset(0, 20),
                                     ),
                                     // Inner glow
                                     BoxShadow(
-                                      color: Colors.white.withOpacity(isDark ? 0.1 : 0.3),
+                                      color: Colors.white.withValues(alpha:isDark ? 0.1 : 0.3),
                                       blurRadius: 10,
                                       offset: const Offset(-2, -2),
                                       spreadRadius: -5,
@@ -651,7 +651,7 @@ class _ModernAboutPageState extends State<ModernAboutPage>
                   shaderCallback: (bounds) => LinearGradient(
                     colors: [
                       isDark ? AppColors.textDarkPrimary : AppColors.textPrimary,
-                      (isDark ? AppColors.textDarkPrimary : AppColors.textPrimary).withOpacity(0.8),
+                      (isDark ? AppColors.textDarkPrimary : AppColors.textPrimary).withValues(alpha:0.8),
                     ],
                   ).createShader(bounds),
                   child: Text(
@@ -703,12 +703,12 @@ class _ModernAboutPageState extends State<ModernAboutPage>
               gradient: LinearGradient(
                 colors: isDark
                     ? [
-                        Colors.white.withOpacity(0.03),
-                        Colors.white.withOpacity(0.01),
+                        Colors.white.withValues(alpha:0.03),
+                        Colors.white.withValues(alpha:0.01),
                       ]
                     : [
-                        Colors.black.withOpacity(0.02),
-                        Colors.black.withOpacity(0.005),
+                        Colors.black.withValues(alpha:0.02),
+                        Colors.black.withValues(alpha:0.005),
                       ],
               ),
               borderRadius: BorderRadius.only(
@@ -732,18 +732,18 @@ class _ModernAboutPageState extends State<ModernAboutPage>
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              AppColors.success.withOpacity(0.2),
-                              AppColors.success.withOpacity(0.1),
+                              AppColors.success.withValues(alpha:0.2),
+                              AppColors.success.withValues(alpha:0.1),
                             ],
                           ),
                           borderRadius: BorderRadius.circular(context.rbr(20)),
                           border: Border.all(
-                            color: AppColors.success.withOpacity(0.4),
+                            color: AppColors.success.withValues(alpha:0.4),
                             width: 1.5,
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.success.withOpacity(0.25),
+                              color: AppColors.success.withValues(alpha:0.25),
                               blurRadius: 12,
                               offset: const Offset(0, 4),
                             ),
@@ -791,10 +791,10 @@ class _ModernAboutPageState extends State<ModernAboutPage>
           child: Container(
             padding: context.rse(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: AppColors.accentDark.withOpacity(0.1),
+              color: AppColors.accentDark.withValues(alpha:0.1),
               borderRadius: BorderRadius.circular(context.rbr(16)),
               border: Border.all(
-                color: AppColors.accentDark.withOpacity(0.3),
+                color: AppColors.accentDark.withValues(alpha:0.3),
                 width: 1,
               ),
             ),
@@ -920,7 +920,7 @@ class _ModernAboutPageState extends State<ModernAboutPage>
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: color.withOpacity(0.1),
+                    color: color.withValues(alpha:0.1),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -944,18 +944,18 @@ class _ModernAboutPageState extends State<ModernAboutPage>
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                               colors: [
-                                color.withOpacity(0.15),
-                                color.withOpacity(0.08),
+                                color.withValues(alpha:0.15),
+                                color.withValues(alpha:0.08),
                               ],
                             ),
                             borderRadius: BorderRadius.circular(context.rbr(12)),
                             border: Border.all(
-                              color: color.withOpacity(0.3),
+                              color: color.withValues(alpha:0.3),
                               width: 1,
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: color.withOpacity(0.2),
+                                color: color.withValues(alpha:0.2),
                                 blurRadius: 8,
                                 offset: const Offset(0, 2),
                               ),
@@ -1090,10 +1090,10 @@ class _ModernAboutPageState extends State<ModernAboutPage>
     return Container(
       padding: context.re(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.05),
+        color: color.withValues(alpha:0.05),
         borderRadius: BorderRadius.circular(context.rbr(12)),
         border: Border.all(
-          color: color.withOpacity(0.2),
+          color: color.withValues(alpha:0.2),
           width: 1,
         ),
       ),
@@ -1206,10 +1206,10 @@ class _ModernAboutPageState extends State<ModernAboutPage>
               return Container(
                 padding: context.rse(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
-                  color: AppColors.accentDark.withOpacity(0.1),
+                  color: AppColors.accentDark.withValues(alpha:0.1),
                   borderRadius: BorderRadius.circular(context.rbr(20)),
                   border: Border.all(
-                    color: AppColors.accentDark.withOpacity(0.3),
+                    color: AppColors.accentDark.withValues(alpha:0.3),
                     width: 1,
                   ),
                 ),
@@ -1288,19 +1288,19 @@ class _ModernAboutPageState extends State<ModernAboutPage>
                         end: Alignment.bottomRight,
                         colors: [
                           AppColors.accentDark,
-                          AppColors.accentDark.withOpacity(0.8),
+                          AppColors.accentDark.withValues(alpha:0.8),
                         ],
                       ),
                       borderRadius: BorderRadius.circular(context.rbr(16)),
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.accentDark.withOpacity(0.4),
+                          color: AppColors.accentDark.withValues(alpha:0.4),
                           blurRadius: 12,
                           offset: const Offset(0, 6),
                           spreadRadius: 2,
                         ),
                         BoxShadow(
-                          color: AppColors.accentDark.withOpacity(0.2),
+                          color: AppColors.accentDark.withValues(alpha:0.2),
                           blurRadius: 24,
                           offset: const Offset(0, 12),
                         ),

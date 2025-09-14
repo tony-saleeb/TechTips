@@ -126,7 +126,7 @@ class _CreativeThemeSelectorState extends State<CreativeThemeSelector>
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(21.5), // Slightly smaller to account for border
-                    child: AnimatedContainer(
+                  child: AnimatedContainer(
                       duration: const Duration(milliseconds: 400),
                       curve: Curves.easeOutCubic,
                     decoration: BoxDecoration(
@@ -149,19 +149,19 @@ class _CreativeThemeSelectorState extends State<CreativeThemeSelector>
                       stops: const [0.0, 0.3, 0.7, 1.0],
                     ),
                   ),
-                      child: IntrinsicHeight(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            _buildHeader(context, isDark),
-                            _buildThemeOptions(context, isDark),
-                            _buildFooter(context, isDark),
-                          ],
+                  child: IntrinsicHeight(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _buildHeader(context, isDark),
+                        _buildThemeOptions(context, isDark),
+                        _buildFooter(context, isDark),
+                      ],
                         ),
-                      ),
                     ),
                   ),
+                ),
                 ),
               ),
             ),
