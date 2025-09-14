@@ -622,7 +622,7 @@ class _MinimalHomePageState extends State<MinimalHomePage>
       case 'macos':
         return Icons.apple;
       case 'linux':
-        return Icons.computer;
+        return Icons.terminal; // Changed to match tip details and tip cards
       default:
         return Icons.computer;
     }
