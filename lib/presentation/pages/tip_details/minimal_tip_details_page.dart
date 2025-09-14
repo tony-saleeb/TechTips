@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../../../domain/entities/tip_entity.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_icons.dart';
-import '../../../core/utils/extensions.dart';
 import '../../viewmodels/tips_viewmodel.dart';
 
 /// Awesome Tip Details Page - Premium Design with Main Screen Spirit
@@ -165,209 +164,61 @@ class _MinimalTipDetailsPageState extends State<MinimalTipDetailsPage>
   }
 
   PreferredSizeWidget _buildAwesomeAppBar(bool isDark) {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(120), // Give it proper height to match main screen
-      child: Container(
-        height: 120, // Explicit height to ensure visibility
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: isDark
-              ? [
-                  Colors.white.withValues(alpha: 0.2),
-                  AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.18),
-                  Colors.white.withValues(alpha: 0.12),
-                ]
-              : [
-                  Colors.white.withValues(alpha: 0.9),
-                  AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.12),
-                  Colors.white.withValues(alpha: 0.8),
-                ],
-            stops: const [0.0, 0.5, 1.0],
-          ),
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(context.rbr(50)),
-            bottomRight: Radius.circular(context.rbr(50)),
-          ),
-          border: Border.all(
-            color: isDark 
-              ? AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.5)
-              : AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.35),
-            width: context.rw(1.5),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: isDark
-                ? Colors.black.withValues(alpha: 0.3)
-                : Colors.black.withValues(alpha: 0.15),
-              blurRadius: 20,
-              offset: const Offset(0, 8),
-              spreadRadius: 0,
-            ),
-          ],
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: context.rse(horizontal: 20, vertical: 2),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Back button
-                _buildBackButton(isDark),
-                
-                const SizedBox(width: 12),
-                
-                // Title
-                Expanded(
-                  child: Center(
-                    child: _buildModernTitle(isDark),
-                  ),
-                ),
-                
-                const SizedBox(width: 12),
-                
-                // Favorite button
-                _buildFavoriteButton(isDark),
-              ],
-            ),
-          ),
-        ),
+    return AppBar(
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+      elevation: 0,
+      surfaceTintColor: Colors.transparent,
+      centerTitle: true,
+      automaticallyImplyLeading: false, // Disable default leading
+      title: Row(
+        children: [
+          // Back button - matching home page button style
+          _buildBackButton(isDark),
+          
+          // Spacer to center the title
+          const Expanded(child: SizedBox()),
+          
+          // Centered title
+          _buildCleanTitle(isDark),
+          
+          // Spacer to balance
+          const Expanded(child: SizedBox()),
+          
+          // Favorite button - matching home page button style
+          _buildFavoriteButton(isDark),
+        ],
       ),
     );
   }
 
-  /// Build modern title with OS-specific styling - matches main screen exactly
-  Widget _buildModernTitle(bool isDark) {
-    return Container(
-      padding: context.rse(horizontal: 18, vertical: 10),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: isDark
-            ? [
-                Colors.white.withValues(alpha: 0.25),
-                Colors.white.withValues(alpha: 0.15),
-                Colors.white.withValues(alpha: 0.08),
-              ]
-            : [
-                Colors.white.withValues(alpha: 0.98),
-                Colors.white.withValues(alpha: 0.95),
-                Colors.white.withValues(alpha: 0.9),
-              ],
-          stops: const [0.0, 0.5, 1.0],
-        ),
-        borderRadius: BorderRadius.circular(context.rbr(20)),
-        border: Border.all(
+  /// Build clean title - matching home page style
+  Widget _buildCleanTitle(bool isDark) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          AppIcons.getOSIcon(widget.tip.os),
           color: isDark 
-            ? Colors.white.withValues(alpha: 0.3)
-            : AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.4),
-          width: context.rw(2.0),
+            ? Colors.white 
+            : AppColors.getOSColor(widget.tip.os),
+          size: 20,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: isDark
-              ? Colors.black.withValues(alpha: 0.4)
-              : Colors.black.withValues(alpha: 0.15),
-            blurRadius: 25,
-            offset: const Offset(0, 10),
-            spreadRadius: 0,
-          ),
-          BoxShadow(
-            color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.3),
-            blurRadius: 35,
-            offset: const Offset(0, 15),
-            spreadRadius: 2,
-          ),
-          BoxShadow(
-            color: AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.2),
-            blurRadius: 20,
-            offset: const Offset(0, 0),
-            spreadRadius: -8,
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: isDark
-                  ? [
-                      Colors.grey.shade900,
-                      Colors.grey.shade800,
-                      Colors.grey.shade900,
-                    ]
-                  : [
-                      Colors.grey.shade800,
-                      Colors.grey.shade700,
-                      Colors.grey.shade900,
-                    ],
-                stops: const [0.0, 0.5, 1.0],
-              ),
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: isDark 
-                    ? Colors.black.withValues(alpha: 0.4)
-                    : Colors.black.withValues(alpha: 0.3),
-                  blurRadius: 12,
-                  offset: const Offset(0, 5),
-                  spreadRadius: 1,
-                ),
-                BoxShadow(
-                  color: isDark 
-                    ? Colors.white.withValues(alpha: 0.1)
-                    : Colors.white.withValues(alpha: 0.2),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                  spreadRadius: 2,
-                ),
-              ],
+        const SizedBox(width: 8),
+        Flexible(
+          child: Text(
+            'Tip Details',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w700,
+              color: isDark 
+                ? Colors.white 
+                : AppColors.getOSColor(widget.tip.os),
+              letterSpacing: -0.3,
             ),
-            child: Icon(
-              AppIcons.getOSIcon(widget.tip.os),
-              color: Colors.white,
-              size: 18,
-            ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           ),
-          
-          const SizedBox(width: 12),
-          
-          ShaderMask(
-            shaderCallback: (bounds) => LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: isDark
-                ? [
-                    Colors.white,
-                    Colors.white.withValues(alpha: 0.95),
-                    Colors.white.withValues(alpha: 0.9),
-                  ]
-                : [
-                    AppColors.getOSColor(widget.tip.os),
-                    AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.9),
-                    AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.8),
-                  ],
-              stops: const [0.0, 0.5, 1.0],
-            ).createShader(bounds),
-            child: Text(
-              'Tip Details',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-                letterSpacing: -0.3,
-                fontSize: 16,
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -918,16 +769,6 @@ class _MinimalTipDetailsPageState extends State<MinimalTipDetailsPage>
             : AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.6),
           width: 2.0,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: isDark
-              ? Colors.black.withValues(alpha: 0.2)
-              : Colors.black.withValues(alpha: 0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-            spreadRadius: 0,
-          ),
-        ],
       ),
       child: Material(
         color: Colors.transparent,
@@ -988,16 +829,6 @@ class _MinimalTipDetailsPageState extends State<MinimalTipDetailsPage>
                 : AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.6),
               width: 2.0,
             ),
-            boxShadow: [
-              BoxShadow(
-                color: isDark
-                  ? Colors.black.withValues(alpha: 0.2)
-                  : Colors.black.withValues(alpha: 0.1),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-                spreadRadius: 0,
-              ),
-            ],
           ),
           child: Material(
             color: Colors.transparent,

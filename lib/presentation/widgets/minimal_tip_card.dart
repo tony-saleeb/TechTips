@@ -57,16 +57,6 @@ class _MinimalTipCardState extends State<MinimalTipCard> {
                         child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(context.rbr(28)),
-                boxShadow: [
-                  BoxShadow(
-                    color: isDark 
-                      ? Colors.black.withValues(alpha: 0.4)
-                      : Colors.black.withValues(alpha: 0.08),
-                    blurRadius: 20,
-                    offset: const Offset(0, 8),
-                    spreadRadius: 0,
-                  ),
-                ],
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(context.rbr(28)),

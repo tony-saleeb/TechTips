@@ -141,7 +141,7 @@ class _TipDetailsPageState extends State<TipDetailsPage>
         
         return Scaffold(
           backgroundColor: isDark ? const Color(0xFF0A0A0A) : const Color(0xFFFAFAFA),
-          appBar: _buildUltraPremiumAppBar(context, isFavorite, tipsViewModel, isDark),
+          appBar: _buildCleanAppBar(context, isFavorite, tipsViewModel, isDark),
           body: Stack(
             children: [
               // Premium Background
@@ -236,212 +236,176 @@ class _TipDetailsPageState extends State<TipDetailsPage>
     );
   }
   
-  PreferredSizeWidget _buildUltraPremiumAppBar(BuildContext context, bool isFavorite, TipsViewModel tipsViewModel, bool isDark) {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(130),
-      child: Container(
+  PreferredSizeWidget _buildCleanAppBar(BuildContext context, bool isFavorite, TipsViewModel tipsViewModel, bool isDark) {
+    return AppBar(
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+      elevation: 0,
+      surfaceTintColor: Colors.transparent,
+      centerTitle: true,
+      automaticallyImplyLeading: false, // Disable default leading
+      title: Row(
+        children: [
+          // Back button - matching home page button style
+          _buildBackButton(isDark),
+          
+          // Spacer to center the title
+          const Expanded(child: SizedBox()),
+          
+          // Centered title
+          _buildCleanTitle(isDark),
+          
+          // Spacer to balance
+          const Expanded(child: SizedBox()),
+          
+          // Favorite button - matching home page button style
+          _buildFavoriteButton(isDark, isFavorite, tipsViewModel),
+        ],
+      ),
+    );
+  }
+
+  /// Build back button - matching home page style
+  Widget _buildBackButton(bool isDark) {
+    return Container(
+      width: 40,
+      height: 40,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: isDark
             ? [
-                  const Color(0xFF000000),
-                  const Color(0xFF1A0033),
-                  const Color(0xFF2D1B69),
-                  const Color(0xFF1A1A2E),
-                  const Color(0xFF16213E),
-                  const Color(0xFF0F172A),
-                ]
-              : [
-                  const Color(0xFFFFFFFF),
-                  const Color(0xFFF0F4FF),
-                  const Color(0xFFE6F0FF),
-                  const Color(0xFFD1E7FF),
-                  const Color(0xFFB8D4FF),
-                  const Color(0xFF9CC5FF),
-                ],
-          ),
-          borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(35),
-            bottomRight: Radius.circular(35),
-        ),
-        boxShadow: [
-          BoxShadow(
-              color: isDark ? Colors.purple.withValues(alpha: 0.4) : Colors.blue.withValues(alpha: 0.3),
-              blurRadius: 40,
-              offset: const Offset(0, 12),
-            spreadRadius: 2,
-          ),
-          BoxShadow(
-              color: isDark ? Colors.purple.withValues(alpha: 0.3) : Colors.purple.withValues(alpha: 0.2),
-              blurRadius: 25,
-              offset: const Offset(0, 6),
-              spreadRadius: 1,
-            ),
-            BoxShadow(
-              color: isDark ? Colors.black.withValues(alpha: 0.2) : Colors.grey.withValues(alpha: 0.15),
-              blurRadius: 15,
-              offset: const Offset(0, 3),
-              spreadRadius: 0,
-            ),
-          ],
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-            child: Row(
-              children: [
-                // Back Button - Enhanced Futuristic Design
-                Container(
-                  width: 55,
-                  height: 55,
-                  decoration: BoxDecoration(
-                    gradient: RadialGradient(
-                      colors: [
-                        isDark ? Colors.purple[400]!.withValues(alpha: 0.4) : Colors.blue[400]!.withValues(alpha: 0.3),
-                        isDark ? Colors.purple[500]!.withValues(alpha: 0.2) : Colors.blue[500]!.withValues(alpha: 0.2),
-                        isDark ? Colors.purple[600]!.withValues(alpha: 0.1) : Colors.blue[600]!.withValues(alpha: 0.12),
-                        Colors.transparent,
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(28),
-                    border: Border.all(
-                      color: isDark ? Colors.purple[300]!.withValues(alpha: 0.5) : Colors.blue[300]!.withValues(alpha: 0.4),
-                      width: 2,
-                    ),
-                            boxShadow: [
-                      BoxShadow(
-                        color: isDark ? Colors.purple[400]!.withValues(alpha: 0.2) : Colors.blue[400]!.withValues(alpha: 0.15),
-                        blurRadius: 12,
-                        offset: const Offset(0, 4),
-                        spreadRadius: 0,
-                      ),
-                    ],
-                  ),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(28),
-                      onTap: () => Navigator.of(context).pop(),
-                      child: Center(
-                        child: Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          color: isDark ? Colors.white : Colors.grey[800],
-                          size: 22,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                
-                const Spacer(),
-                
-                // Title - Enhanced Modern Typography
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [
-                        isDark ? Colors.purple[400]!.withValues(alpha: 0.2) : Colors.blue[300]!.withValues(alpha: 0.15),
-                        isDark ? Colors.purple[500]!.withValues(alpha: 0.15) : Colors.blue[400]!.withValues(alpha: 0.12),
-                        isDark ? Colors.purple[600]!.withValues(alpha: 0.1) : Colors.blue[500]!.withValues(alpha: 0.08),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(35),
-                    border: Border.all(
-                      color: isDark ? Colors.purple[300]!.withValues(alpha: 0.4) : Colors.blue[200]!.withValues(alpha: 0.3),
-                      width: 1.5,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: isDark ? Colors.purple[400]!.withValues(alpha: 0.15) : Colors.blue[300]!.withValues(alpha: 0.12),
-                        blurRadius: 10,
-                        offset: const Offset(0, 3),
-                        spreadRadius: 0,
-                      ),
-                    ],
-      ),
-                  child: Text(
-                    'TIP DETAILS',
-                    style: TextStyle(
-                      color: isDark ? Colors.purple[100] : Colors.blue[700],
-                      fontWeight: FontWeight.w900,
-                      fontSize: 17,
-                      letterSpacing: 1.5,
-                      shadows: [
-                        Shadow(
-                          color: isDark ? Colors.purple[400]!.withValues(alpha: 0.3) : Colors.blue[300]!.withValues(alpha: 0.2),
-                          blurRadius: 8,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                
-                const Spacer(),
-                
-                // Favorite Button - Enhanced Futuristic Design
-                Container(
-                  width: 55,
-                  height: 55,
-                  decoration: BoxDecoration(
-                    gradient: RadialGradient(
-                      colors: isFavorite
-                        ? [
-                            Colors.red[300]!.withValues(alpha: 0.5),
-                            Colors.red[500]!.withValues(alpha: 0.3),
-                            Colors.red[700]!.withValues(alpha: 0.2),
-                            Colors.transparent,
-                          ]
-                        : [
-                            isDark ? Colors.purple[400]!.withValues(alpha: 0.4) : Colors.blue[400]!.withValues(alpha: 0.3),
-                            isDark ? Colors.purple[500]!.withValues(alpha: 0.2) : Colors.blue[500]!.withValues(alpha: 0.2),
-                            isDark ? Colors.purple[600]!.withValues(alpha: 0.1) : Colors.blue[600]!.withValues(alpha: 0.12),
-                            Colors.transparent,
-                          ],
-                    ),
-                    borderRadius: BorderRadius.circular(28),
-                    border: Border.all(
-                      color: isFavorite
-                        ? Colors.red[200]!.withValues(alpha: 0.6)
-                        : (isDark ? Colors.purple[300]!.withValues(alpha: 0.5) : Colors.blue[300]!.withValues(alpha: 0.4)),
-                      width: 2,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: isFavorite
-                          ? Colors.red[300]!.withValues(alpha: 0.2)
-                          : (isDark ? Colors.purple[400]!.withValues(alpha: 0.2) : Colors.blue[400]!.withValues(alpha: 0.15)),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-            spreadRadius: 0,
-          ),
-        ],
-      ),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(28),
-                      onTap: () => _toggleFavorite(context, tipsViewModel),
-                      child: Center(
-                        child: Icon(
-                          isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-                          color: isFavorite ? Colors.red[500] : (isDark ? Colors.white : Colors.grey[800]),
-                          size: 22,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                Colors.white.withValues(alpha: 0.35),
+                Colors.white.withValues(alpha: 0.25),
+                Colors.white.withValues(alpha: 0.15),
+              ]
+            : [
+                Colors.white.withValues(alpha: 0.98),
+                Colors.white.withValues(alpha: 0.95),
+                Colors.white.withValues(alpha: 0.9),
               ],
+          stops: const [0.0, 0.5, 1.0],
+        ),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: isDark 
+            ? Colors.white.withValues(alpha: 0.4)
+            : AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.6),
+          width: 2.0,
+        ),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            HapticFeedback.lightImpact();
+            Navigator.of(context).pop();
+          },
+          borderRadius: BorderRadius.circular(12),
+          child: SizedBox(
+            width: 40,
+            height: 40,
+            child: Center(
+              child: Icon(
+                Icons.arrow_back_ios_rounded,
+                size: 18,
+                color: isDark 
+                  ? Colors.white.withValues(alpha: 0.95) 
+                  : AppColors.getOSColor(widget.tip.os),
+              ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  /// Build favorite button - matching home page style
+  Widget _buildFavoriteButton(bool isDark, bool isFavorite, TipsViewModel tipsViewModel) {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: isDark
+            ? [
+                Colors.white.withValues(alpha: 0.35),
+                Colors.white.withValues(alpha: 0.25),
+                Colors.white.withValues(alpha: 0.15),
+              ]
+            : [
+                Colors.white.withValues(alpha: 0.98),
+                Colors.white.withValues(alpha: 0.95),
+                Colors.white.withValues(alpha: 0.9),
+              ],
+          stops: const [0.0, 0.5, 1.0],
+        ),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: isDark 
+            ? Colors.white.withValues(alpha: 0.4)
+            : AppColors.getOSColor(widget.tip.os).withValues(alpha: 0.6),
+          width: 2.0,
+        ),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            HapticFeedback.lightImpact();
+            _toggleFavorite(context, tipsViewModel);
+          },
+          borderRadius: BorderRadius.circular(12),
+          child: SizedBox(
+            width: 40,
+            height: 40,
+            child: Center(
+              child: Icon(
+                isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                size: 18,
+                color: isFavorite 
+                  ? Colors.red 
+                  : (isDark 
+                      ? Colors.white.withValues(alpha: 0.95) 
+                      : AppColors.getOSColor(widget.tip.os)),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Build clean title - matching home page style
+  Widget _buildCleanTitle(bool isDark) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          AppIcons.getOSIcon(widget.tip.os),
+          color: isDark 
+            ? Colors.white 
+            : AppColors.getOSColor(widget.tip.os),
+          size: 20,
+        ),
+        const SizedBox(width: 8),
+        Flexible(
+          child: Text(
+            'Tip Details',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w700,
+              color: isDark 
+                ? Colors.white 
+                : AppColors.getOSColor(widget.tip.os),
+              letterSpacing: -0.3,
+            ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+          ),
+        ),
+      ],
     );
   }
 

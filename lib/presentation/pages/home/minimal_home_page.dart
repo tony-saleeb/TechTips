@@ -110,212 +110,59 @@ class _MinimalHomePageState extends State<MinimalHomePage>
     );
   }
 
-  /// Build awesome app bar - matches tip details exactly
+  /// Build clean app bar with proper layout
   PreferredSizeWidget _buildAwesomeAppBar(bool isDark) {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(120), // Give it proper height to match main screen
-      child: Container(
-        height: 120, // Explicit height to ensure visibility
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: isDark
-              ? [
-                  Colors.white.withValues(alpha: 0.2),
-                  AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.18),
-                  Colors.white.withValues(alpha: 0.12),
-                ]
-              : [
-                  Colors.white.withValues(alpha: 0.9),
-                  AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.12),
-                  Colors.white.withValues(alpha: 0.8),
-                ],
-            stops: const [0.0, 0.5, 1.0],
-          ),
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(context.rbr(50)),
-            bottomRight: Radius.circular(context.rbr(50)),
-          ),
-          border: Border.all(
-            color: isDark 
-              ? AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.5)
-              : AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.35),
-            width: context.rw(1.5),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: isDark
-                ? Colors.black.withValues(alpha: 0.3)
-                : Colors.black.withValues(alpha: 0.15),
-              blurRadius: 20,
-              offset: const Offset(0, 8),
-              spreadRadius: 0,
-            ),
-          ],
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: context.rse(horizontal: 20, vertical: 2),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Drawer button
-                _buildDrawerButton(isDark),
-                
-                const SizedBox(width: 12),
-                
-                // Title
-                Expanded(
-                  child: Center(
-                    child: _buildModernTitle(isDark),
-                  ),
-                ),
-                
-                const SizedBox(width: 12),
-                
-                // Search button
-                _buildAppBarSearchButton(isDark),
-              ],
-            ),
-          ),
-        ),
+    return AppBar(
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+      elevation: 0,
+      surfaceTintColor: Colors.transparent,
+      centerTitle: true,
+      automaticallyImplyLeading: false, // Disable default leading
+      title: Row(
+        children: [
+          // Custom drawer button to match search button exactly
+          _buildDrawerButton(isDark),
+          
+          // Spacer to center the title
+          const Expanded(child: SizedBox()),
+          
+          // Centered title
+          _buildModernTitle(isDark),
+          
+          // Spacer to balance
+          const Expanded(child: SizedBox()),
+          
+          // Search button
+          _buildAppBarSearchButton(isDark),
+        ],
       ),
     );
   }
 
-  /// Build modern title with OS-specific styling - matches tip details exactly
+  /// Build clean title for app bar
   Widget _buildModernTitle(bool isDark) {
-    
-    return Container(
-      padding: context.rse(horizontal: 18, vertical: 10),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: isDark
-            ? [
-                Colors.white.withValues(alpha: 0.25),
-                Colors.white.withValues(alpha: 0.15),
-                Colors.white.withValues(alpha: 0.08),
-              ]
-            : [
-                Colors.white.withValues(alpha: 0.98),
-                Colors.white.withValues(alpha: 0.95),
-                Colors.white.withValues(alpha: 0.9),
-              ],
-          stops: const [0.0, 0.5, 1.0],
-        ),
-        borderRadius: BorderRadius.circular(context.rbr(20)),
-        border: Border.all(
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          _getOSIcon(['windows', 'macos', 'linux'][_selectedIndex]),
           color: isDark 
-            ? Colors.white.withValues(alpha: 0.3)
-            : AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.4),
-          width: context.rw(2.0),
+            ? Colors.white 
+            : AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]),
+          size: 20,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: isDark
-              ? Colors.black.withValues(alpha: 0.4)
-              : Colors.black.withValues(alpha: 0.15),
-            blurRadius: 25,
-            offset: const Offset(0, 10),
-            spreadRadius: 0,
+        const SizedBox(width: 8),
+        Text(
+          '${_getOSDisplayName(['windows', 'macos', 'linux'][_selectedIndex])} Tips',
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w700,
+            color: isDark 
+              ? Colors.white 
+              : AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]),
+            letterSpacing: -0.3,
           ),
-          BoxShadow(
-            color: AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.3),
-            blurRadius: 35,
-            offset: const Offset(0, 15),
-            spreadRadius: 2,
-          ),
-          BoxShadow(
-            color: AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.2),
-            blurRadius: 20,
-            offset: const Offset(0, 0),
-            spreadRadius: -8,
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: isDark
-                  ? [
-                      Colors.grey.shade900,
-                      Colors.grey.shade800,
-                      Colors.grey.shade900,
-                    ]
-                  : [
-                      Colors.grey.shade800,
-                      Colors.grey.shade700,
-                      Colors.grey.shade900,
-                    ],
-                stops: const [0.0, 0.5, 1.0],
-              ),
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: isDark 
-                    ? Colors.black.withValues(alpha: 0.4)
-                    : Colors.black.withValues(alpha: 0.3),
-                  blurRadius: 12,
-                  offset: const Offset(0, 5),
-                  spreadRadius: 1,
-                ),
-                BoxShadow(
-                  color: isDark 
-                    ? Colors.white.withValues(alpha: 0.1)
-                    : Colors.white.withValues(alpha: 0.2),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                  spreadRadius: 2,
-                ),
-              ],
-            ),
-            child: Icon(
-              _getOSIcon(['windows', 'macos', 'linux'][_selectedIndex]),
-              color: Colors.white,
-              size: context.ri(18),
-            ),
-          ),
-          
-          context.rsb(width: 12),
-          
-          ShaderMask(
-            shaderCallback: (bounds) => LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: isDark
-                ? [
-                    Colors.white,
-                    Colors.white.withValues(alpha: 0.95),
-                    Colors.white.withValues(alpha: 0.9),
-                  ]
-                : [
-                    AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]),
-                    AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.9),
-                    AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.8),
-                  ],
-              stops: const [0.0, 0.5, 1.0],
-            ).createShader(bounds),
-            child: Text(
-              '${_getOSDisplayName(['windows', 'macos', 'linux'][_selectedIndex])} Tips',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-                letterSpacing: -0.3,
-                fontSize: context.rs(16),
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -604,7 +451,7 @@ class _MinimalHomePageState extends State<MinimalHomePage>
                       gradient: RadialGradient(
                         center: Alignment.center,
                         radius: 1.2,
-                        colors: [
+                     colors: [
                           AppColors.accentDark.withValues(alpha: 0.15),
                           AppColors.accentDark.withValues(alpha: 0.10),
                           AppColors.accentDark.withValues(alpha: 0.05),
@@ -932,7 +779,7 @@ class _MinimalHomePageState extends State<MinimalHomePage>
                 return Container(
                   width: 120,
                   height: 120,
-                  decoration: BoxDecoration(
+              decoration: BoxDecoration(
                     gradient: RadialGradient(
                       center: Alignment.center,
                       radius: 0.8,
@@ -951,7 +798,7 @@ class _MinimalHomePageState extends State<MinimalHomePage>
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.accentDark.withValues(alpha: 0.1),
+                color: AppColors.accentDark.withValues(alpha: 0.1),
                         blurRadius: 30,
                         offset: const Offset(0, 10),
                         spreadRadius: 5,
@@ -991,11 +838,11 @@ class _MinimalHomePageState extends State<MinimalHomePage>
                         angle: math.sin(value * 2 * math.pi) * 0.05,
                         child: Transform.scale(
                           scale: 1.0 + (0.05 * (1.0 + math.sin(value * 6 * math.pi)) / 2),
-                          child: Icon(
+              child: Icon(
                             Icons.favorite_border_rounded,
                             size: 48,
-                            color: AppColors.accentDark,
-                          ),
+                color: AppColors.accentDark,
+              ),
                         ),
                       ),
                       
@@ -1470,16 +1317,6 @@ class _MinimalHomePageState extends State<MinimalHomePage>
             : AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.6),
           width: 2.0,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: isDark
-              ? Colors.black.withValues(alpha: 0.2)
-              : Colors.black.withValues(alpha: 0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-            spreadRadius: 0,
-          ),
-        ],
       ),
       child: Material(
         color: Colors.transparent,
@@ -1540,16 +1377,6 @@ class _MinimalHomePageState extends State<MinimalHomePage>
             : AppColors.getOSColor(['windows', 'macos', 'linux'][_selectedIndex]).withValues(alpha: 0.6),
           width: 2.0,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: isDark
-              ? Colors.black.withValues(alpha: 0.2)
-              : Colors.black.withValues(alpha: 0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-            spreadRadius: 0,
-          ),
-        ],
       ),
       child: Material(
         color: Colors.transparent,

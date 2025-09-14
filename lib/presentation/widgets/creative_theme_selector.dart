@@ -107,7 +107,7 @@ class _CreativeThemeSelectorState extends State<CreativeThemeSelector>
               child: ScaleTransition(
                 scale: _scaleAnimation,
                 child: Container(
-                  width: (size.width * 0.85).clamp(300.0, 500.0), // 85% of screen width, min 300px, max 500px
+                  width: (size.width * 0.75).clamp(280.0, 380.0), // 75% of screen width, min 280px, max 380px
                   decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(24),
                     border: Border.all(
@@ -175,7 +175,7 @@ class _CreativeThemeSelectorState extends State<CreativeThemeSelector>
     return AnimatedContainer(
       duration: const Duration(milliseconds: 400),
       curve: Curves.easeOutCubic,
-      padding: const EdgeInsets.fromLTRB(40, 24, 40, 20),
+      padding: const EdgeInsets.fromLTRB(24, 16, 24, 14),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -217,7 +217,7 @@ class _CreativeThemeSelectorState extends State<CreativeThemeSelector>
                     letterSpacing: -0.5,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 4),
                 Text(
                   'Choose your preferred appearance',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -305,7 +305,7 @@ class _CreativeThemeSelectorState extends State<CreativeThemeSelector>
         final currentTheme = settingsVM.themeMode;
         
         return Padding(
-          padding: const EdgeInsets.fromLTRB(40, 36, 40, 24),
+          padding: const EdgeInsets.fromLTRB(24, 20, 24, 16),
           child: Column(
             children: [
               _buildThemeOption(
@@ -318,7 +318,7 @@ class _CreativeThemeSelectorState extends State<CreativeThemeSelector>
                 currentTheme == ThemeMode.system,
                 () => _selectTheme(context, settingsVM, ThemeMode.system),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 12),
               _buildThemeOption(
                 context,
                 isDark,
@@ -329,7 +329,7 @@ class _CreativeThemeSelectorState extends State<CreativeThemeSelector>
                 currentTheme == ThemeMode.light,
                 () => _selectTheme(context, settingsVM, ThemeMode.light),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 12),
               _buildThemeOption(
                 context,
                 isDark,
@@ -605,7 +605,7 @@ class _CreativeThemeSelectorState extends State<CreativeThemeSelector>
     return AnimatedContainer(
       duration: const Duration(milliseconds: 400),
       curve: Curves.easeOutCubic,
-      padding: const EdgeInsets.fromLTRB(40, 28, 40, 40),
+      padding: const EdgeInsets.fromLTRB(24, 18, 24, 24),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
