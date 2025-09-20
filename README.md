@@ -64,24 +64,24 @@ A quick look at the app's clean UI in both light and dark themes.
 <div align="center">
 <h4>🌙 Dark Theme</h4>
 <p>
-<img src="screenshots/dark_home.png" width="250">
-<img src="screenshots/dark_tips.png" width="250">
-<img src="screenshots/dark_settings.png" width="250">
+<img src="screenshots/1.png" width="250">
+<img src="screenshots/2.png" width="250">
+<img src="screenshots/3.png" width="250">
 <br>
-<img src="screenshots/dark_search.png" width="250">
-<img src="screenshots/dark_favorites.png" width="250">
-<img src="screenshots/dark_about.png" width="250">
+<img src="screenshots/4.png" width="250">
+<img src="screenshots/5.png" width="250">
+<img src="screenshots/6.png" width="250">
 </p>
 
 <h4>🌞 Light Theme</h4>
 <p>
-<img src="screenshots/light_home.png" width="250">
-<img src="screenshots/light_tips.png" width="250">
-<img src="screenshots/light_settings.png" width="250">
+<img src="screenshots/11.png" width="250">
+<img src="screenshots/22.png" width="250">
+<img src="screenshots/33.png" width="250">
 <br>
-<img src="screenshots/light_search.png" width="250">
-<img src="screenshots/light_favorites.png" width="250">
-<img src="screenshots/light_about.png" width="250">
+<img src="screenshots/44.png" width="250">
+<img src="screenshots/55.png" width="250">
+<img src="screenshots/66.png" width="250">
 </p>
 </div>
 
