@@ -47,7 +47,7 @@ A comprehensive Flutter mobile application focused on productivity tips and keyb
 
 You can download and test the latest APK release here:
 
-[Download APK - Coming Soon](https://github.com/tony-saleeb/techtips/releases)
+[Download APK v1.0.0](https://github.com/tony-saleeb/techtips/releases)
 
 ## Educational Value
 
